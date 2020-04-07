@@ -1,0 +1,23 @@
+{
+  "name": "pathsuite",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"nodemon index.js\" \"npm run start --prefix client\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.7",
+    "validator": "^13.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0",
+    "nodemon": "^2.0.2"
+  },
+  "keywords": [],
+  "description": ""
+}
