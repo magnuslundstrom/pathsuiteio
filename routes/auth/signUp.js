@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 
 const User = require('../../models/User')
-const Company = require('../../models/Company')
 const setCookie = require('../../utils/setCookie')
+const errorHandler = require('../../utils/errorHandler')
 
 router.post('/api/sign-up', async (req, res) => {
   const user = new User({
@@ -13,22 +13,25 @@ router.post('/api/sign-up', async (req, res) => {
     password: req.body.password,
     isAdmin: req.body.isAdmin,
   })
-  const company = new Company({
-    companyName: req.body.companyName,
-    companyEmail: req.body.companyEmail,
-    users: user._id,
-  })
-  user.company = company._id
+
   try {
     await user.save()
-    await company.save()
     setCookie(res, user._id)
-    res.redirect('/tunnel')
+    res.send({ success: 'User was successfully created' })
   } catch (e) {
-    await user.delete()
-    await company.delete()
-    res.status(406).send(e)
+    const newErrors = errorHandler(e)
+    res.status(406).send(newErrors)
   }
 })
+
+// await company.save()
+// const company = new Company({
+//   companyName: req.body.companyName,
+//   companyEmail: req.body.companyEmail,
+//   users: user._id,
+// })
+// user.company = company._id
+// await user.delete()
+// await company.delete()
 
 module.exports = router

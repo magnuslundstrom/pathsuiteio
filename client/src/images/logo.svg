@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1938.3 360.2" style="enable-background:new 0 0 1938.3 360.2;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#46CC8C;}
+	.st1{fill:none;stroke:#FFFFFF;stroke-width:16.1531;stroke-miterlimit:10;}
+	.st2{fill:#FFFFFF;}
+	.st3{fill:#2F3756;}
+	.st4{font-family:'Inter-Bold';}
+	.st5{font-size:327.3333px;}
+</style>
+<g>
+	<path class="st0" d="M286.4,338.1H65.7c-25.6,0-46.6-21-46.6-46.6V70.8c0-25.6,21-46.6,46.6-46.6h220.7c25.6,0,46.6,21,46.6,46.6
+		v220.7C333,317.2,312,338.1,286.4,338.1z"/>
+	<path class="st1" d="M106.2,258.7c0,0-12.6-74.6,67.2-74.6"/>
+	<path class="st1" d="M240.6,109.4c0,0,12.6,74.6-67.2,74.6"/>
+	<circle class="st2" cx="241.4" cy="98.8" r="29.9"/>
+	<circle class="st2" cx="105.4" cy="267.6" r="23.4"/>
+</g>
+<text transform="matrix(1 0 0 1 391.4901 306.9405)" class="st3 st4 st5">Pathsuite</text>
+</svg>

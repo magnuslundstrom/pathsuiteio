@@ -16,7 +16,7 @@ router.post('/api/login', async (req, res) => {
         return res.send({ success: 'User was successfully logged in!' })
       }
     }
-    return res.status(406).send({ errors: { login: { message: 'User was not found' } } })
+    return res.status(406).send({ loginError: "We don't know this account. Please try again." })
   } catch (e) {
     return res
       .status(406)
