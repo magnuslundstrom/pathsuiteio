@@ -1,8 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { HeaderWrapper } from '../../styledComponents/headerComponents'
 
-const Header = () => {
+const Header = (props) => {
   return (
     <HeaderWrapper>
       <Link to="/dashboard">Pathsuite.io</Link>
@@ -10,10 +11,16 @@ const Header = () => {
         <Link to="/paths">Paths</Link>
         <Link to="/employees">Employees</Link>
         <Link to="/">Reports</Link>
-        <div className="dropdown">Username</div>
+        <div className="dropdown">{props.name}</div>
       </div>
     </HeaderWrapper>
   )
 }
 
-export default Header
+const mapStateToProps = (state) => {
+  return {
+    name: state.user.firstName,
+  }
+}
+
+export default connect(mapStateToProps, null)(Header)
