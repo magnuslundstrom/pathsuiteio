@@ -14,12 +14,8 @@ class CreateCompany extends React.Component {
   onSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post('/api/sign-up', {
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        email: this.state.email,
-        password: this.state.password,
-        isAdmin: true,
+      await axios.post('/api/create-company', {
+        message: 'hej',
       })
     } catch (err) {
       this.setState({ errors: { ...err.response.data } })

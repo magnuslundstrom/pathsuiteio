@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cookieParser = require('cookie-parser')
 const { MONGODB_URI } = require('./config/keys')
 mongoose.set('useCreateIndex', true)
 
@@ -10,11 +11,15 @@ mongoose.connect(MONGODB_URI, {
 
 const app = express()
 app.use(express.json())
+app.use(cookieParser)
+
 const signUp = require('./routes/auth/signUp')
 const login = require('./routes/auth/login')
+const createCompany = require('./routes/auth/createCompany')
 
 app.use(signUp)
 app.use(login)
+app.use(createCompany)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
