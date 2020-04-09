@@ -10,8 +10,6 @@ const CompanySchema = new mongoose.Schema({
   },
   companyEmail: {
     type: String,
-    required: true,
-    unique: true,
     trim: true,
     lowercase: true,
     validate(value) {
@@ -45,7 +43,7 @@ CompanySchema.post('save', function (error, doc, next) {
       },
     })
   }
-  next()
+  next(error)
 })
 
 const Company = mongoose.model('Company', CompanySchema, 'companies')

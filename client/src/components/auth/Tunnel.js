@@ -1,15 +1,19 @@
 import React from 'react'
-// import { Redirect } from 'react-router-dom'
-
-import { GrayBg } from './styledComponents'
-// import axios from 'axios'
 
 class Tunnel extends React.Component {
   componentDidMount() {}
-
   render() {
     return (
-      <GrayBg>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          height: '100vh',
+          width: '100vw',
+        }}
+      >
         <div className="lds-roller">
           <div></div>
           <div></div>
@@ -21,7 +25,7 @@ class Tunnel extends React.Component {
           <div></div>
         </div>
         <p style={{ marginTop: '30px' }}>Fetching user data</p>
-      </GrayBg>
+      </div>
     )
   }
 }

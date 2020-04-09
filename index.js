@@ -11,15 +11,15 @@ mongoose.connect(MONGODB_URI, {
 
 const app = express()
 app.use(express.json())
-app.use(cookieParser)
+app.use(cookieParser())
 
 const signUp = require('./routes/auth/signUp')
 const login = require('./routes/auth/login')
 const createCompany = require('./routes/auth/createCompany')
 
+app.use(createCompany)
 app.use(signUp)
 app.use(login)
-app.use(createCompany)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))

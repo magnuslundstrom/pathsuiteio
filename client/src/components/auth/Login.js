@@ -20,7 +20,7 @@ class Login extends React.Component {
         email: this.state.email,
         password: this.state.password,
       })
-      this.setState({ error: '', redirect: true })
+      this.setState({ redirect: true })
     } catch (error) {
       this.setState({ error: error.response.data.loginError })
     }
@@ -32,7 +32,9 @@ class Login extends React.Component {
     } else {
       return (
         <GrayBg>
-          <Logo src={logoImg} />
+          <Link to="/">
+            <Logo src={logoImg}></Logo>
+          </Link>
           <FormWrapper>
             <Title>Sign in</Title>
             <Form onSubmit={this.onSubmit}>
@@ -48,11 +50,7 @@ class Login extends React.Component {
                 onChange={(e) => this.setState({ password: e.target.value })}
                 value={this.state.password}
               />
-              {this.state.error && (
-                <ErrorMessage>
-                  <i className="fas fa-exclamation-triangle"></i> {this.state.error}
-                </ErrorMessage>
-              )}
+              {this.state.error && <ErrorMessage>{this.state.error}</ErrorMessage>}
               <Button>Sign in!</Button>
             </Form>
           </FormWrapper>
