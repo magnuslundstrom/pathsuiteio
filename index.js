@@ -17,11 +17,13 @@ const signUp = require('./routes/auth/signUp')
 const login = require('./routes/auth/login')
 const createCompany = require('./routes/auth/createCompany')
 const tunnel = require('./routes/auth/tunnel')
+const createPath = require('./routes/dashboard/createPath')
 
 app.use(createCompany)
 app.use(signUp)
 app.use(login)
 app.use(tunnel)
+app.use(createPath)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
