@@ -7,9 +7,13 @@ export const Logo = styled.img`
   margin-bottom: 30px;
 `
 
-export const SuccessMsg = styled.p`
-  color: ${colors.green};
-  font-weight: 700;
+export const WelcomeMessage = styled.div`
+  background-color: ${colors.welcomeBlue};
+  padding: 100px;
+  font-size: 46px;
+  h1 {
+    color: ${colors.purple};
+  }
 `
 const ErrorMessageStyles = styled.p`
   color: ${colors.red};

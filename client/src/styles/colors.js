@@ -9,4 +9,5 @@ export default {
   secOrange: '#ffd0b0',
   secBlue: '#7394f4',
   secGreen: '#baf4ba',
+  welcomeBlue: '#cfdaf4',
 }

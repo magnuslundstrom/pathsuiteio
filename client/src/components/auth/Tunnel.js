@@ -1,31 +1,27 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { logOut } from '../../redux/actions/logInOut'
 import fetchUser from '../../redux/actions/fetchUser'
 import axios from 'axios'
 
 class Tunnel extends React.Component {
   state = {
-    authorized: 'loading',
+    userLoaded: 'loading',
   }
   async componentDidMount() {
     try {
       const user = await axios.get('/api/tunnel')
-
       this.props.fetchUser(user.data)
-      this.setState({ authorized: true })
+      this.setState({ userLoaded: true })
     } catch (e) {
-      console.log(e)
-      if (e.response.status === 401) {
-        this.setState({ authorized: false })
-      } else {
-        console.log(e)
-      }
+      this.props.logOut()
+      this.setState({ userLoaded: false })
     }
   }
 
   renderContent = () => {
-    if (this.state.authorized === 'loading') {
+    if (this.state.userLoaded === 'loading') {
       return (
         <div
           style={{
@@ -49,7 +45,7 @@ class Tunnel extends React.Component {
           </div>
         </div>
       )
-    } else if (this.state.authorized) {
+    } else if (this.state.userLoaded) {
       return <Redirect to="/dashboard" />
     } else {
       return <Redirect to="/" />
@@ -60,4 +56,4 @@ class Tunnel extends React.Component {
   }
 }
 
-export default connect(null, { fetchUser })(Tunnel)
+export default connect(null, { fetchUser, logOut })(Tunnel)

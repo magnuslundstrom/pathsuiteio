@@ -106,17 +106,3 @@ class SignUp extends React.Component {
 }
 
 export default SignUp
-
-//   const allErrors = Object.keys(this.state.errors)
-//   const curErrors = Object.keys(err.response.data.errors)
-//   // Checks all errors, if el exists in curError puts response error : ''
-//   allErrors.forEach((el) => {
-//     if (curErrors.find((ele) => ele === el)) {
-//       this.setState({
-//         errors: { ...this.state.errors, [el]: err.response.data.errors[el].message },
-//       })
-//     } else if (this.state.errors.el) {
-//       this.setState({ errors: { ...this.state.errors, [el]: '' } })
-//     }
-//   })
-//

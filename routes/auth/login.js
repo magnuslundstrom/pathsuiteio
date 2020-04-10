@@ -24,4 +24,18 @@ router.post('/api/login', async (req, res) => {
   }
 })
 
+router.get('/api/app-did-mount', async (req, res) => {
+  try {
+    const user = await User.findById(req.cookies.user)
+    if (user) {
+      setCookie(res, user._id)
+      res.send({ success: 'Redirect to tunnel' })
+    } else {
+      throw new Error()
+    }
+  } catch (e) {
+    res.status(401).send()
+  }
+})
+
 module.exports = router
