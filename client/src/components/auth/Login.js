@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import axios from 'axios'
 import { logIn } from '../../redux/actions/logInOut'
+import axios from 'axios'
+import Logo from '../utils/Logo'
 import { Form, Input, Button, FormWrapper, GrayBg, Title } from './styledComponents'
-import { ErrorMessage, Logo } from '../styledComponents/smallComponents'
-import logoImg from '../../images/logo.png'
+import { ErrorMessage } from '../styledComponents/smallComponents'
 
 class Login extends React.Component {
   state = {
@@ -30,9 +30,7 @@ class Login extends React.Component {
   render() {
     return (
       <GrayBg>
-        <Link to="/">
-          <Logo src={logoImg}></Logo>
-        </Link>
+        <Logo />
         <FormWrapper>
           <Title>Sign in</Title>
           <Form onSubmit={this.onSubmit}>

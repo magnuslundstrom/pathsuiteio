@@ -4,8 +4,8 @@ import axios from 'axios'
 
 import { Form, Input, Button, FormWrapper, GrayBg } from './styledComponents'
 
-import { ErrorMessage, Logo } from '../styledComponents/smallComponents'
-import logoImg from '../../images/logo.png'
+import { ErrorMessage } from '../styledComponents/smallComponents'
+import Logo from '../utils/Logo'
 import CreateCompany from './CreateCompany'
 
 class SignUp extends React.Component {
@@ -41,9 +41,7 @@ class SignUp extends React.Component {
     } else {
       return (
         <GrayBg>
-          <Link to="/">
-            <Logo src={logoImg}></Logo>
-          </Link>
+          <Logo />
           <FormWrapper>
             <h1>Create your account</h1>
             <Form onSubmit={this.onSubmit}>

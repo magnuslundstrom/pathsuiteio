@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import { logIn } from '../../redux/actions/logInOut'
 import { Link } from 'react-router-dom'
 import { Form, Input, Button, FormWrapper, GrayBg } from './styledComponents'
-import { ErrorMessage, Logo } from '../styledComponents/smallComponents'
-import logoImg from '../../images/logo.png'
+import { ErrorMessage } from '../styledComponents/smallComponents'
+import Logo from '../utils/Logo'
 
 class CreateCompany extends React.Component {
   state = {
@@ -28,9 +28,7 @@ class CreateCompany extends React.Component {
   render() {
     return (
       <GrayBg>
-        <Link to="/">
-          <Logo src={logoImg}></Logo>
-        </Link>
+        <Logo />
         <FormWrapper>
           <h1>Last step!</h1>
           <p>Who is the owner of the account?</p>

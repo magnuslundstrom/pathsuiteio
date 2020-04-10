@@ -2,15 +2,12 @@ import styled from 'styled-components'
 import colors from '../../styles/colors'
 import React from 'react'
 
-export const Logo = styled.img`
-  height: 40px;
-  margin-bottom: 30px;
-`
-
 export const WelcomeMessage = styled.div`
   background-color: ${colors.welcomeBlue};
-  padding: 100px;
+  padding: 50px;
   font-size: 46px;
+  box-shadow: 0 0.175rem 0.25rem rgba(0, 0, 0, 0.075);
+  margin-top: 50px;
   h1 {
     color: ${colors.purple};
   }
