@@ -21,7 +21,7 @@ const HeaderWrapper = styled.div`
     align-items: center;
   }
 
-  a {
+  .navigation a {
     margin-left: 30px;
   }
 
@@ -36,7 +36,7 @@ const Header = (props) => {
     <HeaderWrapper>
       <div className="headerWidth">
         <Logo dashboard />
-        <div>
+        <div className="navigation">
           <Link to="/paths">Paths</Link>
           <Link to="/employees">Employees</Link>
           <Link to="/">Reports</Link>
