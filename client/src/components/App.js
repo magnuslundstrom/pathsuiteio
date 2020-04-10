@@ -6,7 +6,8 @@ import Login from './auth/Login'
 import SignUp from './auth/SignUp'
 import Tunnel from './auth/Tunnel'
 import Dashboard from './dashboard/Dashboard'
-import Paths from './dashboard/Paths'
+import Paths from './dashboard/paths/Paths'
+import CreatePath from './dashboard/paths/CreatePath'
 import axios from 'axios'
 
 class App extends React.Component {
@@ -39,6 +40,7 @@ class App extends React.Component {
           <Route path="/dashboard" exact component={Dashboard} />
           <Route path="/tunnel" exact component={Tunnel} />
           <Route path="/paths" exact component={Paths} />
+          <Route path="/create-path" exact component={CreatePath} />
         </div>
       )
     } else {
