@@ -9,24 +9,22 @@ const PathSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide a category'],
   },
-  startingDate: {
-    type: Date,
-  },
-  endingDate: {
-    type: Date,
+  responsible: {
+    type: String,
+    required: [true, 'Please provide a responsible person'],
   },
   steps: [
     {
-      title: {
+      goalTitle: {
         type: String,
       },
-      type: {
+      goalType: {
         type: String,
       },
-      link: {
+      goalLink: {
         type: String,
       },
-      note: {
+      goalNote: {
         type: String,
       },
     },
@@ -44,6 +42,13 @@ const PathSchema = new mongoose.Schema({
   company: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Company',
+  },
+
+  startingDate: {
+    type: Date,
+  },
+  endingDate: {
+    type: Date,
   },
 })
 

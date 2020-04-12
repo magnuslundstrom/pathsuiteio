@@ -24,12 +24,7 @@ const CompanySchema = new mongoose.Schema({
       ref: 'User',
     },
   ],
-  paths: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Path',
-    },
-  ],
+
   logo: {
     type: Buffer,
   },

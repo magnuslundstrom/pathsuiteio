@@ -16,7 +16,6 @@ class Tunnel extends React.Component {
       this.setState({ userLoaded: true })
     } catch (e) {
       this.props.logOut()
-      this.setState({ userLoaded: false })
     }
   }
 

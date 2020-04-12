@@ -2,7 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-import { Form, Input, Button, FormWrapper, GrayBg } from './styledComponents'
+import { Form, Input, FormWrapper, GrayBg } from './styledComponents'
+import { Button } from '../utils/Buttons'
 
 import { ErrorMessage } from '../styledComponents/smallComponents'
 import Logo from '../utils/Logo'

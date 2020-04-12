@@ -2,9 +2,10 @@ import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { logIn } from '../../redux/actions/logInOut'
-import { Form, Input, Button, FormWrapper, GrayBg } from './styledComponents'
+import { Form, Input, FormWrapper, GrayBg } from './styledComponents'
 import { ErrorMessage } from '../styledComponents/smallComponents'
 import Logo from '../utils/Logo'
+import { Button } from '../utils/Buttons'
 
 class CreateCompany extends React.Component {
   state = {

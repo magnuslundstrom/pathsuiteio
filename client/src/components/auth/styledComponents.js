@@ -40,23 +40,6 @@ export const Input = styled.input`
   }
 `
 
-export const Button = styled.button`
-  background-color: ${colors.green};
-  border: 0px;
-  width: 100%;
-  color: ${colors.white};
-  padding: 10px;
-  margin-top: 20px;
-  border-radius: 5px;
-  :hover {
-    cursor: pointer;
-    background-color: ${colors.secGreen};
-  }
-  &:disabled {
-    background-color: ${colors.secGreen};
-  }
-`
-
 export const GrayBg = styled.div`
   height: 100vh;
   padding-top: 100px;

@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import { logIn } from '../../redux/actions/logInOut'
 import axios from 'axios'
 import Logo from '../utils/Logo'
-import { Form, Input, Button, FormWrapper, GrayBg, Title } from './styledComponents'
+import { Button } from '../utils/Buttons'
+import { Form, Input, FormWrapper, GrayBg, Title } from './styledComponents'
 import { ErrorMessage } from '../styledComponents/smallComponents'
 
 class Login extends React.Component {
