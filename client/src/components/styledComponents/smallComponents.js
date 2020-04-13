@@ -18,6 +18,7 @@ export const InnerContainer = styled.div`
   padding: 50px;
   box-shadow: 0 0.175rem 0.25rem rgba(0, 0, 0, 0.075);
   margin-top: 30px;
+  border-radius: 5px;
 `
 
 const ErrorMessageStyles = styled.p`

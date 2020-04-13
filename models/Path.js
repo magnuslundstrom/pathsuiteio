@@ -27,14 +27,16 @@ const PathSchema = new mongoose.Schema({
       goalNote: {
         type: String,
       },
+      isCompleted: {
+        type: Boolean,
+        default: false,
+      },
     },
   ],
-  users: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-    },
-  ],
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
