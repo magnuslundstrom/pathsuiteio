@@ -36,3 +36,11 @@ export const CreatePathButton = styled.button`
     background-color: ${colors.secGreen};
   }
 `
+
+export const TransparentButton = styled.button`
+  background: transparent;
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 0px;
+`
