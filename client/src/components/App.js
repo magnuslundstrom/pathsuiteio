@@ -8,6 +8,8 @@ import Tunnel from './auth/Tunnel'
 import Dashboard from './dashboard/Dashboard'
 import Paths from './dashboard/paths/Paths'
 import CreatePath from './dashboard/paths/CreatePath'
+import CreateUser from './dashboard/employees/CreateUser'
+import Employees from './dashboard/employees/Employees'
 import axios from 'axios'
 
 class App extends React.Component {
@@ -41,6 +43,8 @@ class App extends React.Component {
           <Route path="/tunnel" exact component={Tunnel} />
           <Route path="/paths" exact component={Paths} />
           <Route path="/create-path" exact component={CreatePath} />
+          <Route path="/employees" exact component={Employees} />
+          <Route path="/create-user" exact component={CreateUser} />
         </div>
       )
     } else {

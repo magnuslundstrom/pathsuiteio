@@ -45,7 +45,7 @@ class Tunnel extends React.Component {
         </div>
       )
     } else if (this.state.userLoaded) {
-      return <Redirect to="/paths" />
+      return <Redirect to="/employees" />
     } else {
       return <Redirect to="/" />
     }
