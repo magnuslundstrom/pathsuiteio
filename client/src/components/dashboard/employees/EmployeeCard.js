@@ -9,6 +9,7 @@ const EmployeeCard = (props) => {
         <img
           src={props.data.image}
           style={{ width: '100px', height: 'auto', borderRadius: '50%' }}
+          alt="profile"
         />
         <h2 style={{ marginBottom: '0px' }}>
           {props.data.firstName} {props.data.lastName}

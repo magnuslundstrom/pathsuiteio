@@ -20,6 +20,9 @@ class CreatePath extends React.Component {
         goalNote: '',
       },
     ],
+    user: '',
+    search: '',
+    searchResult: [],
   }
 
   onButtonSubmit = () => {
@@ -28,6 +31,7 @@ class CreatePath extends React.Component {
       category: this.state.category,
       responsible: this.state.responsible,
       steps: [...this.state.goals],
+      user: this.state.user,
     })
   }
 
@@ -116,6 +120,47 @@ class CreatePath extends React.Component {
     })
   }
 
+  onSearch = (e) => {
+    this.setState({ search: e.target.value, user: '' }, async () => {
+      const res = await axios.post('/api/find-user', {
+        find: this.state.search,
+      })
+      if (this.state.search.length > 0) {
+        this.setState({ searchResult: [...res.data] })
+      } else {
+        this.setState({ searchResult: [] })
+      }
+      console.log(this.state.searchResult)
+    })
+  }
+
+  renderSearchResults = () => {
+    return this.state.searchResult.map((result, index) => {
+      let style
+      if (this.state.user === result._id) {
+        style = { border: '1px solid green' }
+      } else {
+        style = { border: '1px solid gray' }
+      }
+
+      return (
+        <div key={index}>
+          <button
+            onClick={() =>
+              this.setState(
+                { user: result._id, search: `${result.firstName} ${result.lastName}` },
+                () => console.log(this.state.user)
+              )
+            }
+            style={style}
+          >
+            {result.firstName} {result.lastName}
+          </button>
+        </div>
+      )
+    })
+  }
+
   render() {
     return (
       <Container>
@@ -128,14 +173,33 @@ class CreatePath extends React.Component {
             value={this.state.title}
             onChange={(e) => this.setState({ title: e.target.value })}
           />
-          <div style={{ display: 'flex' }}>
-            {/* @@ ADD EMPLOYEES TO THE PATH */}
-            <Input
-              type="text"
-              placeholder="employees -> mia"
-              icon={<i className="fas fa-user"></i>}
-              onChange={(e) => this.setState({ employees: e.target.value })}
-            />
+          <div style={{ display: 'flex', position: 'relative' }}>
+            <div>
+              {/* @@ ADD EMPLOYEES TO THE PATH */}
+              <Input
+                type="text"
+                placeholder="employees"
+                icon={<i className="fas fa-user"></i>}
+                onChange={(e) => this.onSearch(e)}
+                value={this.state.search}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: '0px',
+                  boxShadow: '0 0.175rem 0.25rem rgba(0, 0, 0, 0.075)',
+                  minHeight: '50px',
+                  zIndex: '100',
+                  backgroundColor: '#fff',
+                }}
+              >
+                {this.state.searchResult.length > 0 && this.state.search && !this.state.user
+                  ? this.renderSearchResults()
+                  : ''}
+              </div>
+            </div>
+
             {/* @@ ADD RESPONSIBLE FOR THE PATH */}
             <Input
               type="text"

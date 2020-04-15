@@ -8,8 +8,8 @@ router.post('/api/create-path', auth, async (req, res) => {
     ...req.body,
     createdBy: req.user._id,
     company: req.user.company._id,
-    user: req.user._id,
   })
+  console.log(req.body)
   await path.save()
 })
 

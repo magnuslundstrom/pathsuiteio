@@ -16,4 +16,11 @@ router.get('/api/users', auth, async (req, res) => {
   } catch (e) {}
 })
 
+router.post('/api/find-user', auth, async (req, res) => {
+  const find = req.body.find
+  const reg = new RegExp('^' + find, 'i')
+  const user = await User.find({ firstName: reg }).select('firstName lastName')
+  res.send(user)
+})
+
 module.exports = router
