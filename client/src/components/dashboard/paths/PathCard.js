@@ -40,7 +40,8 @@ class PathCard extends React.Component {
             <i className="fas fa-sticky-note"></i> {this.props.path.category}
           </p>
           <p>
-            <i className="fas fa-user"></i> {this.props.path.responsible}
+            <i className="fas fa-user"></i> {this.props.path.responsible.firstName}{' '}
+            {this.props.path.responsible.lastName}
           </p>
         </div>
         <ProgressBar progress={66}></ProgressBar>

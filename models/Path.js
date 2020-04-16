@@ -10,8 +10,8 @@ const PathSchema = new mongoose.Schema({
     required: [true, 'Please provide a category'],
   },
   responsible: {
-    type: String,
-    required: [true, 'Please provide a responsible person'],
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
   },
   steps: [
     {
