@@ -8,10 +8,17 @@ const Path = require('../../models/Path')
 router.get('/api/users', auth, async (req, res) => {
   try {
     users = await User.find({ company: req.user.company._id, isAdmin: false })
-      .select('jobTitle firstName lastName')
+      .select('jobTitle firstName lastName image')
       .populate('paths', 'title')
       .exec()
-    res.send(users)
+    const newUsers = []
+    users.forEach((user) => {
+      const image = user.image.toString('base64')
+      const paths = user.paths
+      const newUser = { ...user._doc, paths, image }
+      newUsers.push(newUser)
+    })
+    res.send(newUsers)
   } catch (e) {}
 })
 

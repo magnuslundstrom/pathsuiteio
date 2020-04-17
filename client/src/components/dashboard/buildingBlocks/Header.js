@@ -40,7 +40,9 @@ const Header = (props) => {
           <Link to="/paths">Paths</Link>
           <Link to="/employees">Employees</Link>
           <Link to="/">Reports</Link>
-          <div className="dropdown">{props.name}</div>
+          <div className="dropdown">
+            {props.image && <img src={`data:image/png;base64, ${props.image}`} />}
+          </div>
         </div>
       </div>
     </HeaderWrapper>
@@ -49,7 +51,7 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    name: state.user.firstName,
+    image: state.user.image,
   }
 }
 

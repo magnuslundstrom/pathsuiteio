@@ -1,14 +1,17 @@
 const User = require('../models/User')
-const Company = require('../models/Company')
 
 const auth = async (req, res, next) => {
   try {
     const user = await User.findById(req.cookies.user)
-      .select('company email firstName lastName isAdmin')
+      .select('company email firstName lastName isAdmin image')
       .populate('company')
       .exec()
     if (user) {
-      req.user = user
+      const image = user.image.toString('base64')
+      req.user = {
+        ...user._doc,
+        image,
+      }
     } else {
       throw new Error()
     }

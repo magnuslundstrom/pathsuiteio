@@ -7,7 +7,7 @@ const EmployeeCard = (props) => {
     <InnerContainer>
       <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
         <img
-          src={props.data.image}
+          src={`data:image/png;base64, ${props.data.image}`}
           style={{ width: '100px', height: 'auto', borderRadius: '50%' }}
           alt="profile"
         />
