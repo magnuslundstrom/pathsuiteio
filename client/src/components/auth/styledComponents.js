@@ -41,7 +41,7 @@ export const Input = styled.input`
 `
 
 export const GrayBg = styled.div`
-  height: 100vh;
+  min-height: calc(100% - 100px);
   padding-top: 100px;
   width: 100vw;
   display: flex;
