@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logOut } from '../../redux/actions/logInOut'
-import fetchUser from '../../redux/actions/fetchUser'
+import { fetchUser } from '../../redux/actions/fetchUser'
 import axios from 'axios'
 
 class Tunnel extends React.Component {

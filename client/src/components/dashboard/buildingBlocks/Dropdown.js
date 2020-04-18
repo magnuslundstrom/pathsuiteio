@@ -1,8 +1,7 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import OutsideClickHandler from 'react-outside-click-handler'
-import axios from 'axios'
 import colors from '../../../styles/colors'
 import general from '../../../styles/general'
 
@@ -39,6 +38,7 @@ const Dropdown = (props) => {
               height: 'auto',
               cursor: 'pointer',
             }}
+            alt="profile"
           />
         )}
         {props.dropdown && (

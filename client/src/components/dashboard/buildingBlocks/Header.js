@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logOut } from '../../../redux/actions/logInOut'
+import { unFetchUser } from '../../../redux/actions/fetchUser'
 import Dropdown from './Dropdown'
 import styled from 'styled-components'
 import axios from 'axios'
@@ -49,6 +50,7 @@ class Header extends React.Component {
     const res = await axios.get('api/logout')
     console.log(res.data.success)
     this.props.logOut()
+    this.props.unFetchUser()
   }
 
   render() {
@@ -102,4 +104,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { logOut })(Header)
+export default connect(mapStateToProps, { logOut, unFetchUser })(Header)
