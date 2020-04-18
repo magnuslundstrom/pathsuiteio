@@ -10,7 +10,6 @@ router.get('/api/get-paths', auth, async (req, res) => {
     .populate('user', 'firstName lastName jobTitle image')
     .populate('responsible', 'firstName lastName jobTitle')
     .exec()
-  console.log(paths)
   res.send(paths)
 })
 

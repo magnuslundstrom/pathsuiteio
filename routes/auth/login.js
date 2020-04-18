@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
 const setCookie = require('../../utils/setCookie')
+const auth = require('../../middleware/auth')
 
 const User = require('../../models/User')
 
@@ -36,6 +37,14 @@ router.get('/api/app-did-mount', async (req, res) => {
   } catch (e) {
     res.status(401).send()
   }
+})
+
+router.get('/api/logout', auth, (req, res) => {
+  res.cookie('user', 'logout', {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  })
+  res.send({ success: 'User logged out' })
 })
 
 module.exports = router

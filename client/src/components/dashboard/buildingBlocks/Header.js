@@ -1,18 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { logOut } from '../../../redux/actions/logInOut'
+import Dropdown from './Dropdown'
 import styled from 'styled-components'
+import axios from 'axios'
 import colors from '../../../styles/colors'
+import general from '../../../styles/general'
 
 import Logo from '../../utils/Logo'
 
 const HeaderWrapper = styled.div`
   background-color: ${colors.white};
   padding: 30px 0px;
-  -webkit-box-shadow: 0px 5px 5px 0px rgba(230, 230, 230, 1);
-  -moz-box-shadow: 0px 5px 5px 0px rgba(230, 230, 230, 1);
-  box-shadow: 0px 5px 5px 0px rgba(230, 230, 230, 1);
-
+  box-shadow: ${general.headerBoxShadow};
   .headerWidth {
     max-width: 1300px;
     margin: 0px auto;
@@ -22,37 +23,83 @@ const HeaderWrapper = styled.div`
   }
 
   .navigation a {
-    margin-left: 30px;
+    margin-left: 50px;
+    color: ${colors.blue};
+    display: flex;
+    align-items: center;
+    font-weight: 700;
   }
-
-  .dropdown {
-    display: inline;
-    margin-left: 30px;
+  .navigation a i {
+    margin-right: 7.5px;
   }
 `
 
-const Header = (props) => {
-  return (
-    <HeaderWrapper>
-      <div className="headerWidth">
-        <Logo dashboard />
-        <div className="navigation">
-          <Link to="/paths">Paths</Link>
-          <Link to="/employees">Employees</Link>
-          <Link to="/">Reports</Link>
-          <div className="dropdown">
-            {props.image && <img src={`data:image/png;base64, ${props.image}`} />}
+class Header extends React.Component {
+  state = {
+    dropdown: false,
+  }
+
+  onImageClick = () => {
+    this.setState({ dropdown: !this.state.dropdown })
+  }
+  outSideClick = () => {
+    this.setState({ dropdown: false })
+  }
+  onLogOut = async () => {
+    const res = await axios.get('api/logout')
+    console.log(res.data.success)
+    this.props.logOut()
+  }
+
+  render() {
+    return (
+      <HeaderWrapper>
+        <div className="headerWidth">
+          <Logo dashboard />
+          <div className="navigation" style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <Link to="/paths">
+              <i className="fas fa-chart-line"></i> Paths
+            </Link>
+            <Link to="/employees">
+              <i className="fas fa-users"></i> Employees
+            </Link>
+            <Link to="/">
+              <i className="fas fa-chart-pie"></i> Reports
+            </Link>
+            <Link
+              to="/upgrade"
+              style={{
+                backgroundColor: colors.green,
+                padding: '10px 30px',
+                borderRadius: '5px',
+                color: colors.white,
+                fontWeight: 400,
+              }}
+            >
+              Upgrade now
+            </Link>
+            <Dropdown
+              image={this.props.image}
+              dropdown={this.state.dropdown}
+              fullName={this.props.fullName}
+              email={this.props.email}
+              onClick={this.onImageClick}
+              onOutsideClick={this.outSideClick}
+              onLogOut={this.onLogOut}
+            />
           </div>
         </div>
-      </div>
-    </HeaderWrapper>
-  )
+      </HeaderWrapper>
+    )
+  }
 }
 
 const mapStateToProps = (state) => {
   return {
     image: state.user.image,
+    fullName: state.user.firstName + ' ' + state.user.lastName,
+    email: state.user.email,
   }
 }
 
-export default connect(mapStateToProps, null)(Header)
+export default connect(mapStateToProps, { logOut })(Header)

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import logoImg from '../../images/logo.png'
 
 const LogoStyles = styled.img`
-  height: 40px;
+  height: 30px;
   margin-bottom: ${(props) => (props.header ? '0px' : '30px')};
 `
 
