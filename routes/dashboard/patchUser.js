@@ -21,7 +21,7 @@ const upload = multer({
 router.post('/api/temp-profile-image', upload.single('image'), auth, async (req, res) => {
   const convertedImage = await sharp(req.file.buffer).resize(250, 250).png().toBuffer()
   try {
-    // await User.findOneAndUpdate({ _id: req.user._id }, { image: convertedImage })
+    await User.findOneAndUpdate({ _id: req.user._id }, { image: convertedImage })
     res.send(convertedImage.toString('base64'))
   } catch (e) {}
 })
