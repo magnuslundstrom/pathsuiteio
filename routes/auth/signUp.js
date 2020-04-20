@@ -6,11 +6,9 @@ const sharp = require('sharp')
 
 const User = require('../../models/User')
 const setCookie = require('../../utils/setCookie')
-const errorHandler = require('../../utils/errorHandler')
 
 router.post('/api/sign-up', async (req, res) => {
   fs.readFile(path.join(__dirname, '../', '../', 'files', 'anonym-user.jpg'), (err, data) => {
-    console.log(data)
     sharp(data)
       .resize(250, 250)
       .png()

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcrypt')
+const camelCase = require('../utils/camelCase')
 
 const UserSchema = new mongoose.Schema(
   {
@@ -42,7 +43,7 @@ const UserSchema = new mongoose.Schema(
     jobTitle: {
       type: String,
       required: true,
-      default: 'Job title',
+      default: 'job title',
     },
     image: {
       type: Buffer,
@@ -75,6 +76,10 @@ UserSchema.virtual('paths', {
 
 UserSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 8)
+  this.firstName = camelCase(this.firstName)
+  this.lastName = camelCase(this.lastName)
+  this.jobTitle = camelCase(this.jobTitle)
+
   next()
 })
 

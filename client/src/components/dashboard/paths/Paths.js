@@ -17,7 +17,6 @@ class Paths extends React.Component {
       .then((res) => {
         if (this._isMounted) {
           this.setState({ paths: [...res.data] })
-          console.log(this.state.paths)
         }
       })
       .catch((e) => {

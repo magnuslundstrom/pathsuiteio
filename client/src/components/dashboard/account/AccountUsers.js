@@ -1,11 +1,11 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import styled from 'styled-components'
-import axios from 'axios'
+// import { connect } from 'react-redux'
+// import styled from 'styled-components'
+// import axios from 'axios'
 import Container from '../buildingBlocks/Container'
 import { InnerContainer } from '../../styledComponents/smallComponents'
-import { Button } from '../../utils/Buttons'
-import colors from '../../../styles/colors'
+// import { Button } from '../../utils/Buttons'
+// import colors from '../../../styles/colors'
 
 class AccountUsers extends React.Component {
   render() {

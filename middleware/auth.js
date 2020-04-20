@@ -1,7 +1,6 @@
 const User = require('../models/User')
 
 const auth = async (req, res, next) => {
-  console.log('ewqkioeqwopk')
   try {
     const user = await User.findById(req.cookies.user)
       .select('company email firstName lastName isAdmin image jobTitle')

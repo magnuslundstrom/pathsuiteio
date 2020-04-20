@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
+const camelCase = require('../utils/camelCase')
 
 const CompanySchema = new mongoose.Schema({
   companyName: {
@@ -28,6 +29,11 @@ const CompanySchema = new mongoose.Schema({
   logo: {
     type: Buffer,
   },
+})
+
+CompanySchema.pre('save', function (next) {
+  this.companyName = camelCase(this.companyName)
+  next()
 })
 
 CompanySchema.post('save', function (error, doc, next) {

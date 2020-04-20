@@ -3,6 +3,7 @@ import { InnerContainer } from '../../styledComponents/smallComponents'
 import userImg from '../../../images/anonym-user.jpg'
 import ProgressBar from '../../utils/ProgressBar'
 import { TransparentButton } from '../../utils/Buttons'
+import progressCalc from '../../../utilFns/progressCalc'
 
 class PathCard extends React.Component {
   state = {
@@ -44,7 +45,7 @@ class PathCard extends React.Component {
             {this.props.path.responsible.lastName}
           </p>
         </div>
-        <ProgressBar progress={66}></ProgressBar>
+        <ProgressBar progress={progressCalc(this.props.path.steps)}></ProgressBar>
 
         <ul>
           {this.state.display &&

@@ -86,21 +86,25 @@ class CreatePath extends React.Component {
   onSearchResultClick = (result, isAdmin) => {
     let userType
     isAdmin ? (userType = 'responsible') : (userType = 'user')
-    this.setState({ [userType]: result._id, [`${userType}Search`]: `${result.firstName} ${result.lastName}` }, () =>
-      console.log(this.state[userType])
+    this.setState(
+      { [userType]: result._id, [`${userType}Search`]: `${result.firstName} ${result.lastName}` },
+      () => console.log(this.state[userType])
     )
   }
 
   render() {
     return (
       <Container>
-        {this.state.redirect && <Redirect to='/paths' />}
+        <p>Current limitations:</p>
+        <p>You can only add 1 user to a path. You must choose a user from the dropdown</p>
+        <p>Errors are not being displayed properly.</p>
+        {this.state.redirect && <Redirect to="/paths" />}
         <h1 style={{ marginTop: '50px' }}>New Path</h1>
         <InnerContainer>
           {/* @@ TITLE */}
           <InputTitle
-            type='text'
-            placeholder='Add a title'
+            type="text"
+            placeholder="Add a title"
             value={this.state.title}
             onChange={(e) => this.setState({ title: e.target.value })}
           />
@@ -126,9 +130,9 @@ class CreatePath extends React.Component {
             </div>
             {/* @@ CATEGORY */}
             <Input
-              type='text'
-              placeholder='Add category'
-              icon={<i className='fas fa-sticky-note'></i>}
+              type="text"
+              placeholder="Add category"
+              icon={<i className="fas fa-sticky-note"></i>}
               onChange={(e) => this.setState({ category: e.target.value })}
             />
           </div>
@@ -138,7 +142,7 @@ class CreatePath extends React.Component {
 
           {/* @@ ADD NEW GOAL */}
           <TransparentButton onClick={this.addNewGoal}>
-            <i className='fas fa-plus' style={{ marginRight: '10px' }}></i> Add new learning goal
+            <i className="fas fa-plus" style={{ marginRight: '10px' }}></i> Add new learning goal
           </TransparentButton>
         </InnerContainer>
 

@@ -34,20 +34,63 @@ class Profile extends React.Component {
     this.setState({ image: res.data })
   }
 
-  onSubmit = () => {
+  setOriginalPhoto = () => {
+    document.querySelector('#image').value = ''
+    this.setState({ image: this.props.user.image })
+  }
+
+  onSubmit = async (e) => {
+    e.preventDefault()
     const form = new FormData()
+    form.set('firstName', this.state.firstName)
+    form.set('lastName', this.state.lastName)
+    form.set('jobTitle', this.state.jobTitle)
+    form.set('email', this.state.email)
+    if (this.state.image !== this.props.user.image) {
+      form.append('image', document.querySelector('#image').files[0])
+    }
+    const res = await axios.post('api/update-profile', form, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    if (res) {
+      window.location.reload()
+    }
   }
 
   render() {
     return (
       <Container>
+        <p>Current limitations:</p>
+        <p>You can not change your password as of right now.</p>
         <h1 style={{ marginBottom: '0px', marginTop: '50px' }}>User Profile</h1>
         <InnerContainer>
           <h3>Update profile photo</h3>
-          <form>
+          <form onSubmit={this.onSubmit} id="form">
             <div>
               <ImageContainer>
-                <ProfileImage src={`data:image/png;base64, ${this.state.image}`} />
+                <div style={{ position: 'relative' }}>
+                  <ProfileImage
+                    src={this.state.image && `data:image/png;base64, ${this.state.image}`}
+                  />
+                  {this.state.image !== this.props.user.image && (
+                    <button
+                      style={{
+                        border: '0px',
+                        position: 'absolute',
+                        top: '-10px',
+                        right: '-10px',
+                        backgroundColor: 'transparent',
+                        cursor: 'pointer',
+                      }}
+                      onClick={this.setOriginalPhoto}
+                    >
+                      <i className="fas fa-times-circle"></i>
+                    </button>
+                  )}
+                </div>
+
                 <ProfileImgInfo>
                   <h4 style={{ margin: '0px' }}>Upload Photo</h4>
                   <p style={{ margin: '0px' }}>.jpg, .jpeg or .png</p>
