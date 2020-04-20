@@ -1,4 +1,5 @@
 import React from 'react'
+import { Redirect } from 'react-router-dom'
 import { InnerContainer } from '../../styledComponents/smallComponents'
 import { InputTitle, Input } from '../../utils/Inputs'
 import { CreatePathButton, TransparentButton } from '../../utils/Buttons'
@@ -26,16 +27,18 @@ class CreatePath extends React.Component {
     responsible: '',
     responsibleSearch: '',
     responsibleSearchResult: [],
+    redirect: false,
   }
 
-  onButtonSubmit = () => {
-    axios.post('/api/create-path', {
+  onButtonSubmit = async () => {
+    await axios.post('/api/create-path', {
       title: this.state.title,
       category: this.state.category,
       responsible: this.state.responsible,
       steps: [...this.state.goals],
       user: this.state.user,
     })
+    this.setState({ redirect: true })
   }
 
   addNewGoal = () => {
@@ -83,21 +86,21 @@ class CreatePath extends React.Component {
   onSearchResultClick = (result, isAdmin) => {
     let userType
     isAdmin ? (userType = 'responsible') : (userType = 'user')
-    this.setState(
-      { [userType]: result._id, [`${userType}Search`]: `${result.firstName} ${result.lastName}` },
-      () => console.log(this.state[userType])
+    this.setState({ [userType]: result._id, [`${userType}Search`]: `${result.firstName} ${result.lastName}` }, () =>
+      console.log(this.state[userType])
     )
   }
 
   render() {
     return (
       <Container>
+        {this.state.redirect && <Redirect to='/paths' />}
         <h1 style={{ marginTop: '50px' }}>New Path</h1>
         <InnerContainer>
           {/* @@ TITLE */}
           <InputTitle
-            type="text"
-            placeholder="Add a title"
+            type='text'
+            placeholder='Add a title'
             value={this.state.title}
             onChange={(e) => this.setState({ title: e.target.value })}
           />
@@ -123,9 +126,9 @@ class CreatePath extends React.Component {
             </div>
             {/* @@ CATEGORY */}
             <Input
-              type="text"
-              placeholder="Add category"
-              icon={<i className="fas fa-sticky-note"></i>}
+              type='text'
+              placeholder='Add category'
+              icon={<i className='fas fa-sticky-note'></i>}
               onChange={(e) => this.setState({ category: e.target.value })}
             />
           </div>
@@ -135,7 +138,7 @@ class CreatePath extends React.Component {
 
           {/* @@ ADD NEW GOAL */}
           <TransparentButton onClick={this.addNewGoal}>
-            <i className="fas fa-plus" style={{ marginRight: '10px' }}></i> Add new learning goal
+            <i className='fas fa-plus' style={{ marginRight: '10px' }}></i> Add new learning goal
           </TransparentButton>
         </InnerContainer>
 

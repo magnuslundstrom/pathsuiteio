@@ -25,7 +25,7 @@ router.get('/api/users', auth, async (req, res) => {
 router.post('/api/find-user', auth, async (req, res) => {
   const find = req.body.find
   const reg = new RegExp('^' + find, 'i')
-  const user = await User.find({ firstName: reg, isAdmin: req.query.isAdmin }).select(
+  const user = await User.find({ firstName: reg, isAdmin: req.query.isAdmin, company: req.user.company._id }).select(
     'firstName lastName'
   )
   res.send(user)

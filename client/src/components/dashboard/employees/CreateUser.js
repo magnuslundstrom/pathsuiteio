@@ -1,4 +1,5 @@
 import React from 'react'
+import { Redirect } from 'react-router-dom'
 import { InnerContainer } from '../../styledComponents/smallComponents'
 import { CreatePathButton } from '../../utils/Buttons'
 import Container from '../buildingBlocks/Container'
@@ -13,6 +14,7 @@ class CreateEmployee extends React.Component {
     password: '',
     jobTitle: '',
     isAdmin: false,
+    redirect: false,
   }
 
   handleChange = (e) => {
@@ -27,41 +29,44 @@ class CreateEmployee extends React.Component {
     const res = await axios.post('/api/create-user', {
       ...this.state,
     })
-    console.log(res)
+    if (res) {
+      this.setState({ redirect: true })
+    }
   }
   render() {
     return (
       <Container>
+        {this.state.redirect && <Redirect to='/employees' />}
         <h1 style={{ marginTop: '50px' }}>New User</h1>
         <InnerContainer style={{ flexDirection: 'column', display: 'flex' }}>
           <input
-            type="text"
-            placeholder="first name"
+            type='text'
+            placeholder='first name'
             onChange={(e) => this.inputChange(e, 'firstName')}
             value={this.state.firstName}
           ></input>
 
           <input
-            type="text"
-            placeholder="last name"
+            type='text'
+            placeholder='last name'
             value={this.state.lastName}
             onChange={(e) => this.inputChange(e, 'lastName')}
           ></input>
           <input
-            type="text"
-            placeholder="email"
+            type='text'
+            placeholder='email'
             value={this.state.email}
             onChange={(e) => this.inputChange(e, 'email')}
           ></input>
           <input
-            type="text"
-            placeholder="password"
+            type='text'
+            placeholder='password'
             value={this.state.password}
             onChange={(e) => this.inputChange(e, 'password')}
           ></input>
           <input
-            type="text"
-            placeholder="jobtitle"
+            type='text'
+            placeholder='jobtitle'
             value={this.state.jobTitle}
             onChange={(e) => this.inputChange(e, 'jobTitle')}
           ></input>

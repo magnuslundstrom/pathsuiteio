@@ -9,17 +9,16 @@ const EmployeeCard = (props) => {
         <img
           src={`data:image/png;base64, ${props.data.image}`}
           style={{ width: '100px', height: 'auto', borderRadius: '50%' }}
-          alt="profile"
+          alt='profile'
         />
-        <h2 style={{ marginBottom: '0px' }}>
+        <h2 style={{ marginBottom: '0px', textAlign: 'center' }}>
           {props.data.firstName} {props.data.lastName}
         </h2>
         <p style={{ marginTop: '10px' }}>{props.data.jobTitle}</p>
         <p>
-          <i className="fas fa-chart-line" style={{ marginRight: '5px' }}></i>{' '}
-          {props.data.paths.length} active paths
+          <i className='fas fa-chart-line' style={{ marginRight: '5px' }}></i> {props.data.paths.length} active paths
         </p>
-        <Link to="user/id" style={{ fontWeight: '700' }}>
+        <Link to='user/id' style={{ fontWeight: '700' }}>
           View profile
         </Link>
       </div>
