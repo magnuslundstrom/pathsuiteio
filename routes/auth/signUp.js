@@ -9,7 +9,7 @@ const setCookie = require('../../utils/setCookie')
 const errorHandler = require('../../utils/errorHandler')
 
 router.post('/api/sign-up', async (req, res) => {
-  fs.readFile(path + '../../files/anonym-user.jpg', (err, data) => {
+  fs.readFile(path.join(__dirname, '../', '../', 'files', 'anonym-user.jpg'), (err, data) => {
     console.log(data)
     sharp(data)
       .resize(250, 250)
