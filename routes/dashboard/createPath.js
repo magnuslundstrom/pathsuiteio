@@ -11,6 +11,7 @@ router.post('/api/create-path', auth, async (req, res) => {
   })
   console.log(req.body)
   await path.save()
+  res.send(path)
 })
 
 module.exports = router
