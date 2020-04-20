@@ -4,6 +4,7 @@ const auth = require('../../middleware/auth')
 
 router.get('/api/tunnel', auth, (req, res) => {
   if (req.user) {
+    console.log(req.user)
     res.send(req.user)
   } else {
     res.status(401).send()
