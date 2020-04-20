@@ -25,18 +25,15 @@ const createUser = require('./routes/dashboard/createUser')
 const fetchUsers = require('./routes/dashboard/fetchUsers')
 const patchUser = require('./routes/dashboard/patchUser')
 
-const allRoutes = [
-  signUp,
-  login,
-  createCompany,
-  tunnel,
-  createPath,
-  fetchPaths,
-  createUser,
-  fetchUsers,
-  patchUser,
-]
-allRoutes.forEach((route) => app.use(route))
+app.use(signUp)
+app.use(login)
+app.use(createCompany)
+app.use(tunnel)
+app.use(createPath)
+app.use(fetchPaths)
+app.use(createUser)
+app.use(fetchUsers)
+app.use(patchUser)
 
 if (process.env.NODE_ENV === 'production') {
   const path = require('path')
