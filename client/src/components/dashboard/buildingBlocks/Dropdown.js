@@ -28,15 +28,19 @@ const DropdownWrapper = styled.div`
 const Dropdown = (props) => {
   return (
     <OutsideClickHandler onOutsideClick={props.onOutsideClick}>
-      <div style={{ position: 'relative', marginLeft: '25px' }} className="dropdown">
+      <div
+        style={{ position: 'relative', marginLeft: '25px', display: 'flex', alignItems: 'center' }}
+        className="dropdown"
+      >
         {props.image && (
           <img
             src={`data:image/png;base64, ${props.image}`}
             onClick={props.onClick}
             style={{
-              width: '30px',
+              width: '40px',
               height: 'auto',
               cursor: 'pointer',
+              borderRadius: '50%',
             }}
             alt="profile"
           />
@@ -51,6 +55,9 @@ const Dropdown = (props) => {
               <Link to="/profile">User profile</Link>
               <Link to="/account" style={{ marginBottom: '10px' }}>
                 Account
+              </Link>
+              <Link to="/account-users" style={{ marginBottom: '10px' }}>
+                Account Users
               </Link>
             </div>
             <button

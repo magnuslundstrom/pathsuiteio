@@ -10,7 +10,8 @@ import Paths from './dashboard/paths/Paths'
 import CreatePath from './dashboard/paths/CreatePath'
 import CreateUser from './dashboard/employees/CreateUser'
 import Employees from './dashboard/employees/Employees'
-import Profile from './dashboard/profile/Profile'
+import Profile from './dashboard/account/Profile'
+import AccountUsers from './dashboard/account/AccountUsers'
 import axios from 'axios'
 
 class App extends React.Component {
@@ -47,6 +48,7 @@ class App extends React.Component {
           <Route path="/employees" exact component={Employees} />
           <Route path="/create-user" exact component={CreateUser} />
           <Route path="/profile" exact component={Profile} />
+          <Route path="/account-users" exact component={AccountUsers} />
         </div>
       )
     } else {

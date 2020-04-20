@@ -23,6 +23,7 @@ const createPath = require('./routes/dashboard/createPath')
 const fetchPaths = require('./routes/dashboard/fetchPaths')
 const createUser = require('./routes/dashboard/createUser')
 const fetchUsers = require('./routes/dashboard/fetchUsers')
+const patchUser = require('./routes/dashboard/patchUser')
 
 const allRoutes = [
   signUp,
@@ -33,6 +34,7 @@ const allRoutes = [
   fetchPaths,
   createUser,
   fetchUsers,
+  patchUser,
 ]
 allRoutes.forEach((route) => app.use(route))
 
