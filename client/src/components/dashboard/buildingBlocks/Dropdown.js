@@ -26,6 +26,10 @@ const DropdownWrapper = styled.div`
 `
 
 const Dropdown = (props) => {
+  const renderProfileImage = () => {
+    return props.image ? `data:image/png;base64, ${props.image}` : ''
+  }
+
   return (
     <OutsideClickHandler onOutsideClick={props.onOutsideClick}>
       <div
@@ -34,7 +38,7 @@ const Dropdown = (props) => {
       >
         {props.image && (
           <img
-            src={`data:image/png;base64, ${props.image}`}
+            src={renderProfileImage()}
             onClick={props.onClick}
             style={{
               width: '40px',
