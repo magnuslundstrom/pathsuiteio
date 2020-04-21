@@ -13,6 +13,7 @@ import Employees from './dashboard/employees/Employees'
 import Profile from './dashboard/account/Profile'
 import AccountUsers from './dashboard/account/AccountUsers'
 import axios from 'axios'
+import User from './dashboard/employees/User'
 
 class App extends React.Component {
   async componentDidMount() {
@@ -49,6 +50,7 @@ class App extends React.Component {
           <Route path="/create-user" exact component={CreateUser} />
           <Route path="/profile" exact component={Profile} />
           <Route path="/account-users" exact component={AccountUsers} />
+          <Route path="/user" component={User} />
         </div>
       )
     } else {

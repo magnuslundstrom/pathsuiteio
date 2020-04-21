@@ -49,6 +49,10 @@ class Profile extends React.Component {
     if (this.state.image !== this.props.user.image) {
       form.append('image', document.querySelector('#image').files[0])
     }
+    if (this.state.currentPassword) form.set('currentPassword', this.state.currentPassword)
+    if (this.state.newPassword) form.set('newPassword', this.state.newPassword)
+    if (this.state.confirmNewPassword) form.set('confirmNewPassword', this.state.confirmNewPassword)
+
     const res = await axios.post('api/update-profile', form, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -63,14 +67,14 @@ class Profile extends React.Component {
     return (
       <Container>
         <p>Current limitations:</p>
-        <p>You can not change your password as of right now.</p>
+        <p>Errors are not being displayed properly</p>
         <h1 style={{ marginBottom: '0px', marginTop: '50px' }}>User Profile</h1>
         <InnerContainer>
           <h3>Update profile photo</h3>
           <form onSubmit={this.onSubmit} id="form">
             <div>
               <ImageContainer>
-                <div style={{ position: 'relative' }}>
+                <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
                   <ProfileImage
                     src={this.state.image && `data:image/png;base64, ${this.state.image}`}
                   />

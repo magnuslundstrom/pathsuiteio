@@ -9,9 +9,11 @@ const User = require('../../models/User')
 router.post('/api/login', async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email }).select('email password')
+    console.log(user)
     if (user) {
+      console.log(req.body.password)
       const match = await bcrypt.compare(req.body.password, user.password)
-
+      console.log(match)
       if (match) {
         setCookie(res, user._id)
         return res.send({ success: 'User was successfully logged in!' })
