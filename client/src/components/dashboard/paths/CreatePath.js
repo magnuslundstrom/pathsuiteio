@@ -6,6 +6,7 @@ import { CreatePathButton, TransparentButton } from '../../utils/Buttons'
 import GoalsList from './GoalsList'
 import SearchUser from './SearchUser'
 import Container from '../buildingBlocks/Container'
+import Limitations from '../../utils/Limitations'
 import axios from 'axios'
 
 class CreatePath extends React.Component {
@@ -28,6 +29,7 @@ class CreatePath extends React.Component {
     responsibleSearch: '',
     responsibleSearchResult: [],
     redirect: false,
+    showLimitations: true,
   }
 
   onButtonSubmit = async () => {
@@ -95,9 +97,17 @@ class CreatePath extends React.Component {
   render() {
     return (
       <Container>
-        <p>Current limitations:</p>
-        <p>You can only add 1 user to a path. You must choose a user from the dropdown</p>
-        <p>Errors are not being displayed properly.</p>
+        {this.state.showLimitations && (
+          <Limitations
+            limitations={[
+              'You can only add 1 employee to a path.',
+              'You must choose a user from the dropdown.',
+              'Errors are not being displayed properly.',
+            ]}
+            onClick={() => this.setState({ showLimitations: false })}
+          />
+        )}
+
         {this.state.redirect && <Redirect to="/paths" />}
         <h1 style={{ marginTop: '50px' }}>New Path</h1>
         <InnerContainer>

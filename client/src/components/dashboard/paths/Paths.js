@@ -5,29 +5,25 @@ import PathCard from './PathCard'
 import axios from 'axios'
 
 class Paths extends React.Component {
-  _isMounted = false
+  isLoaded = false
   state = {
     paths: [],
+    loading: true,
   }
 
   componentDidMount() {
-    this._isMounted = true
+    this.isLoaded = true
     axios
       .get('/api/get-paths')
       .then((res) => {
-        if (this._isMounted) {
-          this.setState({ paths: [...res.data] })
+        if (this.isLoaded) {
+          this.setState({ paths: [...res.data], loading: false })
         }
       })
       .catch((e) => {
         console.log(e)
       })
   }
-
-  componentWillUnmount() {
-    this._isMounted = false
-  }
-
   renderPaths = () => {
     return this.state.paths.map((path, index) => {
       return (
@@ -54,7 +50,11 @@ class Paths extends React.Component {
             <i className="fas fa-plus" style={{ fontSize: '20px' }}></i>
           </Link>
         </div>
-        {this.renderPaths()}
+        {this.state.loading ? (
+          <p>Loading</p>
+        ) : (
+          (this.state.paths.length > 0 && this.renderPaths()) || <p>You have no paths yet</p>
+        )}
       </Container>
     )
   }

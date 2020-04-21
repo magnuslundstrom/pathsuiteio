@@ -19,6 +19,7 @@ const upload = multer({
   },
 })
 
+// @@ Allows for user to add temporary photo and delete it again
 router.post('/api/temp-profile-image', upload.single('image'), auth, async (req, res) => {
   const convertedImage = await sharp(req.file.buffer).resize(250, 250).png().toBuffer()
   try {
@@ -33,29 +34,28 @@ const formCheck = multer({
 })
 router.post('/api/update-profile', formCheck.single('image'), auth, async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.user._id })
-    console.log(user)
-    user.firstName = req.body.firstName
-    user.lastName = req.body.lastName
-    user.jobTitle = req.body.jobTitle
-    user.email = req.body.email
+    const { password } = await User.findOne({ _id: req.user._id })
+    // @@ contains all updates adding dynamicly depending on inputs
+    const updates = {}
+    updates.firstName = req.body.firstName
+    updates.lastName = req.body.lastName
+    updates.jobTitle = req.body.jobTitle
+    updates.email = req.body.email
     if (req.file) {
       const image = await sharp(req.file.buffer).resize(250, 250).png().toBuffer()
-      user.image = image
+      updates.image = image
     }
     if (req.body.currentPassword) {
-      const match = await bcrypt.compare(req.body.currentPassword, user.password)
+      const match = await bcrypt.compare(req.body.currentPassword, password)
       if (match) {
         if (req.body.newPassword === req.body.confirmNewPassword) {
-          console.log(req.body.newPassword)
-          user.password = req.body.newPassword
+          updates.password = await bcrypt.hash(req.body.newPassword, 8)
         }
       } else if (!match) {
         console.log('Ikke match')
       }
     }
-    await user.save()
-    console.log(user)
+    await User.updateOne({ _id: req.user._id }, { ...updates })
     res.send('User was updated!')
   } catch (e) {
     console.log(e)

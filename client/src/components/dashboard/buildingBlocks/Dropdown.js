@@ -14,6 +14,7 @@ const DropdownWrapper = styled.div`
   padding: 30px;
   font-size: 14px;
   width: 240px;
+  z-index: 10;
 
   a {
     margin-left: 0px !important;

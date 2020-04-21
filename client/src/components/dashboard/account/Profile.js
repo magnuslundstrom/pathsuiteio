@@ -6,6 +6,7 @@ import Container from '../buildingBlocks/Container'
 import { InnerContainer } from '../../styledComponents/smallComponents'
 import { Button } from '../../utils/Buttons'
 import colors from '../../../styles/colors'
+import Limitations from '../../utils/Limitations'
 
 class Profile extends React.Component {
   state = {
@@ -17,6 +18,7 @@ class Profile extends React.Component {
     currentPassword: '',
     newPassword: '',
     confirmNewPassword: '',
+    showLimitations: true,
   }
 
   onChangeHandler = (e, input) => {
@@ -66,8 +68,12 @@ class Profile extends React.Component {
   render() {
     return (
       <Container>
-        <p>Current limitations:</p>
-        <p>Errors are not being displayed properly</p>
+        {this.state.showLimitations && (
+          <Limitations
+            limitations={['Errors are not being displayed properly.']}
+            onClick={() => this.setState({ showLimitations: false })}
+          />
+        )}
         <h1 style={{ marginBottom: '0px', marginTop: '50px' }}>User Profile</h1>
         <InnerContainer>
           <h3>Update profile photo</h3>

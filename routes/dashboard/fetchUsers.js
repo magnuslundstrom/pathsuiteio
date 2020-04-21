@@ -32,4 +32,24 @@ router.post('/api/find-user', auth, async (req, res) => {
   res.send(user)
 })
 
+router.post('/api/user', async (req, res) => {
+  const user = await User.findById(req.query.id)
+    .select('-password')
+    .populate({
+      path: 'paths',
+      populate: {
+        path: 'responsible user',
+      },
+    })
+    .exec()
+  const image = user.image.toString('base64')
+  const paths = user.paths
+  const actualUser = {
+    ...user._doc,
+    paths,
+    image,
+  }
+  res.send(actualUser)
+})
+
 module.exports = router

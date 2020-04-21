@@ -8,6 +8,7 @@ import EmployeeCard from './EmployeeCard'
 class Employees extends React.Component {
   state = {
     isLoaded: false,
+    loading: true,
     employees: [],
   }
 
@@ -15,7 +16,7 @@ class Employees extends React.Component {
     this.setState({ isLoaded: true })
     const users = await axios.get('api/users')
     if (this.state.isLoaded) {
-      this.setState({ employees: users.data })
+      this.setState({ employees: users.data, loading: false })
     }
   }
 
@@ -47,7 +48,13 @@ class Employees extends React.Component {
             <i className="fas fa-plus" style={{ fontSize: '20px' }}></i>
           </Link>
         </div>
-        {this.renderEmployees()}
+        {this.state.loading ? (
+          <p>Loading...</p>
+        ) : (
+          (this.state.employees.length > 0 && this.renderEmployees()) || (
+            <p>You have no employees yet</p>
+          )
+        )}
       </Container>
     )
   }

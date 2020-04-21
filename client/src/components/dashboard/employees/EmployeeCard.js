@@ -19,7 +19,7 @@ const EmployeeCard = (props) => {
           <i className="fas fa-chart-line" style={{ marginRight: '5px' }}></i>{' '}
           {props.data.paths.length} active paths
         </p>
-        <Link to={`/user/?id=${props.data._id}`} style={{ fontWeight: '700' }}>
+        <Link to={`/user?id=${props.data._id}`} style={{ fontWeight: '700' }}>
           View profile
         </Link>
       </div>

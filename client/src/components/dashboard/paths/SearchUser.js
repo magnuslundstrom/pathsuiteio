@@ -6,6 +6,7 @@ const SearchUser = (props) => {
   let userType
   props.isAdmin ? (userType = 'responsible') : (userType = 'user')
 
+  // @ renders the list of users
   const renderSearchResults = () => {
     return state[`${userType}SearchResult`].map((result, index) => {
       return (
