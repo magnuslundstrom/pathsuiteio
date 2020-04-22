@@ -159,6 +159,7 @@ class Profile extends React.Component {
                   id="currentPassword"
                   type="password"
                   onChange={(e) => this.onChangeHandler(e, 'currentPassword')}
+                  autocomplete="off"
                 />
 
                 <UpdatedLabel htmlFor="newPassword">New password</UpdatedLabel>
@@ -166,6 +167,7 @@ class Profile extends React.Component {
                   id="newPassword"
                   type="password"
                   onChange={(e) => this.onChangeHandler(e, 'newPassword')}
+                  autocomplete="off"
                 />
 
                 <UpdatedLabel htmlFor="confirmNewPassword">Confirm new password</UpdatedLabel>
@@ -173,6 +175,7 @@ class Profile extends React.Component {
                   id="confirmNewPassword"
                   type="password"
                   onChange={(e) => this.onChangeHandler(e, 'confirmNewPassword')}
+                  autocomplete="off"
                 />
                 <Button style={{ width: 'unset', marginTop: '0px' }}>Submit updates</Button>
               </div>

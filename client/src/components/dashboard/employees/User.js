@@ -7,6 +7,7 @@ import axios from 'axios'
 class User extends React.Component {
   state = {
     isLoaded: false,
+    loading: true,
   }
 
   async componentDidMount() {
@@ -16,8 +17,7 @@ class User extends React.Component {
     const id = params.get('id')
     const user = await axios.post(`/api/user?id=${id}`)
     if (this.state.isLoaded) {
-      this.setState({ user: user.data })
-      console.log(this.state.user)
+      this.setState({ user: user.data, loading: false })
     }
   }
 

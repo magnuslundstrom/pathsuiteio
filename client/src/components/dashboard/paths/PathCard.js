@@ -4,10 +4,11 @@ import userImg from '../../../images/anonym-user.jpg'
 import ProgressBar from '../../utils/ProgressBar'
 import { TransparentButton } from '../../utils/Buttons'
 import progressCalc from '../../../utilFns/progressCalc'
+import styled from 'styled-components'
 
 class PathCard extends React.Component {
   state = {
-    display: false,
+    display: true,
   }
   render() {
     return (
@@ -47,16 +48,25 @@ class PathCard extends React.Component {
         </div>
         <ProgressBar progress={progressCalc(this.props.path.steps)}></ProgressBar>
 
-        <ul>
+        <ul style={{ paddingLeft: '0px' }}>
           {this.state.display &&
             this.props.path.steps.map((path, index) => {
               return (
-                <div key={index}>
-                  {path.isCompleted}
-                  <li>{path.goalTitle}</li>
-                  <li>{path.goalType}</li>
-                  <li>{path.goalLink}</li>
-                  <li>{path.goalNote}</li>
+                <div key={index} style={{ display: 'flex' }}>
+                  <CompletedWrapper>
+                    {(path.isCompleted && <i className="fas fa-check-circle"></i>) || (
+                      <i className="far fa-circle"></i>
+                    )}
+                  </CompletedWrapper>
+                  <IndividualStep>
+                    <li>
+                      <i className="far fa-bookmark"></i>
+                      {path.goalTitle}
+                    </li>
+                    <li>{path.goalType}</li>
+                    <li>{path.goalLink}</li>
+                    <li>{path.goalNote}</li>
+                  </IndividualStep>
                 </div>
               )
             })}
@@ -65,5 +75,18 @@ class PathCard extends React.Component {
     )
   }
 }
+const CompletedWrapper = styled.div`
+  i {
+    font-size: 36px;
+  }
+`
+
+const IndividualStep = styled.ul`
+  padding: 0px;
+  margin-left: 15px;
+  li {
+    list-style-type: none;
+  }
+`
 
 export default PathCard
