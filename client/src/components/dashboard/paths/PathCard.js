@@ -8,7 +8,7 @@ import styled from 'styled-components'
 
 class PathCard extends React.Component {
   state = {
-    display: true,
+    display: false,
   }
   render() {
     return (
@@ -19,7 +19,7 @@ class PathCard extends React.Component {
               <img
                 src={userImg}
                 style={{ width: '100px', height: 'auto', borderRadius: '50%', marginRight: '15px' }}
-                alt="profile"
+                alt='profile'
               />
             </div>
 
@@ -33,16 +33,16 @@ class PathCard extends React.Component {
           </div>
           <div>
             <TransparentButton onClick={() => this.setState({ display: !this.state.display })}>
-              <i className="fas fa-chevron-down"></i>
+              <i className='fas fa-chevron-down'></i>
             </TransparentButton>
           </div>
         </div>
         <div style={{ display: 'flex' }}>
           <p style={{ marginRight: '20px' }}>
-            <i className="fas fa-sticky-note"></i> {this.props.path.category}
+            <i className='fas fa-sticky-note'></i> {this.props.path.category}
           </p>
           <p>
-            <i className="fas fa-user"></i> {this.props.path.responsible.firstName}{' '}
+            <i className='fas fa-user'></i> {this.props.path.responsible.firstName}{' '}
             {this.props.path.responsible.lastName}
           </p>
         </div>
@@ -54,13 +54,11 @@ class PathCard extends React.Component {
               return (
                 <div key={index} style={{ display: 'flex' }}>
                   <CompletedWrapper>
-                    {(path.isCompleted && <i className="fas fa-check-circle"></i>) || (
-                      <i className="far fa-circle"></i>
-                    )}
+                    {(path.isCompleted && <i className='fas fa-check-circle'></i>) || <i className='far fa-circle'></i>}
                   </CompletedWrapper>
                   <IndividualStep>
                     <li>
-                      <i className="far fa-bookmark"></i>
+                      <i className='far fa-bookmark'></i>
                       {path.goalTitle}
                     </li>
                     <li>{path.goalType}</li>

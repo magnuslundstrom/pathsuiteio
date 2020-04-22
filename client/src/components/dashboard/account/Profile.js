@@ -77,13 +77,11 @@ class Profile extends React.Component {
         <h1 style={{ marginBottom: '0px', marginTop: '50px' }}>User Profile</h1>
         <InnerContainer>
           <h3>Update profile photo</h3>
-          <form onSubmit={this.onSubmit} id="form">
+          <form onSubmit={this.onSubmit} id='form'>
             <div>
               <ImageContainer>
                 <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-                  <ProfileImage
-                    src={this.state.image && `data:image/png;base64, ${this.state.image}`}
-                  />
+                  <ProfileImage src={this.state.image && `data:image/png;base64, ${this.state.image}`} />
                   {this.state.image !== this.props.user.image && (
                     <button
                       style={{
@@ -96,7 +94,7 @@ class Profile extends React.Component {
                       }}
                       onClick={this.setOriginalPhoto}
                     >
-                      <i className="fas fa-times-circle"></i>
+                      <i className='fas fa-times-circle'></i>
                     </button>
                   )}
                 </div>
@@ -104,14 +102,14 @@ class Profile extends React.Component {
                 <ProfileImgInfo>
                   <h4 style={{ margin: '0px' }}>Upload Photo</h4>
                   <p style={{ margin: '0px' }}>.jpg, .jpeg or .png</p>
-                  <UploadProfileImgBtn htmlFor="image">Upload photo</UploadProfileImgBtn>
+                  <UploadProfileImgBtn htmlFor='image'>Upload photo</UploadProfileImgBtn>
                   <input
-                    type="file"
+                    type='file'
                     style={{
                       display: 'none',
                     }}
-                    name="image"
-                    id="image"
+                    name='image'
+                    id='image'
                     onChange={(e) => this.fetchNewPhoto(e.target.files[0])}
                   />
                 </ProfileImgInfo>
@@ -120,62 +118,62 @@ class Profile extends React.Component {
             <div style={{ display: 'flex', marginTop: '30px' }}>
               <div style={{ width: '100%', marginRight: '50px' }}>
                 <h3>Basic information</h3>
-                <UpdatedLabel htmlFor="firstName">First name</UpdatedLabel>
+                <UpdatedLabel htmlFor='firstName'>First name</UpdatedLabel>
                 <UpdatedInput
-                  type="text"
+                  type='text'
                   value={this.state.firstName}
-                  id="firstName"
+                  id='firstName'
                   onChange={(e) => this.onChangeHandler(e, 'firstName')}
                 />
 
-                <UpdatedLabel htmlFor="lastName">Last name</UpdatedLabel>
+                <UpdatedLabel htmlFor='lastName'>Last name</UpdatedLabel>
                 <UpdatedInput
-                  type="text"
+                  type='text'
                   value={this.state.lastName}
-                  id="lastName"
+                  id='lastName'
                   onChange={(e) => this.onChangeHandler(e, 'lastName')}
                 />
 
-                <UpdatedLabel htmlFor="jobTitle">Position</UpdatedLabel>
+                <UpdatedLabel htmlFor='jobTitle'>Position</UpdatedLabel>
                 <UpdatedInput
-                  type="text"
+                  type='text'
                   value={this.state.jobTitle}
-                  id="jobTitle"
+                  id='jobTitle'
                   onChange={(e) => this.onChangeHandler(e, 'jobTitle')}
                 />
 
-                <UpdatedLabel htmlFor="email">Email</UpdatedLabel>
+                <UpdatedLabel htmlFor='email'>Email</UpdatedLabel>
                 <UpdatedInput
                   value={this.state.email}
-                  id="email"
-                  type="text"
+                  id='email'
+                  type='text'
                   onChange={(e) => this.onChangeHandler(e, 'email')}
                 />
               </div>
               <div style={{ width: '100%' }}>
                 <h3>Change password</h3>
-                <UpdatedLabel htmlFor="currentPassword">Current password</UpdatedLabel>
+                <UpdatedLabel htmlFor='currentPassword'>Current password</UpdatedLabel>
                 <UpdatedInput
-                  id="currentPassword"
-                  type="password"
+                  id='currentPassword'
+                  type='password'
                   onChange={(e) => this.onChangeHandler(e, 'currentPassword')}
-                  autocomplete="off"
+                  autocomplete='off'
                 />
 
-                <UpdatedLabel htmlFor="newPassword">New password</UpdatedLabel>
+                <UpdatedLabel htmlFor='newPassword'>New password</UpdatedLabel>
                 <UpdatedInput
-                  id="newPassword"
-                  type="password"
+                  id='newPassword'
+                  type='password'
                   onChange={(e) => this.onChangeHandler(e, 'newPassword')}
-                  autocomplete="off"
+                  autocomplete='off'
                 />
 
-                <UpdatedLabel htmlFor="confirmNewPassword">Confirm new password</UpdatedLabel>
+                <UpdatedLabel htmlFor='confirmNewPassword'>Confirm new password</UpdatedLabel>
                 <UpdatedInput
-                  id="confirmNewPassword"
-                  type="password"
+                  id='confirmNewPassword'
+                  type='password'
                   onChange={(e) => this.onChangeHandler(e, 'confirmNewPassword')}
-                  autocomplete="off"
+                  autocomplete='off'
                 />
                 <Button style={{ width: 'unset', marginTop: '0px' }}>Submit updates</Button>
               </div>

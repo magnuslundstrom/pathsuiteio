@@ -32,7 +32,7 @@ class Tunnel extends React.Component {
             width: '100vw',
           }}
         >
-          <div className="lds-roller">
+          <div className='lds-roller'>
             <div></div>
             <div></div>
             <div></div>
@@ -45,9 +45,9 @@ class Tunnel extends React.Component {
         </div>
       )
     } else if (this.state.userLoaded) {
-      return <Redirect to="/user?id=5e9f4a389574ea3e0809367f" />
+      return <Redirect to='/account-users' />
     } else {
-      return <Redirect to="/" />
+      return <Redirect to='/' />
     }
   }
   render() {

@@ -1,13 +1,41 @@
 import React from 'react'
 // import { connect } from 'react-redux'
 // import styled from 'styled-components'
-// import axios from 'axios'
+import axios from 'axios'
 import Container from '../buildingBlocks/Container'
 import { InnerContainer } from '../../styledComponents/smallComponents'
 // import { Button } from '../../utils/Buttons'
 // import colors from '../../../styles/colors'
 
 class AccountUsers extends React.Component {
+  state = {
+    isLoaded: false,
+  }
+  async componentDidMount() {
+    this.setState({ isLoaded: true })
+    if (this.state.isLoaded) {
+      const users = await axios.get('/api/all-users')
+      this.setState({ users: users })
+    }
+  }
+
+  renderUsers = () => {
+    return this.state.users.map((user) => {
+      return (
+        <tr>
+          <td style={{ width: '20%' }}>
+            {user.firstName} {user.lastName}
+          </td>
+          <td style={{ width: '20%' }}>{user.email}</td>
+          <td style={{ width: '20%' }}>{user.jobTitle}</td>
+          <td style={{ width: '20%' }}>{(user.isAdmin && 'Admin') || 'Employee'}</td>
+          <td style={{ width: '20%' }}>
+            <button>Remove access</button>
+          </td>
+        </tr>
+      )
+    })
+  }
   render() {
     return (
       <Container>
@@ -26,15 +54,7 @@ class AccountUsers extends React.Component {
               </tr>
             </thead>
 
-            <tbody>
-              <tr>
-                <td style={{ width: '20%' }}>Elon</td>
-                <td style={{ width: '20%' }}>Elon@pathsuite.io</td>
-                <td style={{ width: '20%' }}>CEO</td>
-                <td style={{ width: '20%' }}>Admin</td>
-                <td style={{ width: '20%' }}>Remove access</td>
-              </tr>
-            </tbody>
+            <tbody>{this.state.users || this.renderUsers() || 'Loading'}</tbody>
           </table>
         </InnerContainer>
       </Container>
