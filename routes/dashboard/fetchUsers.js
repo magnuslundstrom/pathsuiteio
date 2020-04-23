@@ -2,8 +2,9 @@ const express = require('express')
 const router = express.Router()
 const auth = require('../../middleware/auth')
 const User = require('../../models/User')
+const Path = require('../../models/Path')
 
-// @@ Used to fetch employees on /employees
+// @@ Used to fetch employees "/employees"
 router.get('/api/users', auth, async (req, res) => {
   try {
     users = await User.find({ company: req.user.company._id, isAdmin: false })
@@ -56,8 +57,17 @@ router.post('/api/user', async (req, res) => {
 
 // @@ Used to fetch ALL users connected to the account "/account-users"
 router.get('/api/all-users', auth, async (req, res) => {
-  const users = await User.find({ company: req.user.company._id }).select('firstName lastName email jobTitle isAdmin')
+  const users = await User.find({ company: req.user.company._id }).select(
+    'firstName lastName email jobTitle isAdmin'
+  )
   res.send(users)
+})
+
+// @@ Used to remove access / delete user on "/account-users"
+router.post('/api/remove-access', auth, async (req, res) => {
+  await User.findByIdAndDelete(req.body.userId)
+  await Path.deleteMany({ user: req.body.userId })
+  res.send('success')
 })
 
 module.exports = router

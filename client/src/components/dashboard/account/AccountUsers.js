@@ -13,16 +13,27 @@ class AccountUsers extends React.Component {
   }
   async componentDidMount() {
     this.setState({ isLoaded: true })
+    const users = await axios.get('/api/all-users')
     if (this.state.isLoaded) {
-      const users = await axios.get('/api/all-users')
-      this.setState({ users: users })
+      this.setState({ users: users.data })
+    }
+  }
+
+  removeAccess = async (id, index) => {
+    const res = await axios.post(`/api/remove-access`, {
+      userId: id,
+    })
+    if (res) {
+      const newUserArr = [...this.state.users]
+      newUserArr.splice(index, 1)
+      this.setState({ users: newUserArr })
     }
   }
 
   renderUsers = () => {
-    return this.state.users.map((user) => {
+    return this.state.users.map((user, index) => {
       return (
-        <tr>
+        <tr key={index} style={{ height: '40px' }}>
           <td style={{ width: '20%' }}>
             {user.firstName} {user.lastName}
           </td>
@@ -30,32 +41,42 @@ class AccountUsers extends React.Component {
           <td style={{ width: '20%' }}>{user.jobTitle}</td>
           <td style={{ width: '20%' }}>{(user.isAdmin && 'Admin') || 'Employee'}</td>
           <td style={{ width: '20%' }}>
-            <button>Remove access</button>
+            <button onClick={() => this.removeAccess(user._id, index)}>Remove access</button>
           </td>
         </tr>
       )
     })
   }
+
+  renderContent = () => {
+    if (this.state.users) {
+      return (
+        <table style={{ width: '100%' }}>
+          <thead style={{ borderBottom: '5px solid #000' }}>
+            <tr style={{ textAlign: 'left' }}>
+              <th>Name</th>
+              <th>E-mail</th>
+              <th>Position</th>
+              <th>Role</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+
+          {this.state.users && <tbody>{this.renderUsers()}</tbody>}
+        </table>
+      )
+    } else {
+      return <div>Loading</div>
+    }
+  }
+
   render() {
     return (
       <Container>
         <h1 style={{ marginTop: '50px' }}>Account users</h1>
         <InnerContainer>
           <h3>Manage users</h3>
-
-          <table style={{ width: '100%' }}>
-            <thead style={{ borderBottom: '5px solid #000' }}>
-              <tr style={{ textAlign: 'left' }}>
-                <th>Name</th>
-                <th>E-mail</th>
-                <th>Position</th>
-                <th>Role</th>
-                <th>Remove</th>
-              </tr>
-            </thead>
-
-            <tbody>{this.state.users || this.renderUsers() || 'Loading'}</tbody>
-          </table>
+          {this.renderContent()}
         </InnerContainer>
       </Container>
     )

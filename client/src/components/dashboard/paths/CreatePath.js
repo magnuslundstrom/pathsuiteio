@@ -31,6 +31,7 @@ class CreatePath extends React.Component {
     redirect: false,
     showLimitations: true,
   }
+  isTyping = false
 
   onButtonSubmit = async () => {
     await axios.post('/api/create-path', {
@@ -72,26 +73,35 @@ class CreatePath extends React.Component {
   onSearch = (e, isAdmin) => {
     let userType
     isAdmin === true ? (userType = 'responsible') : (userType = 'user')
-    this.setState({ [`${userType}Search`]: e.target.value, [userType]: '' }, async () => {
-      const res = await axios.post(`/api/find-user?isAdmin=${isAdmin}`, {
-        find: this.state[`${userType}Search`],
-      })
-      if (this.state[`${userType}Search`].length > 0) {
-        this.setState({ [`${userType}SearchResult`]: [...res.data] })
-      } else {
-        this.setState({ [`${userType}SearchResult`]: [] })
+    this.setState(
+      { [`${userType}Search`]: e.target.value, [userType]: '', isTyping: true },
+      async () => {
+        if (!this.isTyping) {
+          this.isTyping = true
+          const res = await axios.post(`/api/find-user?isAdmin=${isAdmin}`, {
+            find: this.state[`${userType}Search`],
+          })
+          if (this.state[`${userType}Search`].length > 0) {
+            this.setState({ [`${userType}SearchResult`]: [...res.data] })
+          } else {
+            this.setState({ [`${userType}SearchResult`]: [] })
+          }
+        }
       }
-      console.log(this.state[`${userType}SearchResult`])
-    })
+    )
+
+    setTimeout(() => {
+      this.isTyping = false
+    }, 250)
   }
 
   onSearchResultClick = (result, isAdmin) => {
     let userType
     isAdmin ? (userType = 'responsible') : (userType = 'user')
-    this.setState(
-      { [userType]: result._id, [`${userType}Search`]: `${result.firstName} ${result.lastName}` },
-      () => console.log(this.state[userType])
-    )
+    this.setState({
+      [userType]: result._id,
+      [`${userType}Search`]: `${result.firstName} ${result.lastName}`,
+    })
   }
 
   render() {
