@@ -34,7 +34,7 @@ const Dropdown = (props) => {
   return (
     <OutsideClickHandler onOutsideClick={props.onOutsideClick}>
       <div
-        style={{ position: 'relative', marginLeft: '40px', display: 'flex', alignItems: 'center' }}
+        style={{ position: 'relative', marginLeft: '25px', display: 'flex', alignItems: 'center' }}
         className="dropdown"
       >
         {props.image && (
@@ -58,16 +58,12 @@ const Dropdown = (props) => {
             </div>
             <div style={{ borderBottom: `1px solid ${colors.gray}` }}>
               <Link to="/profile">User profile</Link>
-              {props.isAdmin && (
-                <div>
-                  <Link to="/account" style={{ marginBottom: '10px' }}>
-                    Account
-                  </Link>
-                  <Link to="/account-users" style={{ marginBottom: '10px' }}>
-                    Account Users
-                  </Link>
-                </div>
-              )}
+              <Link to="/account" style={{ marginBottom: '10px' }}>
+                Account
+              </Link>
+              <Link to="/account-users" style={{ marginBottom: '10px' }}>
+                Account Users
+              </Link>
             </div>
             <button
               onClick={props.onLogOut}

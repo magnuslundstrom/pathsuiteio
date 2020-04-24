@@ -9,9 +9,7 @@ class Dashboard extends React.Component {
       <Container>
         <WelcomeMessage>
           <h1>Welcome back, {this.props.userFirstName}!</h1>
-          {(this.props.isAdmin && <p>Get a status on your teams performance.</p>) || (
-            <p>Get a status on your latest performance</p>
-          )}
+          <p>Get a status on your teams performance.</p>
         </WelcomeMessage>
       </Container>
     )
@@ -21,7 +19,6 @@ class Dashboard extends React.Component {
 const mapPropsToState = (state) => {
   return {
     userFirstName: state.user.firstName,
-    isAdmin: state.user.isAdmin,
   }
 }
 export default connect(mapPropsToState, null)(Dashboard)

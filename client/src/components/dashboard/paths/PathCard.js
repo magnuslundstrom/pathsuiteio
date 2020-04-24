@@ -9,7 +9,7 @@ import colors from '../../../styles/colors'
 
 class PathCard extends React.Component {
   state = {
-    display: false,
+    display: true,
   }
 
   renderContent = () => {
@@ -76,9 +76,9 @@ class PathCard extends React.Component {
               return (
                 <div key={index} style={{ display: 'flex', marginTop: '30px' }}>
                   <CompletedWrapper>
-                    {(path.isCompleted && (
+                    {(path.isCompleted && <i className="far fa-circle"></i>) || (
                       <i className="fas fa-check-circle" style={{ color: colors.green }}></i>
-                    )) || <i className="far fa-circle"></i>}
+                    )}
                   </CompletedWrapper>
                   <IndividualStep>
                     <li>
