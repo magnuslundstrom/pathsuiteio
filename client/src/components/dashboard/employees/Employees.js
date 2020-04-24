@@ -24,7 +24,7 @@ class Employees extends React.Component {
     return this.state.employees.map((el, index) => {
       return (
         <div key={index}>
-          <div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr' }}>
             <EmployeeCard data={this.state.employees[index]} />
           </div>
         </div>
@@ -48,17 +48,12 @@ class Employees extends React.Component {
             <i className="fas fa-plus" style={{ fontSize: '20px' }}></i>
           </Link>
         </div>
-
         {this.state.loading ? (
           <p>Loading...</p>
         ) : (
-          (this.state.employees.length > 0 && (
-            <div
-              style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gridGap: '30px' }}
-            >
-              {this.renderEmployees()}
-            </div>
-          )) || <p>You have no employees yet</p>
+          (this.state.employees.length > 0 && this.renderEmployees()) || (
+            <p>You have no employees yet</p>
+          )
         )}
       </Container>
     )
