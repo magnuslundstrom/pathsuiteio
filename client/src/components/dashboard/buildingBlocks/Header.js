@@ -11,6 +11,30 @@ import general from '../../../styles/general'
 
 import Logo from '../../utils/Logo'
 
+const HeaderWrapper = styled.div`
+  background-color: ${colors.white};
+  padding: 30px 0px;
+  box-shadow: ${general.headerBoxShadow};
+  .headerWidth {
+    max-width: 1300px;
+    margin: 0px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navigation a {
+    margin-left: 50px;
+    color: ${colors.blue};
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+  }
+  .navigation a i {
+    margin-right: 7.5px;
+  }
+`
+
 class Header extends React.Component {
   state = {
     dropdown: false,
@@ -88,28 +112,3 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { logOut, unFetchUser })(Header)
-
-const HeaderWrapper = styled.div`
-  background-color: ${colors.white};
-  padding: 30px 0px;
-  box-shadow: ${general.headerBoxShadow};
-  margin-bottom: 50px;
-  .headerWidth {
-    max-width: 1300px;
-    margin: 0px auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .navigation a {
-    margin-left: 50px;
-    color: ${colors.blue};
-    display: flex;
-    align-items: center;
-    font-weight: 700;
-  }
-  .navigation a i {
-    margin-right: 7.5px;
-  }
-`

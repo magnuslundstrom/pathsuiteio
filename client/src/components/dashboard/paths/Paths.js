@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import PathCard from '../PathCard'
+import Container from '../buildingBlocks/Container'
+import PathCard from './PathCard'
+import axios from 'axios'
 
 class Paths extends React.Component {
   isLoaded = false
@@ -34,11 +36,12 @@ class Paths extends React.Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <div
           style={{
             display: 'flex',
             justifyContent: 'space-between',
+            marginTop: '50px',
             alignItems: 'center',
           }}
         >
@@ -52,7 +55,7 @@ class Paths extends React.Component {
         ) : (
           (this.state.paths.length > 0 && this.renderPaths()) || <p>You have no paths yet</p>
         )}
-      </div>
+      </Container>
     )
   }
 }
