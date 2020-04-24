@@ -45,7 +45,7 @@ class Tunnel extends React.Component {
         </div>
       )
     } else if (this.state.userLoaded) {
-      return <Redirect to="/create-path" />
+      return <Redirect to="/user?id=5ea0cd9ed6e0291908f51763" />
     } else {
       return <Redirect to="/" />
     }

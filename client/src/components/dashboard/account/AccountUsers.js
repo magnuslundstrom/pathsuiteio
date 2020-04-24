@@ -1,10 +1,11 @@
 import React from 'react'
 // import { connect } from 'react-redux'
-// import styled from 'styled-components'
+import styled from 'styled-components'
 import axios from 'axios'
 import Container from '../buildingBlocks/Container'
 import { InnerContainer } from '../../styledComponents/smallComponents'
-// import { Button } from '../../utils/Buttons'
+import colors from '../../../styles/colors'
+import { Link } from 'react-router-dom'
 // import colors from '../../../styles/colors'
 
 class AccountUsers extends React.Component {
@@ -34,14 +35,27 @@ class AccountUsers extends React.Component {
     return this.state.users.map((user, index) => {
       return (
         <tr key={index} style={{ height: '40px' }}>
-          <td style={{ width: '20%' }}>
+          <td style={{ width: '20%', paddingTop: '15px' }}>
             {user.firstName} {user.lastName}
           </td>
-          <td style={{ width: '20%' }}>{user.email}</td>
-          <td style={{ width: '20%' }}>{user.jobTitle}</td>
-          <td style={{ width: '20%' }}>{(user.isAdmin && 'Admin') || 'Employee'}</td>
-          <td style={{ width: '20%' }}>
-            <button onClick={() => this.removeAccess(user._id, index)}>Remove access</button>
+          <td style={{ width: '20%', paddingTop: '15px' }}>{user.email}</td>
+          <td style={{ width: '20%', paddingTop: '15px' }}>{user.jobTitle}</td>
+          <td style={{ width: '20%', paddingTop: '15px' }}>
+            {(user.isAdmin && 'Admin') || 'Employee'}
+          </td>
+          <td style={{ width: '20%', paddingTop: '15px' }}>
+            <button
+              onClick={() => this.removeAccess(user._id, index)}
+              style={{
+                border: '0px',
+                backgroundColor: '#fff',
+                color: colors.green,
+                cursor: 'pointer',
+                padding: '0px',
+              }}
+            >
+              Remove access
+            </button>
           </td>
         </tr>
       )
@@ -52,17 +66,17 @@ class AccountUsers extends React.Component {
     if (this.state.users) {
       return (
         <table style={{ width: '100%' }}>
-          <thead style={{ borderBottom: '5px solid #000' }}>
-            <tr style={{ textAlign: 'left' }}>
-              <th>Name</th>
-              <th>E-mail</th>
-              <th>Position</th>
-              <th>Role</th>
-              <th>Remove</th>
-            </tr>
+          <thead>
+            <StyledThead style={{ textAlign: 'left', position: 'relative' }}>
+              <StyledTh>Name</StyledTh>
+              <StyledTh>E-mail</StyledTh>
+              <StyledTh>Position</StyledTh>
+              <StyledTh>Role</StyledTh>
+              <StyledTh>Remove</StyledTh>
+            </StyledThead>
           </thead>
 
-          {this.state.users && <tbody>{this.renderUsers()}</tbody>}
+          <tbody>{this.renderUsers()}</tbody>
         </table>
       )
     } else {
@@ -75,7 +89,20 @@ class AccountUsers extends React.Component {
       <Container>
         <h1 style={{ marginTop: '50px' }}>Account users</h1>
         <InnerContainer>
-          <h3>Manage users</h3>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '30px',
+            }}
+          >
+            <h3 style={{ marginTop: '0px', marginBottom: '0px' }}>Manage users</h3>
+            <Link to="/create-user">
+              <i className="fas fa-plus"></i>
+            </Link>
+          </div>
+
           {this.renderContent()}
         </InnerContainer>
       </Container>
@@ -84,3 +111,11 @@ class AccountUsers extends React.Component {
 }
 
 export default AccountUsers
+
+const StyledThead = styled.tr`
+  padding-bottom: 30px;
+`
+const StyledTh = styled.th`
+  border-bottom: 2px solid #f4f4f4;
+  padding-bottom: 15px;
+`

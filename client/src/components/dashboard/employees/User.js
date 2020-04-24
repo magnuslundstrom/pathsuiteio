@@ -12,7 +12,6 @@ class User extends React.Component {
 
   async componentDidMount() {
     this.setState({ isLoaded: true })
-    console.log(this.state.isLoaded)
     const params = new URLSearchParams(this.props.location.search)
     const id = params.get('id')
     const user = await axios.post(`/api/user?id=${id}`)
@@ -26,7 +25,7 @@ class User extends React.Component {
       return this.state.user.paths.map((path, index) => {
         return (
           <div key={index}>
-            <PathCard path={path} />
+            <PathCard path={path} user />
           </div>
         )
       })
@@ -41,7 +40,7 @@ class User extends React.Component {
             <div style={{ marginRight: '30px' }}>
               <img
                 src={`data:img/png;base64, ${this.state.user.image}`}
-                alt='profile'
+                alt="profile"
                 style={{ height: 'auto', width: '100px', borderRadius: '50%' }}
               />
             </div>
@@ -53,8 +52,8 @@ class User extends React.Component {
             </div>
           </div>
           <div>
-            <Link to='/create-user'>
-              <i className='fas fa-plus' style={{ fontSize: '20px' }}></i>
+            <Link to="/create-user">
+              <i className="fas fa-plus" style={{ fontSize: '20px' }}></i>
             </Link>
           </div>
         </div>

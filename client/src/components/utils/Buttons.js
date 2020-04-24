@@ -43,4 +43,8 @@ export const TransparentButton = styled.button`
   font-weight: 700;
   cursor: pointer;
   border: 0px;
+  transition: 300ms;
+  &:focus {
+    outline: 0px;
+  }
 `

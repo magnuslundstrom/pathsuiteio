@@ -5,44 +5,66 @@ import ProgressBar from '../../utils/ProgressBar'
 import { TransparentButton } from '../../utils/Buttons'
 import progressCalc from '../../../utilFns/progressCalc'
 import styled from 'styled-components'
+import colors from '../../../styles/colors'
 
 class PathCard extends React.Component {
   state = {
-    display: false,
+    display: true,
   }
-  render() {
+
+  renderContent = () => {
     return (
       <InnerContainer>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex' }}>
-            <div>
-              <img
-                src={userImg}
-                style={{ width: '100px', height: 'auto', borderRadius: '50%', marginRight: '15px' }}
-                alt='profile'
-              />
-            </div>
+          {this.props.user ? (
+            <h3 style={{ marginTop: '10px' }}>{this.props.path.title}</h3>
+          ) : (
+            <div style={{ display: 'flex' }}>
+              <div>
+                <img
+                  src={userImg}
+                  style={{
+                    width: '100px',
+                    height: 'auto',
+                    borderRadius: '50%',
+                    marginRight: '15px',
+                  }}
+                  alt="profile"
+                />
+              </div>
 
-            <div>
-              <h2 style={{ marginBottom: '10px', marginTop: '0px', fontSize: '26px' }}>
-                {this.props.path.user.firstName} {this.props.path.user.lastName}
-              </h2>
-              <p style={{ marginTop: '0px' }}>{this.props.path.user.jobTitle}</p>
-              <p>{this.props.path.title}</p>
+              <div>
+                <h2 style={{ marginBottom: '10px', marginTop: '0px', fontSize: '26px' }}>
+                  {this.props.path.user.firstName} {this.props.path.user.lastName}
+                </h2>
+                <p style={{ marginTop: '0px' }}>{this.props.path.user.jobTitle}</p>
+                <p>{this.props.path.title}</p>
+              </div>
             </div>
-          </div>
+          )}
+
           <div>
-            <TransparentButton onClick={() => this.setState({ display: !this.state.display })}>
-              <i className='fas fa-chevron-down'></i>
+            <TransparentButton
+              onClick={() => this.setState({ display: !this.state.display })}
+              className={this.state.display && 'displaysteps'}
+            >
+              <i className="fas fa-chevron-down"></i>
             </TransparentButton>
           </div>
         </div>
-        <div style={{ display: 'flex' }}>
+        {this.props.user && (
+          <p>
+            <i className="fas fa-user-alt"></i> {this.props.path.user.firstName}{' '}
+            {this.props.path.user.lastName}
+          </p>
+        )}
+
+        <div style={{ display: 'flex', marginBottom: '20px' }}>
           <p style={{ marginRight: '20px' }}>
-            <i className='fas fa-sticky-note'></i> {this.props.path.category}
+            <i className="fas fa-sticky-note"></i> {this.props.path.category}
           </p>
           <p>
-            <i className='fas fa-user'></i> {this.props.path.responsible.firstName}{' '}
+            <i className="fas fa-user"></i> {this.props.path.responsible.firstName}{' '}
             {this.props.path.responsible.lastName}
           </p>
         </div>
@@ -52,18 +74,27 @@ class PathCard extends React.Component {
           {this.state.display &&
             this.props.path.steps.map((path, index) => {
               return (
-                <div key={index} style={{ display: 'flex' }}>
+                <div key={index} style={{ display: 'flex', marginTop: '30px' }}>
                   <CompletedWrapper>
-                    {(path.isCompleted && <i className='fas fa-check-circle'></i>) || <i className='far fa-circle'></i>}
+                    {(path.isCompleted && <i className="far fa-circle"></i>) || (
+                      <i className="fas fa-check-circle" style={{ color: colors.green }}></i>
+                    )}
                   </CompletedWrapper>
                   <IndividualStep>
                     <li>
-                      <i className='far fa-bookmark'></i>
-                      {path.goalTitle}
+                      <h3 style={{ marginTop: '0px' }}>
+                        {index}. {path.goalTitle}
+                      </h3>
                     </li>
-                    <li>{path.goalType}</li>
-                    <li>{path.goalLink}</li>
-                    <li>{path.goalNote}</li>
+                    <li>
+                      <i className="fas fa-thumbtack"></i> {path.goalType}
+                    </li>
+                    <li>
+                      <i className="fas fa-link"></i> {path.goalLink}
+                    </li>
+                    <li>
+                      <i className="fas fa-sticky-note"></i> {path.goalNote}
+                    </li>
                   </IndividualStep>
                 </div>
               )
@@ -72,8 +103,16 @@ class PathCard extends React.Component {
       </InnerContainer>
     )
   }
+
+  render() {
+    return <div>{this.renderContent()}</div>
+  }
 }
 const CompletedWrapper = styled.div`
+  width: 100px;
+  justify-content: center;
+  display: flex;
+
   i {
     font-size: 36px;
   }
