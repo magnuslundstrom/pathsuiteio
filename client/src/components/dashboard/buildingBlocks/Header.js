@@ -62,24 +62,29 @@ class Header extends React.Component {
             <Link to="/paths">
               <i className="fas fa-chart-line"></i> Paths
             </Link>
-            <Link to="/employees">
-              <i className="fas fa-users"></i> Employees
-            </Link>
-            <Link to="/">
-              <i className="fas fa-chart-pie"></i> Reports
-            </Link>
-            <Link
-              to="/upgrade"
-              style={{
-                backgroundColor: colors.green,
-                padding: '10px 30px',
-                borderRadius: '5px',
-                color: colors.white,
-                fontWeight: 400,
-              }}
-            >
-              Upgrade now
-            </Link>
+            {this.props.isAdmin && (
+              <div style={{ display: 'flex' }}>
+                <Link to="/employees">
+                  <i className="fas fa-users"></i> Employees
+                </Link>
+                <Link to="/reports">
+                  <i className="fas fa-chart-pie"></i> Reports
+                </Link>
+                <Link
+                  to="/upgrade"
+                  style={{
+                    backgroundColor: colors.green,
+                    padding: '10px 30px',
+                    borderRadius: '5px',
+                    color: colors.white,
+                    fontWeight: 400,
+                  }}
+                >
+                  Upgrade now
+                </Link>
+              </div>
+            )}
+
             <Dropdown
               image={this.props.image}
               dropdown={this.state.dropdown}
@@ -88,6 +93,7 @@ class Header extends React.Component {
               onClick={this.onImageClick}
               onOutsideClick={this.outSideClick}
               onLogOut={this.onLogOut}
+              isAdmin={this.props.isAdmin}
             />
           </div>
         </div>
@@ -101,6 +107,7 @@ const mapStateToProps = (state) => {
     image: state.user.image,
     fullName: state.user.firstName + ' ' + state.user.lastName,
     email: state.user.email,
+    isAdmin: state.user.isAdmin,
   }
 }
 
