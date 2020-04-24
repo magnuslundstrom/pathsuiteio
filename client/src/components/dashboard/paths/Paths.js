@@ -41,7 +41,6 @@ class Paths extends React.Component {
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            marginTop: '50px',
             alignItems: 'center',
           }}
         >
