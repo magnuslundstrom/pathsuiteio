@@ -46,26 +46,6 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-function sameFrequency(strOne) {
-  // good luck. Add any arguments you deem necessary.
-
-  const strOnee = toString(strOne)
-  const objOne = {}
-
-  for (var i = 0; i < strOnee.length; i++) {
-    objOne[strOnee[i]] ? (strOnee[strOne[i]] += 1) : (objOne[strOnee[i]] = 1)
-  }
-  console.log(objOne)
-  for (const el in objOne) {
-    if (objOne[el] > 1) {
-      return false
-    }
-  }
-  return true
-}
-
-sameFrequency(111)
-
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
   console.log('Vi kører!')
