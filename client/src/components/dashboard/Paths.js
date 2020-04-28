@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import axios from 'axios'
 
@@ -7,15 +8,51 @@ import Container from '../buildingBlocks/Container'
 import PathCard from '../buildingBlocks/PathCard'
 import BoxLoader from '../buildingBlocks/utils/ScreenLoader'
 
+import Confetti from 'react-dom-confetti'
+
+const config = {
+  angle: 90,
+  spread: 45,
+  startVelocity: 45,
+  elementCount: 50,
+  dragFriction: 0.1,
+  duration: 3000,
+  stagger: 0,
+  width: '10px',
+  height: '10px',
+  colors: ['#a864fd', '#29cdff', '#78ff44', '#ff718d', '#fdff6a'],
+}
+
 class Paths extends React.Component {
   state = {
+    confetti: false,
     loading: true,
     paths: [],
   }
 
   async componentDidMount() {
-    const { data: paths } = await axios.get('/api/paths')
+    let paths
+    if (this.props.isAdmin) {
+      const { data } = await axios.get('/api/paths')
+      paths = data
+    } else {
+      const { data } = await axios.get('/api/own-paths')
+      paths = data
+    }
+
     this.setState({ paths: paths, loading: false })
+    console.log(this.state.paths)
+  }
+
+  onComplete = (goalIndex, stepIndex) => {
+    const paths = [...this.state.paths]
+    paths[goalIndex].steps[stepIndex].isCompleted = !paths[goalIndex].steps[stepIndex].isCompleted
+    this.setState(paths)
+  }
+
+  success = () => {
+    this.setState({ confetti: true })
+    console.log(this.state.confetti)
   }
 
   renderPaths = () => {
@@ -23,7 +60,17 @@ class Paths extends React.Component {
       return <p>You have no paths yet!</p>
     } else {
       return this.state.paths.map((path, index) => {
-        return <PathCard key={index} path={path} position="paths" />
+        return (
+          <PathCard
+            key={index}
+            path={path}
+            position="paths"
+            isAdmin={this.props.isAdmin}
+            onComplete={this.onComplete}
+            goalIndex={index}
+            success={() => this.success()}
+          />
+        )
       })
     }
   }
@@ -38,7 +85,19 @@ class Paths extends React.Component {
                 <i className="fas fa-plus text-2xl font-semibold"></i>
               </Link>
             </div>
-            <div className="mt-10">{this.renderPaths()}</div>
+
+            <div className="mt-10 relative">{this.renderPaths()}</div>
+            <div
+              style={{
+                position: 'absolute',
+                top: '0%',
+                left: '50%',
+                transform: 'translateX(50%)',
+                zIndex: '10',
+              }}
+            >
+              <Confetti active={this.state.confetti} config={config} />
+            </div>
           </div>
         )}
       </Container>
@@ -46,4 +105,11 @@ class Paths extends React.Component {
   }
 }
 
-export default Paths
+const mapStateToProps = (state) => {
+  return {
+    isAdmin: state.user.isAdmin,
+    _id: state.user._id,
+  }
+}
+
+export default connect(mapStateToProps, null)(Paths)

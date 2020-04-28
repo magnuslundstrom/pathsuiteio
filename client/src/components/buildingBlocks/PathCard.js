@@ -4,16 +4,30 @@ import UpperPathCard from './utils/UpperPathCard'
 
 const PathCard = (props) => {
   const [display, setDisplay] = useState(false)
-  const progress = progressCalc(props.path.steps)
+  const [confetti, setConfetti] = useState(false)
+  let progress = progressCalc(props.path.steps)
+
+  const onProgressClick = (goalIndex, index) => {
+    props.onComplete(goalIndex, index)
+    progress = progressCalc(props.path.steps)
+    if (progress === 100) props.success()
+  }
 
   const renderGoals = () => {
     return props.path.steps.map((path, index) => {
       return (
         <div key={index} className="flex">
           <div className="mt-1 mr-5 text-3xl">
-            {(path.isCompleted && <i className="fas fa-check-circle text-green"></i>) || (
-              <i className="far fa-circle"></i>
-            )}
+            {(!props.isAdmin && (
+              <button onClick={() => onProgressClick(props.goalIndex, index)}>
+                {(path.isCompleted && <i className="fas fa-check-circle text-green"></i>) || (
+                  <i className="far fa-circle"></i>
+                )}
+              </button>
+            )) ||
+              (path.isCompleted && <i className="fas fa-check-circle text-green"></i>) || (
+                <i className="far fa-circle"></i>
+              )}
           </div>
           <div>
             <h3 className="mb-1">
@@ -38,7 +52,7 @@ const PathCard = (props) => {
   }
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-10">
+    <div className="bg-white shadow-md rounded-lg p-10 mt-10">
       <div className="flex justify-between">
         <UpperPathCard path={props.path} position={props.position} />
         <div>
@@ -58,8 +72,8 @@ const PathCard = (props) => {
       </div>
       <div className="rounded-lg bg-gray mt-5 h-8 w-full relative">
         <div
-          className="bg-green absolute top-0 left-0 z-10 h-8 rounded-lg flex justify-center items-center"
-          style={{ width: progress + '%' }}
+          className="bg-green absolute top-0 left-0 z-10 h-8 rounded-lg flex justify-center items-center duration-500"
+          style={{ width: progress === 0 ? '0px' : progress + '%' }}
         >
           <p
             className={progress > 3 ? 'text-white' : 'text-blue'}
