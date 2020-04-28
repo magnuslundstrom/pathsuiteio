@@ -1,6 +1,6 @@
 import { LOG_IN, LOG_OUT } from '../actions/TYPES'
 
-const logInReducer = (state = true, action) => {
+const logInReducer = (state = false, action) => {
   switch (action.type) {
     case LOG_IN:
       return true

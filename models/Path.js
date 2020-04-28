@@ -9,10 +9,6 @@ const PathSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide a category'],
   },
-  responsible: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  },
   steps: [
     {
       goalTitle: {
@@ -33,24 +29,17 @@ const PathSchema = new mongoose.Schema({
       },
     },
   ],
-  user: {
+  responsible: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-  createdBy: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
   company: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Company',
-  },
-
-  startingDate: {
-    type: Date,
-  },
-  endingDate: {
-    type: Date,
   },
 })
 

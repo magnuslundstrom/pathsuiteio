@@ -2,12 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-import { Form, Input, FormWrapper, GrayBg } from './styledComponents'
-import { Button } from '../utils/Buttons'
-
-import { ErrorMessage } from '../styledComponents/smallComponents'
-import Logo from '../utils/Logo'
 import CreateCompany from './CreateCompany'
+
+import AuthFormWrapper from '../buildingBlocks/AuthFormWrapper'
+import { AuthError } from '../buildingBlocks/utils/ErrorMessages'
 
 class SignUp extends React.Component {
   state = {
@@ -15,8 +13,8 @@ class SignUp extends React.Component {
     lastName: '',
     email: '',
     password: '',
-    checked: false,
     errors: {},
+    checked: false,
     userCreated: false,
   }
 
@@ -28,7 +26,6 @@ class SignUp extends React.Component {
         lastName: this.state.lastName,
         email: this.state.email,
         password: this.state.password,
-        isAdmin: true,
       })
       this.setState({ userCreated: true })
     } catch (err) {
@@ -37,64 +34,66 @@ class SignUp extends React.Component {
   }
 
   renderContent = () => {
+    // Renders CreateCompany step if the userCreated
     if (this.state.userCreated) {
       return <CreateCompany />
     } else {
       return (
-        <GrayBg>
-          <Logo />
-          <FormWrapper>
-            <h1>Create your account</h1>
-            <Form onSubmit={this.onSubmit}>
-              <Input
-                type="text"
-                placeholder="First name"
-                value={this.state.firstName}
-                onChange={(e) => this.setState({ firstName: e.target.value })}
+        <AuthFormWrapper header="Create your account" signUp>
+          <form className="flex justify-center flex-col mx-auto" onSubmit={this.onSubmit}>
+            <input
+              className="input-border-gray"
+              type="text"
+              placeholder="First name"
+              value={this.state.firstName}
+              onChange={(e) => this.setState({ firstName: e.target.value })}
+            />
+            {this.state.errors.firstName && <AuthError msg={this.state.errors.firstName} />}
+            <input
+              className="input-border-gray"
+              type="text"
+              placeholder="Last name"
+              value={this.state.lastName}
+              onChange={(e) => this.setState({ lastName: e.target.value })}
+            />
+            {this.state.errors.lastName && <AuthError msg={this.state.errors.lastName} />}
+            <input
+              className="input-border-gray"
+              type="text"
+              placeholder="Email"
+              value={this.state.email}
+              onChange={(e) => this.setState({ email: e.target.value })}
+            />
+            {this.state.errors.email && <AuthError msg={this.state.errors.email} />}
+            <input
+              className="input-border-gray"
+              type="password"
+              placeholder="Password"
+              value={this.state.password}
+              onChange={(e) => this.setState({ password: e.target.value })}
+            />
+            {this.state.errors.password && <AuthError msg={this.state.errors.password} />}
+            <div className="flex text-left align-top">
+              <input
+                type="checkbox"
+                id="termagreement"
+                onChange={() => this.setState({ checked: !this.state.checked })}
+                value={this.state.checked}
+                className="mr-2 mt-1 "
               />
-              <Input
-                type="text"
-                placeholder="Last name"
-                value={this.state.lastName}
-                onChange={(e) => this.setState({ lastName: e.target.value })}
-              />
-              <Input
-                type="text"
-                placeholder="Email"
-                value={this.state.email}
-                onChange={(e) => this.setState({ email: e.target.value })}
-              />
-              {this.state.errors.email && <ErrorMessage>{this.state.errors.email}</ErrorMessage>}
-              <Input
-                type="password"
-                placeholder="Password"
-                value={this.state.password}
-                onChange={(e) => this.setState({ password: e.target.value })}
-              />
-              {this.state.errors.password && (
-                <ErrorMessage>{this.state.errors.password}</ErrorMessage>
-              )}
-              <div style={{ marginTop: '15px', display: 'flex' }}>
-                <input
-                  type="checkbox"
-                  id="termagreement"
-                  style={{ margin: '6px, 6px, 0px, 0px' }}
-                  onChange={() => this.setState({ checked: !this.state.checked })}
-                  value={this.state.checked}
-                />{' '}
-                <label htmlFor="termagreement">
-                  By signing up I agree the <Link to="#">terms of service</Link> and the{' '}
-                  <Link to="#">privacy policy</Link>.
-                </label>
-              </div>
-
-              <Button disabled={!this.state.checked}>Sign Up</Button>
-            </Form>
-          </FormWrapper>
-          <p>
-            Already have an account? <Link to="/">Sign in</Link>
-          </p>
-        </GrayBg>
+              <label htmlFor="termagreement" className="leading-none mb-5">
+                By signing up I agree the <Link to="#">terms of service</Link> and the{' '}
+                <Link to="#" className="hover-green">
+                  privacy policy
+                </Link>
+                .
+              </label>
+            </div>
+            <button className="btn" disabled={!this.state.checked}>
+              Sign up!
+            </button>
+          </form>
+        </AuthFormWrapper>
       )
     }
   }

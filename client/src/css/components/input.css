@@ -1,0 +1,19 @@
+.input-border-gray::placeholder {
+  @apply text-secGray;
+}
+
+.input-border-gray:focus {
+  @apply outline-none;
+}
+
+.input-border-gray {
+  @apply border-2 border-solid border-gray rounded-md px-4 py-2 block mb-5 w-full;
+}
+
+.input-border-trans {
+  @apply border-transparent rounded-md py-1;
+}
+
+.input-border-trans:focus {
+  @apply outline-none;
+}

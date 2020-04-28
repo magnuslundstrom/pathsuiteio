@@ -1,23 +1,25 @@
 const mongoose = require('mongoose')
+
 const validator = require('validator')
 const bcrypt = require('bcrypt')
-const camelCase = require('../utils/camelCase')
+
+const camelCase = require('../utilFns/camelCase')
 
 const UserSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
-      required: true,
+      required: [true, 'A first name is required'],
       trim: true,
     },
     lastName: {
       type: String,
-      required: true,
+      required: [true, 'A last name is required'],
       trim: true,
     },
     email: {
       type: String,
-      required: true,
+      required: [true, 'An email is required'],
       lowercase: true,
       trim: true,
       unique: true,
@@ -29,7 +31,7 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: [true, 'A password is required'],
       validate(value) {
         if (value.length < 7) {
           throw new Error('Password must be atleast 7 characters')
@@ -42,8 +44,8 @@ const UserSchema = new mongoose.Schema(
     },
     jobTitle: {
       type: String,
-      required: true,
-      default: 'job title',
+      required: [true, 'A jobtitle is required'],
+      default: 'Job Title',
     },
     image: {
       type: Buffer,
@@ -53,6 +55,7 @@ const UserSchema = new mongoose.Schema(
       default: false,
       required: true,
     },
+
     createdAt: {
       type: Date,
       default: Date.now,
@@ -72,6 +75,10 @@ UserSchema.virtual('paths', {
   ref: 'Path',
   localField: '_id',
   foreignField: 'user',
+})
+
+UserSchema.virtual('fullName').get(function () {
+  return this.firstName + ' ' + this.lastName
 })
 
 UserSchema.pre('save', async function (next) {

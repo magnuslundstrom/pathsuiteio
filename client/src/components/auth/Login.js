@@ -1,60 +1,54 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+
 import { connect } from 'react-redux'
-import { logIn } from '../../redux/actions/logInOut'
 import axios from 'axios'
-import Logo from '../utils/Logo'
-import { Button } from '../utils/Buttons'
-import { Form, Input, FormWrapper, GrayBg, Title } from './styledComponents'
-import { ErrorMessage } from '../styledComponents/smallComponents'
+
+import { logIn } from '../../redux/actions/logInOut'
+import { AuthError } from '../buildingBlocks/utils/ErrorMessages'
+import AuthFormWrapper from '../buildingBlocks/AuthFormWrapper'
 
 class Login extends React.Component {
   state = {
     email: '',
     password: '',
-    error: '',
+    errors: '',
   }
 
   onSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post('/api/login', {
+      const res = await axios.post('/api/login', {
         email: this.state.email,
         password: this.state.password,
       })
-      this.props.logIn()
+      if (res) this.props.logIn()
     } catch (error) {
-      this.setState({ error: error.response.data.loginError })
+      this.setState({ errors: { ...error.response.data } })
     }
   }
 
   render() {
     return (
-      <GrayBg>
-        <Logo />
-        <FormWrapper>
-          <Title>Sign in</Title>
-          <Form onSubmit={this.onSubmit}>
-            <Input
-              type="text"
-              placeholder="Email"
-              onChange={(e) => this.setState({ email: e.target.value })}
-              value={this.state.email}
-            />
-            <Input
-              type="password"
-              placeholder="Password"
-              onChange={(e) => this.setState({ password: e.target.value })}
-              value={this.state.password}
-            />
-            {this.state.error && <ErrorMessage>{this.state.error}</ErrorMessage>}
-            <Button>Sign in!</Button>
-          </Form>
-        </FormWrapper>
-        <p>
-          Dont have an account? <Link to="/sign-up">Sign up!</Link>
-        </p>
-      </GrayBg>
+      <AuthFormWrapper header="Sign in" logIn>
+        <form className="flex justify-center flex-col mx-auto" onSubmit={this.onSubmit}>
+          <input
+            className="input-border-gray"
+            type="text"
+            placeholder="Email"
+            value={this.state.email}
+            onChange={(e) => this.setState({ email: e.target.value })}
+          />
+          <input
+            className="input-border-gray"
+            type="password"
+            placeholder="Password"
+            value={this.state.password}
+            onChange={(e) => this.setState({ password: e.target.value })}
+          />
+          {this.state.errors.loginError && <AuthError msg={this.state.errors.loginError} />}
+          <button className="btn">Sign in!</button>
+        </form>
+      </AuthFormWrapper>
     )
   }
 }

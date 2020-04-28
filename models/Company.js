@@ -1,34 +1,42 @@
 const mongoose = require('mongoose')
+
 const validator = require('validator')
-const camelCase = require('../utils/camelCase')
 
-const CompanySchema = new mongoose.Schema({
-  companyName: {
-    type: String,
-    required: [true, 'Please enter company name'],
-    unique: true,
-    trim: true,
-  },
-  companyEmail: {
-    type: String,
-    trim: true,
-    lowercase: true,
-    validate(value) {
-      if (!validator.isEmail(value)) {
-        throw new Error('Invalid email')
-      }
+const camelCase = require('../utilFns/camelCase')
+
+const CompanySchema = new mongoose.Schema(
+  {
+    companyName: {
+      type: String,
+      required: [true, 'Please enter company name'],
+      unique: true,
+      trim: true,
+    },
+    companyEmail: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error('Invalid email')
+        }
+      },
     },
   },
-  users: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+  {
+    toObject: {
+      virtuals: true,
     },
-  ],
+    toJSON: {
+      virtuals: true,
+    },
+  }
+)
 
-  logo: {
-    type: Buffer,
-  },
+CompanySchema.virtual('users', {
+  ref: 'User',
+  localField: '_id',
+  foreignField: 'company',
 })
 
 CompanySchema.pre('save', function (next) {

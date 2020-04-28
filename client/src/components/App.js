@@ -1,77 +1,85 @@
 import React from 'react'
-import { BrowserRouter, Route, Redirect } from 'react-router-dom'
-import { logIn } from '../redux/actions/logInOut'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+
+import axios from 'axios'
+
+import { logIn } from '../redux/actions/logInOut'
+import ScreenLoader from './buildingBlocks/utils/ScreenLoader'
 import Login from './auth/Login'
 import SignUp from './auth/SignUp'
-import Tunnel from './auth/Tunnel'
 import Dashboard from './dashboard/Dashboard'
-import Paths from './dashboard/paths/Paths'
-import CreatePath from './dashboard/paths/CreatePath'
-import CreateUser from './dashboard/employees/CreateUser'
-import Employees from './dashboard/employees/Employees'
-import Profile from './dashboard/account/Profile'
-import AccountUsers from './dashboard/account/AccountUsers'
-import axios from 'axios'
-import User from './dashboard/employees/User'
+import Tunnel from './auth/Tunnel'
+import Paths from './dashboard/Paths'
+import Employees from './dashboard/Employees'
+import CreatePath from './dashboard/CreatePath'
+import CreateUser from './dashboard/CreateUser'
+import Profile from './dashboard/Profile'
+import AccountUsers from './dashboard/AccountUsers'
+import User from './dashboard/User'
 
 class App extends React.Component {
+  state = {
+    loading: true,
+  }
+
   async componentDidMount() {
     try {
-      const res = await axios.get('/api/app-did-mount')
+      const res = await axios.get('/api/mount')
       if (res) {
         this.props.logIn()
+        this.setState({ loading: false })
       }
-    } catch (e) {}
+    } catch (e) {
+      this.setState({ loading: false })
+    }
   }
 
-  openRoutes = () => {
-    if (!this.props.loggedIn) {
+  renderRoutes = () => {
+    if (this.state.loading) {
+      return <ScreenLoader />
+    }
+    if (this.props.loggedIn) {
+      // If the user has'nt been set in redux store
+      if (!this.props.user.hasOwnProperty('firstName')) {
+        return <Tunnel />
+        // If the user has been set in redux store
+      } else {
+        return (
+          <Switch>
+            <Route path="/" exact component={Dashboard} />
+            <Route path="/paths" exact component={Paths} />
+            <Route path="/employees" exact component={Employees} />
+            <Route path="/create-path" exact component={CreatePath} />
+            <Route path="/create-user" exact component={CreateUser} />
+            <Route path="/profile" exact component={Profile} />
+            <Route path="/account-users" exact component={AccountUsers} />
+            <Route path="/user" component={User} />
+            <Route path="*" render={() => <Redirect to="/" />} />
+          </Switch>
+        )
+      }
+      // If the user is not logged in
+    } else {
       return (
-        <div>
+        <Switch>
           <Route path="/" exact component={Login} />
           <Route path="/sign-up" exact component={SignUp} />
-        </div>
+          <Route path="*" render={() => <Redirect to="/" />} />
+        </Switch>
       )
-    } else {
-      return <Redirect to="/tunnel"></Redirect>
     }
   }
 
-  closedRoutes = () => {
-    if (this.props.loggedIn) {
-      return (
-        <div>
-          <Route path="/dashboard" exact component={Dashboard} />
-          <Route path="/tunnel" exact component={Tunnel} />
-          <Route path="/paths" exact component={Paths} />
-          <Route path="/create-path" exact component={CreatePath} />
-          <Route path="/employees" exact component={Employees} />
-          <Route path="/create-user" exact component={CreateUser} />
-          <Route path="/profile" exact component={Profile} />
-          <Route path="/account-users" exact component={AccountUsers} />
-          <Route path="/user" component={User} />
-        </div>
-      )
-    } else {
-      return <Redirect to="/"></Redirect>
-    }
-  }
   render() {
-    return (
-      <div>
-        <BrowserRouter>
-          {this.openRoutes()}
-          {this.closedRoutes()}
-        </BrowserRouter>
-      </div>
-    )
+    return <BrowserRouter>{this.renderRoutes()}</BrowserRouter>
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     loggedIn: state.loggedIn,
+    user: state.user,
   }
 }
 

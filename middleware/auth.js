@@ -6,7 +6,6 @@ const auth = async (req, res, next) => {
       .select('company email firstName lastName isAdmin image jobTitle')
       .populate('company')
       .exec()
-
     if (user) {
       const image = user.image.toString('base64')
       req.user = {
@@ -17,7 +16,7 @@ const auth = async (req, res, next) => {
       throw new Error()
     }
   } catch (e) {
-    res.status(401).send()
+    res.status(406).send('User not authenticated!')
   }
   next()
 }

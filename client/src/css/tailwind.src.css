@@ -1,0 +1,52 @@
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import './components';
+@import './loadingSpinner';
+@import 'tailwindcss/utilities';
+
+
+
+body {
+  @apply bg-gray;
+}
+* {
+  @apply text-blue;
+}
+
+h1 {
+  @apply text-4xl  font-semibold;
+}
+h2 {
+  @apply text-2xl font-semibold;
+}
+
+h3 {
+  @apply text-xl font-semibold;
+}
+
+.hover-green {
+  @apply text-green font-semibold;
+}
+
+.hover-green:hover {
+  @apply border-b;
+}
+
+.hover-blue {
+  position: relative;
+}
+
+.hover-blue:hover::after {
+  content: '';
+  height: 1px;
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  left: 0px;
+  @apply bg-blue;
+}
+
+.error {
+  @apply text-red;
+}

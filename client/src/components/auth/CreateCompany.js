@@ -1,11 +1,11 @@
 import React from 'react'
-import axios from 'axios'
 import { connect } from 'react-redux'
+
+import axios from 'axios'
+
 import { logIn } from '../../redux/actions/logInOut'
-import { Form, Input, FormWrapper, GrayBg } from './styledComponents'
-import { ErrorMessage } from '../styledComponents/smallComponents'
-import Logo from '../utils/Logo'
-import { Button } from '../utils/Buttons'
+import AuthFormWrapper from '../buildingBlocks/AuthFormWrapper'
+import { AuthError } from '../buildingBlocks/utils/ErrorMessages'
 
 class CreateCompany extends React.Component {
   state = {
@@ -27,25 +27,20 @@ class CreateCompany extends React.Component {
 
   render() {
     return (
-      <GrayBg>
-        <Logo />
-        <FormWrapper>
-          <h1>Last step!</h1>
-          <p>Who is the owner of the account?</p>
-          <Form onSubmit={this.onSubmit}>
-            <Input
-              type="text"
-              placeholder="Company name"
-              value={this.state.companyName}
-              onChange={(e) => this.setState({ companyName: e.target.value })}
-            />
-            {this.state.errors.companyName && (
-              <ErrorMessage>{this.state.errors.companyName}</ErrorMessage>
-            )}
-            <Button>Sign Up</Button>
-          </Form>
-        </FormWrapper>
-      </GrayBg>
+      <AuthFormWrapper header="Create your account">
+        <p className="mb-6">What company is connected to this account?</p>
+        <form className="flex justify-center flex-col mx-auto" onSubmit={this.onSubmit}>
+          <input
+            className="input-border-gray"
+            type="text"
+            placeholder="Company name"
+            value={this.state.companyName}
+            onChange={(e) => this.setState({ companyName: e.target.value })}
+          />
+          {this.state.errors.companyName && <AuthError msg={this.state.errors.companyName} />}
+          <button className="btn">Lets get started!</button>
+        </form>
+      </AuthFormWrapper>
     )
   }
 }

@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './components/App'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import rootReducer from './redux/reducers'
 
-import './styles/main.scss'
+import App from './components/App'
+import './tailwind.css'
+
+import rootReducer from './redux/reducers'
 
 const store = createStore(
   rootReducer,
