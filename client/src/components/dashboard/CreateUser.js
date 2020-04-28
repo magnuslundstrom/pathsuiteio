@@ -73,6 +73,7 @@ class CreateUser extends React.Component {
             className="input-border-gray"
             value={this.state.password}
             onChange={(e) => this.setState({ password: e.target.value })}
+            autoComplete="new-password"
           />
           {this.state.errors.password && <AuthError msg={this.state.errors.password} />}
           <input
