@@ -53,7 +53,7 @@ class Header extends React.Component {
 
             {/* Dropdown */}
             <OutsideClickHandler onOutsideClick={() => this.setState({ dropdown: false })}>
-              <div className="relative">
+              <div className="relative z-20">
                 <img
                   src={`data:image/png;base64, ${this.props.image}`}
                   alt="profile"

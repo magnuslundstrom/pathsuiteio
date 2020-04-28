@@ -64,7 +64,7 @@ class Paths extends React.Component {
           <PathCard
             key={index}
             path={path}
-            position="paths"
+            position={this.props.isAdmin ? 'paths' : 'user'}
             isAdmin={this.props.isAdmin}
             onComplete={this.onComplete}
             goalIndex={index}

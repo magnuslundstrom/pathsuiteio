@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import Container from '../buildingBlocks/Container'
@@ -21,7 +22,7 @@ class User extends React.Component {
 
   renderPaths = () => {
     return this.state.user.paths.map((path, index) => {
-      return <PathCard key={index} path={path} position="user" />
+      return <PathCard key={index} path={path} position="user" isAdmin={this.props.isAdmin} />
     })
   }
 
@@ -57,4 +58,10 @@ class User extends React.Component {
   }
 }
 
-export default User
+const mapStateToProps = (state) => {
+  return {
+    isAdmin: state.user.isAdmin,
+  }
+}
+
+export default connect(mapStateToProps, null)(User)

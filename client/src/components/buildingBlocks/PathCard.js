@@ -1,49 +1,55 @@
 import React, { useState } from 'react'
 import progressCalc from '../../utilsFn/progressCalc'
+import axios from 'axios'
 import UpperPathCard from './utils/UpperPathCard'
 
 const PathCard = (props) => {
   const [display, setDisplay] = useState(false)
-  const [confetti, setConfetti] = useState(false)
   let progress = progressCalc(props.path.steps)
-
-  const onProgressClick = (goalIndex, index) => {
+  const onProgressClick = async (goalIndex, index, pathId, stepId) => {
     props.onComplete(goalIndex, index)
     progress = progressCalc(props.path.steps)
+    const res = await axios.post('/api/update-goal-status', {
+      pathId,
+      stepId,
+    })
+    console.log(res)
     if (progress === 100) props.success()
   }
 
   const renderGoals = () => {
-    return props.path.steps.map((path, index) => {
+    return props.path.steps.map((step, index) => {
       return (
         <div key={index} className="flex">
           <div className="mt-1 mr-5 text-3xl">
             {(!props.isAdmin && (
-              <button onClick={() => onProgressClick(props.goalIndex, index)}>
-                {(path.isCompleted && <i className="fas fa-check-circle text-green"></i>) || (
+              <button
+                onClick={() => onProgressClick(props.goalIndex, index, props.path._id, step._id)}
+              >
+                {(step.isCompleted && <i className="fas fa-check-circle text-green"></i>) || (
                   <i className="far fa-circle"></i>
                 )}
               </button>
             )) ||
-              (path.isCompleted && <i className="fas fa-check-circle text-green"></i>) || (
+              (step.isCompleted && <i className="fas fa-check-circle text-green"></i>) || (
                 <i className="far fa-circle"></i>
               )}
           </div>
           <div>
             <h3 className="mb-1">
-              {index + 1}. {path.goalTitle}
+              {index + 1}. {step.goalTitle}
             </h3>
             <i className="fas fa-link text-sm mr-2"></i>{' '}
             <a
-              href={`${path.goalLink}`}
+              href={`${step.goalLink}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-green"
             >
-              {path.goalLink}
+              {step.goalLink}
             </a>
             <p>
-              <i className="fas fa-sticky-note text-sm mr-2"></i> {path.goalNote}
+              <i className="fas fa-sticky-note text-sm mr-2"></i> {step.goalNote}
             </p>
           </div>
         </div>
