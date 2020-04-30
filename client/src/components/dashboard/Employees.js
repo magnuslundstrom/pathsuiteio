@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 import Container from '../buildingBlocks/Container'
-import EmployeeCard from '../buildingBlocks/utils/EmployeeCard'
+import EmployeeList from '../buildingBlocks/employee/EmployeeList'
 import BoxLoader from '../buildingBlocks/utils/ScreenLoader'
 
 class Employees extends React.Component {
@@ -22,15 +22,6 @@ class Employees extends React.Component {
     }
   }
 
-  renderEmployees = () => {
-    if (this.state.employees.length === 0) {
-      return <p>You have no employees yet!</p>
-    } else {
-      return this.state.employees.map((employee, index) => {
-        return <EmployeeCard key={index} employee={employee} />
-      })
-    }
-  }
   render() {
     return (
       <Container>
@@ -40,11 +31,7 @@ class Employees extends React.Component {
             <i className="fas fa-plus text-2xl font-semibold"></i>
           </Link>
         </div>
-        {(this.state.loading && <BoxLoader />) || (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
-            {this.renderEmployees()}
-          </div>
-        )}
+        {(this.state.loading && <BoxLoader />) || <EmployeeList employees={this.state.employees} />}
       </Container>
     )
   }

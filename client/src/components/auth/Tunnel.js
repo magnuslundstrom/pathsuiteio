@@ -6,6 +6,8 @@ import axios from 'axios'
 
 import ScreenLoader from '../buildingBlocks/utils/ScreenLoader'
 
+// Reaches api endpoint to check if user is logged in. If cookie exists sets user and loggedIn @redux store
+
 class Tunnel extends React.Component {
   async componentDidMount() {
     try {

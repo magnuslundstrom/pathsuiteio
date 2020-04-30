@@ -77,10 +77,6 @@ UserSchema.virtual('paths', {
   foreignField: 'user',
 })
 
-UserSchema.virtual('fullName').get(function () {
-  return this.firstName + ' ' + this.lastName
-})
-
 UserSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 8)
   this.firstName = camelCase(this.firstName)

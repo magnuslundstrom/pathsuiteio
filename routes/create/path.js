@@ -19,5 +19,5 @@ title,
 category,
 user,
 responsible,
-[steps],
+[goals],
 */

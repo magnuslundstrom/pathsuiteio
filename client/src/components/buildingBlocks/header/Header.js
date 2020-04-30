@@ -2,123 +2,57 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import axios from 'axios'
-
 import { logOut } from '../../../redux/actions/logInOut'
 import { unsetUser } from '../../../redux/actions/unsetUser'
 
-import OutsideClickHandler from 'react-outside-click-handler'
+import Dropdown from './Dropdown'
 import logo from '../../../images/logo.png'
 
-class Header extends React.Component {
-  state = {
-    dropdown: false,
-  }
+const Header = (props) => {
+  return (
+    <div className="shadow-md bg-white py-6 px-5">
+      <div className="w-8/12 m-auto flex justify-between items-center">
+        <Link to="/">
+          <img src={logo} className="w-40" alt="logo" />
+        </Link>
 
-  logOut = async () => {
-    await axios.get('/api/logout')
-    this.props.unsetUser()
-    this.props.logOut()
-  }
-
-  render() {
-    return (
-      <div className="shadow-md bg-white py-6 px-5">
-        <div className="w-8/12 m-auto flex justify-between items-center">
-          <Link to="/">
-            <img src={logo} className="w-40" alt="logo" />
+        <div className="flex items-center">
+          <Link to="/paths" className="mr-8 hover-blue font-semibold">
+            <i className="fas fa-chart-line"></i> Paths
           </Link>
 
-          <div className="flex items-center">
-            <Link to="/paths" className="mr-8 hover-blue font-semibold">
-              <i className="fas fa-chart-line"></i> Paths
-            </Link>
-            {this.props.isAdmin && (
+          {/* Extra menu items if isAdmin */}
+          {props.isAdmin && (
+            <div>
               <Link to="/employees" className="mr-8 hover-blue font-semibold">
                 <i className="fas fa-users"></i> Employees
               </Link>
-            )}
-
-            {this.props.isAdmin && (
               <Link to="/reports" className="mr-16 hover-blue font-semibold">
                 <i className="fas fa-chart-pie"></i> Reports
               </Link>
-            )}
-
-            {this.props.isAdmin && (
               <Link to="#" className="btn btn-upgrade mr-8">
                 Upgrade now
               </Link>
-            )}
+            </div>
+          )}
 
-            {/* Dropdown */}
-            <OutsideClickHandler onOutsideClick={() => this.setState({ dropdown: false })}>
-              <div className="relative z-20">
-                <img
-                  src={`data:image/png;base64, ${this.props.image}`}
-                  alt="profile"
-                  className={`rounded-full w-12 h-12 cursor-pointer ${
-                    !this.props.isAdmin ? 'ml-10' : ''
-                  }`}
-                  onClick={() => this.setState({ dropdown: !this.state.dropdown })}
-                />
-                {this.state.dropdown && (
-                  <div className="absolute top-0 left-0 mt-16 bg-white shadow-md p-5 w-56 rounded-md">
-                    <p className="font-semibold">{this.props.fullname}</p>
-                    <p className="text-secGray border-b border-secGray pb-2">{this.props.email}</p>
-                    <div className="flex flex-col border-b border-secGray pb-2">
-                      <Link to="/profile" className="mt-2 inline-block hover-blue self-start">
-                        Profile
-                      </Link>
-                      {this.props.isAdmin && (
-                        <Link to="/account" className="mt-1 inline-block hover-blue self-start">
-                          Account
-                        </Link>
-                      )}
-                      {this.props.isAdmin && (
-                        <Link
-                          to="/account-users"
-                          className="mt-1 inline-block hover-blue self-start"
-                        >
-                          Account users
-                        </Link>
-                      )}
-
-                      {this.props.isAdmin && (
-                        <Link
-                          to="/subscription"
-                          className="mt-1 inline-block hover-blue self-start"
-                        >
-                          Subscription
-                        </Link>
-                      )}
-                      {this.props.isAdmin && (
-                        <Link to="/billing" className="mt-1 inline-block hover-blue self-start">
-                          Billing info
-                        </Link>
-                      )}
-                    </div>
-                    <button
-                      className="bg-white hover-blue mt-2 border-0 cursor-pointer"
-                      onClick={this.logOut}
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </div>
-            </OutsideClickHandler>
-          </div>
+          {/* Dropdown component */}
+          <Dropdown
+            image={props.image}
+            fullName={props.fullName}
+            email={props.email}
+            isAdmin={props.isAdmin}
+          />
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 const mapStateToProps = (state) => {
   return {
     image: state.user.image,
-    fullname: state.user.firstName + ' ' + state.user.lastName,
+    fullName: state.user.firstName + ' ' + state.user.lastName,
     email: state.user.email,
     isAdmin: state.user.isAdmin,
   }

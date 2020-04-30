@@ -9,7 +9,7 @@ const PathSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide a category'],
   },
-  steps: [
+  goals: [
     {
       goalTitle: {
         type: String,

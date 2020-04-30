@@ -1,5 +1,7 @@
 import React from 'react'
 
+// Used in CreatePath component
+
 const CreateGoals = (props) => {
   const renderGoals = () => {
     return props.goals.map((goal, index) => {

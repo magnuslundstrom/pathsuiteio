@@ -4,7 +4,7 @@ import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 
 import Container from '../buildingBlocks/Container'
-import CreateGoals from '../buildingBlocks/CreateGoals'
+import CreateGoals from '../buildingBlocks/path/CreateGoals'
 import SearchResultList from '../buildingBlocks/utils/SearchResultList'
 import { LimitationBox } from '../buildingBlocks/utils/ErrorMessages'
 
@@ -92,7 +92,7 @@ class Paths extends React.Component {
         user: this.state.user,
         category: this.state.category,
         responsible: this.state.responsible,
-        steps: [...this.state.goals],
+        goals: [...this.state.goals],
       })
       this.setState({ redirect: true })
     } catch (e) {

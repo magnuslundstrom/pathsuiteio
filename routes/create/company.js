@@ -7,10 +7,9 @@ module.exports = (router) => {
   // @@ Used to create a company once a user has signed up
   router.post('/api/create-company', auth, async (req, res) => {
     try {
-      const user = req.user
       const company = new Company({
         companyName: req.body.companyName,
-        users: user._id,
+        users: req.user._id,
       })
       await company.save()
       await User.findByIdAndUpdate(req.user._id, { company: company._id })

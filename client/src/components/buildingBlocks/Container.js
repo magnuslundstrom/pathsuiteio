@@ -2,6 +2,7 @@ import React from 'react'
 import Header from './header/Header'
 
 const Container = (props) => {
+  // A container to reuse that includes header and includes props.children
   return (
     <div>
       <Header />

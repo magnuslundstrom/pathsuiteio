@@ -5,25 +5,20 @@ import { Link } from 'react-router-dom'
 
 import Container from '../buildingBlocks/Container'
 import BoxLoader from '../buildingBlocks/utils/ScreenLoader'
-import PathCard from '../buildingBlocks/PathCard'
+import PathList from '../buildingBlocks/path/PathList'
 
 class User extends React.Component {
   state = {
     loading: true,
-    user: {},
+    paths: {},
   }
 
   async componentDidMount() {
     const params = new URLSearchParams(this.props.location.search)
     const id = params.get('id')
-    const user = await axios.post(`/api/user?id=${id}`)
-    this.setState({ user: user.data, loading: false })
-  }
-
-  renderPaths = () => {
-    return this.state.user.paths.map((path, index) => {
-      return <PathCard key={index} path={path} position="user" isAdmin={this.props.isAdmin} />
-    })
+    const { data: paths } = await axios.get(`/api/paths?user=${id}`)
+    const { data: user } = await axios.get(`/api/user?id=${id}`)
+    this.setState({ paths, user, loading: false }, () => console.log(this.state))
   }
 
   render() {
@@ -39,7 +34,9 @@ class User extends React.Component {
                   className="h-32 w-32 rounded-full mr-6"
                 />
                 <div>
-                  <h1>{this.state.user.fullName}</h1>
+                  <h1>
+                    {this.state.user.firstName} {this.state.user.lastName}
+                  </h1>
                   <p className="font-semibold">{this.state.user.jobTitle}</p>
                 </div>
               </div>
@@ -49,7 +46,7 @@ class User extends React.Component {
             </div>
             <div className="mt-10">
               <h2 className="mb-3">Active paths</h2>
-              {this.renderPaths()}
+              <PathList paths={[...this.state.paths]} isAdmin={this.props.isAdmin} />
             </div>
           </div>
         )}
