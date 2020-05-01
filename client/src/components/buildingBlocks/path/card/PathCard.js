@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
 import GoalList from './goals/GoalsList'
-import UpperPathCard from '../upperpathcard/UpperPathCard'
-import MetaLine from '../upperpathcard/MetaLine'
-import ProgressBar from '../upperpathcard/ProgressBar'
+import UpperPathCard from './upperpathcard/UpperPathCard'
+import MetaLine from './upperpathcard/MetaLine'
+import ProgressBar from './upperpathcard/ProgressBar'
 
 import progressCalc from '../../../../utilsFn/progressCalc'
 

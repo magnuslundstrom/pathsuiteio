@@ -29,7 +29,7 @@ const fetchRoutes = [
 ]
 
 // @@ PATCH ROUTES
-const patchRoutes = [require('./patch/user'), require('./patch/paths')]
+const patchRoutes = [require('./patch/user'), require('./patch/paths'), require('./patch/welcome')]
 
 const routes = [...authRoutes, ...createRoutes, ...deleteRoutes, ...fetchRoutes, ...patchRoutes]
 routes.forEach((route) => route(router))

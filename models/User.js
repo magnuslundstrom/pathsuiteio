@@ -50,12 +50,15 @@ const UserSchema = new mongoose.Schema(
     image: {
       type: Buffer,
     },
+    isFirstTime: {
+      type: Boolean,
+      default: true,
+    },
     isAdmin: {
       type: Boolean,
       default: false,
       required: true,
     },
-
     createdAt: {
       type: Date,
       default: Date.now,

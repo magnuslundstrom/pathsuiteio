@@ -1,11 +1,8 @@
-
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import './components';
 @import './loadingSpinner';
 @import 'tailwindcss/utilities';
-
-
 
 body {
   @apply bg-gray;
@@ -49,4 +46,8 @@ h3 {
 
 .error {
   @apply text-red;
+}
+
+.bg-transparent-gray {
+  background-color: rgba(201, 201, 201, 0.6);
 }
