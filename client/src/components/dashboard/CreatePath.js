@@ -178,7 +178,7 @@ class Paths extends React.Component {
           </button>
         </div>
         <div className="flex justify-end">
-          <button className="btn mt-5" onClick={this.onSubmit}>
+          <button className="btn btn-green mt-5 py-3 px-10" onClick={this.onSubmit}>
             Save path
           </button>
         </div>

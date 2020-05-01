@@ -89,7 +89,7 @@ class SignUp extends React.Component {
                 .
               </label>
             </div>
-            <button className="btn" disabled={!this.state.checked}>
+            <button className="btn btn-green py-3" disabled={!this.state.checked}>
               Sign up!
             </button>
           </form>

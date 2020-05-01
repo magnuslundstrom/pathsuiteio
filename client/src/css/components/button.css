@@ -1,15 +1,19 @@
 .btn {
-  @apply bg-green text-white py-3 px-5 rounded-md font-semibold duration-200;
-}
-
-.btn-upgrade {
-  @apply py-2;
+  @apply text-white rounded-md font-semibold duration-200;
 }
 
 .btn:hover {
-  @apply bg-secGreen duration-200;
+  @apply duration-200;
 }
 
-.btn:disabled {
+.btn-green {
+  @apply bg-green;
+}
+
+.btn-green:hover {
+  @apply bg-secGreen;
+}
+
+.btn-green:disabled {
   @apply bg-secGreen;
 }

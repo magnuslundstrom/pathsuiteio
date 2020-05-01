@@ -86,10 +86,7 @@ class Profile extends React.Component {
                 <p className="font-semibold">Upload photo</p>
                 <p>.jpg, .jpeg, .png</p>
                 <div className="relative mt-4">
-                  <label
-                    htmlFor="image"
-                    className="bg-green font-semibold text-white px-4 py-2 rounded-lg cursor-pointer"
-                  >
+                  <label htmlFor="image" className="btn btn-green py-2 px-5 cursor-pointer">
                     Upload photo
                   </label>
                   <input
@@ -187,7 +184,7 @@ class Profile extends React.Component {
                   onChange={(e) => this.onChangeHandler(e, 'confirmNewPassword')}
                   autoComplete="new-password"
                 />
-                <button className="btn self-start">Submit updates</button>
+                <button className="btn btn-green px-5 py-2 self-start">Submit updates</button>
               </div>
               {/* PASSWORD END */}
             </div>

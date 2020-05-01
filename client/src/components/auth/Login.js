@@ -46,7 +46,7 @@ class Login extends React.Component {
             onChange={(e) => this.setState({ password: e.target.value })}
           />
           {this.state.errors.loginError && <AuthError msg={this.state.errors.loginError} />}
-          <button className="btn">Sign in!</button>
+          <button className="btn btn-green py-3">Sign in!</button>
         </form>
       </AuthFormWrapper>
     )

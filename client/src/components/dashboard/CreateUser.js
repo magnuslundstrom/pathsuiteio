@@ -92,7 +92,7 @@ class CreateUser extends React.Component {
             <option value={true}>Admin</option>
             <option value={false}>Not admin</option>
           </select>
-          <button className="btn">Create user</button>
+          <button className="btn btn-green py-3 px-10">Create user</button>
         </form>
       </Container>
     )

@@ -31,11 +31,11 @@ const Onboard = (props) => {
         <SlidesList index={slideNumber} slides={slides} />
         <PageNumber numbers={slides.length} currentPage={slideNumber} onClick={setSlideNumber} />
         {(slideNumber < slides.length - 1 && (
-          <button className="bg-green py-2 px-10 rounded-lg text-white mt-4" onClick={onNextClick}>
+          <button className="btn btn-green py-2 px-10 mt-5" onClick={onNextClick}>
             Next
           </button>
         )) || (
-          <button className="bg-green py-2 px-10 rounded-lg text-white mt-4" onClick={onClose}>
+          <button className="btn btn-green py-2 px-10 mt-5" onClick={onClose}>
             Done!
           </button>
         )}

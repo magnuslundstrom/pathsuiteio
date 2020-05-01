@@ -30,7 +30,7 @@ const Header = (props) => {
               <Link to="/reports" className="mr-16 hover-blue font-semibold">
                 <i className="fas fa-chart-pie"></i> Reports
               </Link>
-              <Link to="#" className="btn btn-upgrade mr-8">
+              <Link to="#" className="btn btn-green px-5 py-2 mr-8">
                 Upgrade now
               </Link>
             </div>

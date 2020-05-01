@@ -38,7 +38,7 @@ class CreateCompany extends React.Component {
             onChange={(e) => this.setState({ companyName: e.target.value })}
           />
           {this.state.errors.companyName && <AuthError msg={this.state.errors.companyName} />}
-          <button className="btn">Lets get started!</button>
+          <button className="btn btn-green py-3">Lets get started!</button>
         </form>
       </AuthFormWrapper>
     )
