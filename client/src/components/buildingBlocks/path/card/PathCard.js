@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 
 import GoalList from './goals/GoalsList'
 import UpperPathCard from './upperpathcard/UpperPathCard'
@@ -14,10 +15,14 @@ const PathCard = (props) => {
   const [goals, setGoals] = useState(props.goals)
   let progress = progressCalc(goals)
 
-  const onGoalComplete = (index) => {
+  const onGoalComplete = async (index, goalId) => {
     const curGoals = [...goals]
     curGoals[index].isCompleted = !curGoals[index].isCompleted
     setGoals(curGoals)
+    await axios.post('/api/update-goal-status', {
+      pathId: props.path._id,
+      goalId,
+    })
   }
 
   return (

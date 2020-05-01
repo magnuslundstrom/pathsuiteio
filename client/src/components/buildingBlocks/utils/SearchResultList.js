@@ -5,7 +5,7 @@ const SearchResultList = (props) => {
     return props.searchList.map((result, index) => {
       return (
         <button key={index} onClick={() => props.onClick(result, result.isAdmin)}>
-          {result.fullName}
+          {result.firstName} {result.lastName}
         </button>
       )
     })

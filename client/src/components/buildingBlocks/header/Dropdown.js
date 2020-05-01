@@ -27,7 +27,7 @@ const Dropdown = (props) => {
         {/* Dropdown component */}
         {dropdown && (
           <div className="absolute top-0 left-0 mt-16 bg-white shadow-md p-5 w-56 rounded-md">
-            <p className="font-semibold">{props.fullname}</p>
+            <p className="font-semibold">{props.fullName}</p>
             <p className="text-secGray border-b border-secGray pb-2">{props.email}</p>
             <div className="flex flex-col border-b border-secGray pb-2">
               <Link to="/profile" className="mt-2 inline-block hover-blue self-start">

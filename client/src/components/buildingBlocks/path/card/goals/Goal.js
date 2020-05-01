@@ -6,7 +6,7 @@ const Goal = (props) => {
   return (
     <div className="flex mt-5">
       <div className="mt-1 mr-5 text-3xl">
-        <button onClick={() => props.onGoalComplete(props.index)}>
+        <button onClick={() => props.onGoalComplete(props.index, props.goal._id)}>
           {(props.goal.isCompleted && <i className="fas fa-check-circle text-green"></i>) || (
             <i className="far fa-circle"></i>
           )}

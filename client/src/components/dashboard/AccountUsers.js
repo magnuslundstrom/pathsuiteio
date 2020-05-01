@@ -38,7 +38,9 @@ class AccountUsers extends React.Component {
       return this.state.users.map((user, index) => {
         return (
           <tr key={index}>
-            <td className="pt-2">{user.fullName}</td>
+            <td className="pt-2">
+              {user.firstName} {user.lastName}
+            </td>
             <td className="pt-2">{user.email}</td>
             <td className="pt-2">{user.jobTitle}</td>
             <td className="pt-2">{user.isAdmin ? 'Admin' : 'Employee'}</td>
