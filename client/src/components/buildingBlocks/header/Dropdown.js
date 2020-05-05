@@ -14,6 +14,8 @@ const Dropdown = (props) => {
     props.logOut()
   }
 
+  // Uses props.isAdmin to determine what content to show in the menu
+
   return (
     <OutsideClickHandler onOutsideClick={() => setDropdown(false)}>
       <div className="relative z-20">

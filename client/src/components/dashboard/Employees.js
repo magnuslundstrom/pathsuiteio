@@ -15,11 +15,16 @@ class Employees extends React.Component {
 
   async componentDidMount() {
     try {
-      const users = await axios.get('/api/users')
-      this.setState({ employees: users.data, loading: false })
+      const { data: employees } = await axios.get('/api/users')
+      this.setState({ employees, loading: false })
     } catch (e) {
       console.log(e)
     }
+  }
+
+  renderEmployeeList = () => {
+    if (this.state.employees.length === 0) return <p>You have no employees yet!</p>
+    else return <EmployeeList employees={this.state.employees} />
   }
 
   render() {
@@ -31,7 +36,7 @@ class Employees extends React.Component {
             <i className="fas fa-plus text-2xl font-semibold"></i>
           </Link>
         </div>
-        {(this.state.loading && <BoxLoader />) || <EmployeeList employees={this.state.employees} />}
+        {(this.state.loading && <BoxLoader />) || this.renderEmployeeList()}
       </Container>
     )
   }

@@ -2,6 +2,9 @@ import React from 'react'
 import logo from '../../images/logo.png'
 import { Link } from 'react-router-dom'
 
+// Wraps the forms @authorization steps before dashboard
+// Returns logo + dont have account or already have depending on props passed from components in /components/auth
+
 const AuthFormWrapper = (props) => {
   return (
     <div className="h-screen flex flex-col items-center pt-24">
@@ -10,7 +13,6 @@ const AuthFormWrapper = (props) => {
       </Link>
       <div className="text-center bg-white w- shadow-md rounded-lg p-12 w-96">
         <h1 className="mb-6">{props.header}</h1>
-
         {props.children}
       </div>
       {props.logIn && (

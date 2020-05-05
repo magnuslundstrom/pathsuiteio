@@ -17,6 +17,7 @@ import CreateUser from './dashboard/CreateUser'
 import Profile from './dashboard/Profile'
 import AccountUsers from './dashboard/AccountUsers'
 import User from './dashboard/User'
+import EditPath from './dashboard/EditPath'
 
 class App extends React.Component {
   state = {
@@ -55,6 +56,7 @@ class App extends React.Component {
             <Route path="/profile" exact component={Profile} />
             <Route path="/account-users" exact component={AccountUsers} />
             <Route path="/user" component={User} />
+            <Route path="/edit-path" component={EditPath} />
             <Route path="*" render={() => <Redirect to="/" />} />
           </Switch>
         )

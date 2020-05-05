@@ -5,6 +5,9 @@ module.exports = (router) => {
   // Used on /paths on admin side
 
   router.get('/api/paths', auth, async (req, res) => {
+    // req.query (/?user=...)
+    // req.query (/?path=...)
+    console.log(req.query)
     let search
     req.query ? (search = { ...req.query }) : { company: req.user.company._id }
     const paths = await Path.find({ ...search })

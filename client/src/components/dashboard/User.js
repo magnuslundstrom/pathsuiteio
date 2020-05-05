@@ -10,7 +10,7 @@ import PathList from '../buildingBlocks/path/PathList'
 class User extends React.Component {
   state = {
     loading: true,
-    paths: {},
+    paths: [],
   }
 
   async componentDidMount() {
@@ -46,7 +46,15 @@ class User extends React.Component {
             </div>
             <div className="mt-10">
               <h2 className="mb-3">Active paths</h2>
-              <PathList paths={[...this.state.paths]} isAdmin={this.props.isAdmin} />
+              {this.state.paths.length === 0 ? (
+                <p>User have no paths yet!</p>
+              ) : (
+                <PathList
+                  paths={[...this.state.paths]}
+                  isAdmin={this.props.isAdmin}
+                  image={false}
+                />
+              )}
             </div>
           </div>
         )}

@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+// Represents the employee card on /employees
+// Receives {employee}
+
 const EmployeeCard = (props) => {
   return (
     <div className="bg-white shadow-md p-8 flex flex-col items-center rounded-lg text-center">
