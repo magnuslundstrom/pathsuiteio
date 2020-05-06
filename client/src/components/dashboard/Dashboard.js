@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import Onboard from '../buildingBlocks/onboard/Onboard'
 import Container from '../buildingBlocks/Container'
 import NotificationList from '../buildingBlocks/notifications/NotificationList'
+import Chart from '../buildingBlocks/Chart'
 
 class Dashboard extends React.Component {
   state = {
@@ -31,6 +32,7 @@ class Dashboard extends React.Component {
         <div className="flex mt-10">
           <div className="w-2/3 mr-10">
             <h3 className="mb-5">Tasks completed</h3>
+            <Chart />
           </div>
           <div className="w-1/3">
             <h3 className="mb-5">Lastest activity</h3>
