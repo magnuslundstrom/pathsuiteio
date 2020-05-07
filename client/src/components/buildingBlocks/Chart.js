@@ -9,7 +9,7 @@ class Chart extends React.Component {
       datasets: [
         {
           label: 'Completed tasks',
-          data: [...this.props.data],
+          data: this.props.data,
           backgroundColor: '#46cc8c',
           hoverBackgroundColor: '#46cc8c',
         },
@@ -23,7 +23,7 @@ class Chart extends React.Component {
     console.log(this.props.data)
     console.log(typeof this.props.data[0])
     return (
-      <div className="bg-white h-84">
+      <div className='bg-white h-84'>
         <Bar data={this.state.chartData} options={{ ...chartOptions(this.mySuggestedMax) }} />
       </div>
     )

@@ -1,7 +1,7 @@
 const moment = require('moment')
 
 module.exports = (arr) => {
-  const lastWeekNumber = moment(new Date(), 'MM-DD-YYYY').week()
+  const lastWeekNumber = moment(new Date(), 'MM-DD-YYYY').week() - 1
   const lastWeekNotifications = []
   const companyGoalNotifications = arr
 
