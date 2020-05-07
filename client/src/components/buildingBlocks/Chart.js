@@ -5,7 +5,7 @@ import findHighestNumber from '../../utilsFn/findHighestNumber'
 class Chart extends React.Component {
   state = {
     chartData: {
-      labels: ['Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.', 'Sun.'],
+      labels: ['Sun.', 'Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.'],
       datasets: [
         {
           label: 'Completed tasks',
@@ -20,6 +20,8 @@ class Chart extends React.Component {
   mySuggestedMax = findHighestNumber(this.state.chartData.datasets[0].data)
 
   render() {
+    console.log(this.props.data)
+    console.log(typeof this.props.data[0])
     return (
       <div className="bg-white h-84">
         <Bar data={this.state.chartData} options={{ ...chartOptions(this.mySuggestedMax) }} />

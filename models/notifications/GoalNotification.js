@@ -20,6 +20,9 @@ const GoalNotificationSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Path',
   },
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+  },
 })
 
 const GoalNotification = mongoose.model(

@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const { MONGODB_URI } = require('./config/keys')
+
 mongoose.set('useCreateIndex', true)
 
 mongoose.connect(MONGODB_URI, {

@@ -17,7 +17,7 @@ const createRoutes = [
 ]
 
 // @@ DELETE ROUTES
-const deleteRoutes = [require('./delete/user')]
+const deleteRoutes = [require('./delete/user'), require('./delete/path')]
 
 // @@ FETCH ROUTES
 const fetchRoutes = [
@@ -26,6 +26,7 @@ const fetchRoutes = [
   require('./fetch/searchUser'),
   require('./fetch/user'),
   require('./fetch/paths'),
+  require('./fetch/goalNotifications'),
 ]
 
 // @@ PATCH ROUTES

@@ -21,6 +21,7 @@ module.exports = (router) => {
         user: path.user._id,
         goal: path.goals[goalIndex]._id,
         path: path._id,
+        company: req.user.company._id,
       })
       await goalNotification.save()
     } else {
@@ -43,11 +44,5 @@ module.exports = (router) => {
   router.patch('/api/update-path', auth, async (req, res) => {
     await Path.findByIdAndUpdate(req.query.id, { ...req.body })
     res.send({ message: 'Successfully updated!' })
-  })
-
-  router.get('/api/delete-path', auth, async (req, res) => {
-    console.log(req.query.id)
-    await Path.findByIdAndDelete(req.query.id)
-    res.send({ message: 'Successfully deleted!' })
   })
 }

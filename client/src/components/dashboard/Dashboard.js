@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { connect } from 'react-redux'
-
+import axios from 'axios'
 import Onboard from '../buildingBlocks/onboard/Onboard'
 import Container from '../buildingBlocks/Container'
 import NotificationList from '../buildingBlocks/notifications/NotificationList'
@@ -27,8 +27,14 @@ class Dashboard extends React.Component {
       { description: 'Siguard finished something else!', date: '5 april' },
       { description: 'Siguard finished something else!', date: '5 april' },
     ],
-    dataOne: [25, 23, 4, 0, 3, 5, 1],
+    dataOne: [],
     dataTwo: [3, 4, 1, 0, 6, 2, 2],
+  }
+
+  async componentDidMount() {
+    const { data: dataOne } = await axios.get('/api/goals-completed-last-week')
+
+    this.setState({ dataOne: dataOne })
   }
 
   render() {
@@ -43,9 +49,11 @@ class Dashboard extends React.Component {
           <div className="w-2/3 mr-10">
             <div className="flex justify-between">
               <h3 className="mb-3 font-semibold">Tasks completed</h3>
-              <button className="flex items-center font-semibold mb-3">
-                Last week <i className="fas fa-chevron-down ml-3 text-md"></i>
-              </button>
+              <div className="flex items-center mb-3">
+                <button className=" font-semibold ">
+                  Last week <i className="fas fa-chevron-down ml-3 text-md"></i>
+                </button>
+              </div>
             </div>
 
             <div className="bg-white p-5 rounded-lg shadow-md">
