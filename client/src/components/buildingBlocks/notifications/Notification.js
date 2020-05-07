@@ -2,13 +2,12 @@ import React, { useRef, useEffect } from 'react'
 
 const Notification = (props) => {
   const lastNoti = useRef(null)
-  const observerOptions = {
-    threshold: 1.0,
-  }
 
   useEffect(() => {
     if (props.last) {
-      console.log(lastNoti)
+      const observerOptions = {
+        threshold: 1.0,
+      }
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) props.onIntersection()
@@ -16,7 +15,7 @@ const Notification = (props) => {
       }, observerOptions)
       observer.observe(lastNoti.current)
     }
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="flex mb-5" ref={lastNoti}>
