@@ -12,7 +12,7 @@ module.exports = (router) => {
     path.goals[goalIndex].isCompleted = !path.goals[goalIndex].isCompleted
     await path.save()
 
-    // @@ Notification logic
+    // @@ Notification logic -- REFACTOR -- CONSIDER: MIDDLEWARE, POST.SAVE ON MODEL, PRE.SAVE ON MODEL
 
     // GOAL NOTIFICATION
     if (path.goals[goalIndex].isCompleted) {
