@@ -1,3 +1,4 @@
+// sets cookie
 module.exports = (res, id) => {
   return res.cookie('user', id, {
     httpOnly: true,

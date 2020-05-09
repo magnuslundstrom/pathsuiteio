@@ -23,7 +23,10 @@ const Onboard = (props) => {
   }
 
   return (
-    <div className="h-screen w-screen absolute top-0 left-0 bg-transparent-gray z-50 flex justify-center">
+    <div
+      className="w-screen max-w-full absolute top-0 left-0 bg-transparent-gray z-50 flex justify-center"
+      style={{ minHeight: document.documentElement.scrollHeight }}
+    >
       <div className="mt-40 bg-white rounded-lg shadow-md self-start w-108 py-10 px-10 relative flex flex-col items-center">
         <button className="absolute top-0 right-0 mt-4 mr-5" onClick={onClose}>
           <i className="fas fa-times"></i>

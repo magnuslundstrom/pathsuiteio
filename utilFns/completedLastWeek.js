@@ -1,5 +1,6 @@
 const moment = require('moment')
 
+// Used to find the number of tasks completed "last week"
 module.exports = (arr) => {
   const lastWeekNumber = moment(new Date(), 'MM-DD-YYYY').week() - 1
   const lastWeekNotifications = []
