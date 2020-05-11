@@ -7,13 +7,6 @@ import OutsideClickHandler from 'react-outside-click-handler'
 const Dropdown = (props) => {
   const [dropdown, setDropdown] = useState(false)
 
-  // Remove loggedIn and user from redux store
-  const logOut = async () => {
-    await axios.get('/api/logout')
-    props.unsetUser()
-    props.logOut()
-  }
-
   // Uses props.isAdmin to determine what content to show in the menu
 
   return (
@@ -58,7 +51,10 @@ const Dropdown = (props) => {
               )}
             </div>
             {/* Logout button */}
-            <button className="bg-white hover-blue mt-2 border-0 cursor-pointer" onClick={logOut}>
+            <button
+              className="bg-white hover-blue mt-2 border-0 cursor-pointer"
+              onClick={() => props.onLogOut()}
+            >
               Logout
             </button>
           </div>

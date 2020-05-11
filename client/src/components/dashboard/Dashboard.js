@@ -3,91 +3,122 @@ import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import Onboard from '../buildingBlocks/onboard/Onboard'
+import Dropdown from '../buildingBlocks/dashboard/Dropdown'
 import Container from '../buildingBlocks/Container'
+import ScreenLoader from '../buildingBlocks/utils/ScreenLoader'
 import NotificationList from '../buildingBlocks/notifications/NotificationList'
 import Chart from '../buildingBlocks/Chart'
 
 class Dashboard extends React.Component {
   state = {
-    lastestActivity: [
-      { description: 'James finished some shit', date: '5 april' },
-      { description: 'Betina finished something else!', date: '5 april' },
-      { description: 'Betina finished something else!', date: '5 april' },
-      { description: 'Betina finished something else!', date: '5 april' },
-      { description: 'Betina finished something else!', date: '5 april' },
-      { description: 'Betina finished something else!', date: '5 april' },
-      { description: 'Betina finished something else!', date: '5 april' },
-      { description: 'Betina finished something else!', date: '5 april' },
-      { description: 'Betina finished something else!', date: '5 april' },
-    ],
-    recentlyFinished: [
-      { description: 'Siguard finished something else!', date: '5 april' },
-      { description: 'Siguard finished something else!', date: '5 april' },
-      { description: 'Siguard finished something else!', date: '5 april' },
-      { description: 'Siguard finished something else!', date: '5 april' },
-      { description: 'Siguard finished something else!', date: '5 april' },
-    ],
-    dataOne: [0, 0, 0, 0, 0, 0, 0],
-    dataTwo: [3, 4, 1, 0, 6, 2, 2],
+    loading: true,
+    lastestActivity: [],
+    recentlyFinished: [],
+    chartOne: {
+      period: 'week',
+      when: 'last-week',
+      data: [],
+    },
+    chartTwo: {
+      period: 'week',
+      when: 'last-week',
+      data: [],
+    },
   }
 
   async componentDidMount() {
-    const { data: dataOne } = await axios.get('/api/goals-completed-last-week')
-    const newNumbers = dataOne.map((number) => parseInt(number))
-    this.setState({ dataOne: [...newNumbers] })
+    const { data: dataOne } = await axios.get(
+      `/api/goals-completed?when=${this.state.chartOne.when}`
+    )
+    const { data: lastestActivity } = await axios.get('/api/goal-notifications')
+    const { data: dataTwo } = await axios.get(
+      `/api/paths-completed?when=${this.state.chartTwo.when}`
+    )
+    const { data: recentlyFinished } = await axios.get('/api/path-notifications')
+    this.setState({
+      chartOne: { ...this.state.chartOne, data: dataOne },
+      lastestActivity,
+      chartTwo: { ...this.state.chartTwo, data: dataTwo },
+      recentlyFinished,
+      loading: false,
+    })
+  }
+
+  updateChartOne = async (newPeriod, newWhen) => {
+    this.setState(
+      { chartOne: { ...this.state.chartOne, period: newPeriod, when: newWhen, data: [] } },
+      async () => {
+        const { data: newRes } = await axios.get(`/api/goals-completed?when=${newWhen}`)
+        this.setState({
+          chartOne: { ...this.state.chartOne, period: newPeriod, when: newWhen, data: newRes },
+        })
+      }
+    )
+  }
+  updateChartTwo = (newPeriod, newWhen) => {
+    this.setState(
+      {
+        chartTwo: { ...this.state.chartTwo, period: newPeriod, when: newWhen, data: [] },
+      },
+      async () => {
+        const { data: newRes } = await axios.get(`/api/paths-completed?when=${newWhen}`)
+        this.setState({
+          chartTwo: { ...this.state.chartTwo, period: newPeriod, when: newWhen, data: newRes },
+        })
+      }
+    )
   }
 
   render() {
     return (
       <Container>
         {this.props.isFirstTime && <Onboard isAdmin={this.props.isAdmin} />}
+        {(this.state.loading && <ScreenLoader />) || (
+          <div>
+            <h1>Welcome back, {this.props.firstName}!</h1>
+            <p>Get status on your teams performance</p>
+            {/* Tasks + lastest activity */}
+            <div className="flex mt-10">
+              <div className="w-2/3 mr-10">
+                <div className="flex justify-between">
+                  <h3 className="mb-3 font-semibold">Tasks completed</h3>
+                  <div className="flex items-center mb-3">
+                    <Dropdown onClick={this.updateChartOne} />
+                  </div>
+                </div>
 
-        <h1>Welcome back, {this.props.firstName}!</h1>
-        <p>Get status on your teams performance</p>
-        {/* Tasks + lastest activity */}
-        <div className="flex mt-10">
-          <div className="w-2/3 mr-10">
-            <div className="flex justify-between">
-              <h3 className="mb-3 font-semibold">Tasks completed</h3>
-              <div className="flex items-center mb-3">
-                <button className=" font-semibold ">
-                  Last week <i className="fas fa-chevron-down ml-3 text-md"></i>
-                </button>
+                <div className="bg-white p-5 rounded-lg shadow-md">
+                  <Chart data={this.state.chartOne.data} period={this.state.chartOne.period} />
+                </div>
+              </div>
+              <div className="w-1/3">
+                <h3 className="mb-3">Lastest activity</h3>
+                <div className="bg-white p-5 rounded-lg shadow-md">
+                  <NotificationList notifications={this.state.lastestActivity} />
+                </div>
               </div>
             </div>
+            {/* learning paths + recently finished */}
+            <div className="flex mt-10">
+              <div className="w-2/3 mr-10">
+                <div className="flex justify-between">
+                  <h3 className="mb-3">Learning paths completed</h3>
+                  <Dropdown onClick={this.updateChartTwo} />
+                </div>
 
-            <div className="bg-white p-5 rounded-lg shadow-md">
-              <Chart data={this.state.dataOne} />
+                <div className="bg-white p-5 rounded-lg shadow-md">
+                  <Chart data={this.state.chartTwo.data} period={this.state.chartTwo.period} />
+                </div>
+              </div>
+              <div className="w-1/3">
+                <h3 className="mb-3 font-semibold">Recently finished paths</h3>
+                <div className="bg-white p-5 rounded-lg shadow-md">
+                  <NotificationList notifications={this.state.recentlyFinished} />
+                </div>
+              </div>
             </div>
           </div>
-          <div className="w-1/3">
-            <h3 className="mb-3">Lastest activity</h3>
-            <div className="bg-white p-5 rounded-lg shadow-md">
-              <NotificationList notifications={this.state.lastestActivity} />
-            </div>
-          </div>
-        </div>
-        {/* learning paths + recently finished */}
-        <div className="flex mt-10">
-          <div className="w-2/3 mr-10">
-            <div className="flex justify-between">
-              <h3 className="mb-3">Learning paths completed</h3>
-              <button className="flex items-center font-semibold mb-3">
-                Last week <i className="fas fa-chevron-down ml-3 text-md"></i>
-              </button>
-            </div>
-
-            <div className="bg-white p-5 rounded-lg shadow-md">
-              <Chart data={this.state.dataTwo} />
-            </div>
-          </div>
-          <div className="w-1/3">
-            <h3 className="mb-3 font-semibold">Recently finished</h3>
-            <div className="bg-white p-5 rounded-lg shadow-md">
-              <NotificationList notifications={this.state.recentlyFinished} />
-            </div>
-          </div>
-        </div>
+        )}
       </Container>
     )
   }

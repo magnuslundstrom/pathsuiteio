@@ -46,14 +46,14 @@ export default [
   },
   // Slide six
   {
-    image: stepSixImage,
+    image: stepFiveImage,
     title: 'Edit company info',
     description:
       'You can add or remove admins, change billing info, view subscription and edit basic information in the company module.',
   },
   // Slide seven
   {
-    image: stepFiveImage,
+    image: stepSixImage,
     title: 'Upgrade subscription',
     description:
       'Upgrade your subscription from the menu or from the company module. With an upgrade you can add more learning paths and employees.',

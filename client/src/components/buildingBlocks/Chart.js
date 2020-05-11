@@ -3,28 +3,41 @@ import { Bar } from 'react-chartjs-2'
 import findHighestNumber from '../../utilsFn/findHighestNumber'
 
 class Chart extends React.Component {
-  state = {
-    chartData: {
-      labels: ['Sun.', 'Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.'],
-      datasets: [
-        {
-          label: 'Completed tasks',
-          data: this.props.data,
-          backgroundColor: '#46cc8c',
-          hoverBackgroundColor: '#46cc8c',
-        },
-      ],
-    },
-  }
+  mySuggestedMax = findHighestNumber(this.props.data)
 
-  mySuggestedMax = findHighestNumber(this.state.chartData.datasets[0].data)
+  days = ['Sun.', 'Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.']
+  months = [
+    'Jan.',
+    'Feb.',
+    'Mar.',
+    'Apr.',
+    'May',
+    'Jun.',
+    'Jul.',
+    'Aug.',
+    'Sep.',
+    'Oct.',
+    'Nov.',
+    'Dec.',
+  ]
 
   render() {
-    console.log(this.props.data)
-    console.log(typeof this.props.data[0])
     return (
-      <div className='bg-white h-84'>
-        <Bar data={this.state.chartData} options={{ ...chartOptions(this.mySuggestedMax) }} />
+      <div className="bg-white h-84">
+        <Bar
+          data={{
+            labels: this.props.period === 'week' ? [...this.days] : [...this.months],
+            datasets: [
+              {
+                label: 'Completed goals',
+                data: this.props.data,
+                backgroundColor: '#46cc8c',
+                hoverBackgroundColor: '#46cc8c',
+              },
+            ],
+          }}
+          options={{ ...chartOptions(this.mySuggestedMax) }}
+        />
       </div>
     )
   }

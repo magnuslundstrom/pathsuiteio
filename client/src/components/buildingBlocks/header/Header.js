@@ -9,6 +9,11 @@ import Dropdown from './Dropdown'
 import logo from '../../../images/logo.png'
 
 const Header = (props) => {
+  const onLogOut = () => {
+    props.logOut()
+    props.unsetUser()
+  }
+
   return (
     <div className="shadow-md bg-white py-6 px-5">
       <div className="w-8/12 m-auto flex justify-between items-center">
@@ -27,7 +32,7 @@ const Header = (props) => {
               <Link to="/employees" className="mr-8 hover-blue font-semibold">
                 <i className="fas fa-users"></i> Employees
               </Link>
-              <Link to="/reports" className="mr-16 hover-blue font-semibold">
+              <Link to="/reports" className="mr-16 hover-blue font-semibold text-red">
                 <i className="fas fa-chart-pie"></i> Reports
               </Link>
               <Link to="#" className="btn btn-green px-5 py-2 mr-8">
@@ -42,6 +47,7 @@ const Header = (props) => {
             fullName={props.fullName}
             email={props.email}
             isAdmin={props.isAdmin}
+            onLogOut={onLogOut}
           />
         </div>
       </div>

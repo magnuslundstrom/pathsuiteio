@@ -34,6 +34,7 @@ module.exports = (router) => {
         description: `${path.user.firstName} ${path.user.lastName} completed the path "${path.title}"`,
         path: path._id,
         user: path.user._id,
+        company: req.user.company._id,
       })
       await pathNotification.save()
     } else {

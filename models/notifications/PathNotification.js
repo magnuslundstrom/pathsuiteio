@@ -17,6 +17,10 @@ const PathNotificationSchema = new mongoose.Schema({
     ref: 'Path',
     unique: true,
   },
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'company',
+  },
 })
 
 const PathNotification = mongoose.model(
