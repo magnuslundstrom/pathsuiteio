@@ -8,9 +8,8 @@ module.exports = (router) => {
     // req.query (/?user=...)
     // req.query (/?path=...)
     console.log(req.query)
-    let search
-    req.query ? (search = { ...req.query }) : { company: req.user.company._id }
-    const paths = await Path.find({ ...search })
+    if (req.query) let search = { ...req.query }
+    const paths = await Path.find({ ...search, company: req.user.company._id })
       .populate('user', 'firstName lastName jobTitle image')
       .populate('responsible', 'firstName lastName')
       .exec()

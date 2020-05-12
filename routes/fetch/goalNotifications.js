@@ -21,19 +21,23 @@ module.exports = (router) => {
 
   // Get the notifications in sidebar
   router.get('/api/goal-notifications', auth, async (req, res) => {
-    const companyGoalNotifications = await GoalNotification.find({
-      company: req.user.company._id,
-    })
-      .select('date description user')
-      .populate('user', 'firstName lastName image')
-      .exec()
-    const newGoals = []
-    companyGoalNotifications.forEach((noti) => {
-      const image = noti.user._doc.image.toString('base64')
-      const date = moment(noti.date).format('MMM Do')
-      const notification = { ...noti._doc, user: { ...noti._doc.user._doc, image }, date }
-      newGoals.push(notification)
-    })
-    res.send(newGoals)
+    try {
+      const companyGoalNotifications = await GoalNotification.find({
+        company: req.user.company._id,
+      })
+        .select('date description user')
+        .populate('user', 'firstName lastName image')
+        .exec()
+      const newGoals = []
+      companyGoalNotifications.forEach((noti) => {
+        const image = noti.user._doc.image.toString('base64')
+        const date = moment(noti.date).format('MMM Do')
+        const notification = { ...noti._doc, user: { ...noti._doc.user._doc, image }, date }
+        newGoals.push(notification)
+      })
+      res.send(newGoals)
+    } catch (e) {
+      res.status(401).send(e)
+    }
   })
 }
