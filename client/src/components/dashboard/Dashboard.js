@@ -27,21 +27,25 @@ class Dashboard extends React.Component {
   }
 
   async componentDidMount() {
-    const { data: dataOne } = await axios.get(
-      `/api/goals-completed?when=${this.state.chartOne.when}`
-    )
-    const { data: lastestActivity } = await axios.get('/api/goal-notifications')
-    const { data: dataTwo } = await axios.get(
-      `/api/paths-completed?when=${this.state.chartTwo.when}`
-    )
-    const { data: recentlyFinished } = await axios.get('/api/path-notifications')
-    this.setState({
-      chartOne: { ...this.state.chartOne, data: dataOne },
-      lastestActivity,
-      chartTwo: { ...this.state.chartTwo, data: dataTwo },
-      recentlyFinished,
-      loading: false,
-    })
+    try {
+      const { data: dataOne } = await axios.get(
+        `/api/goals-completed?when=${this.state.chartOne.when}`
+      )
+      const { data: lastestActivity } = await axios.get('/api/goal-notifications')
+      const { data: dataTwo } = await axios.get(
+        `/api/paths-completed?when=${this.state.chartTwo.when}`
+      )
+      const { data: recentlyFinished } = await axios.get('/api/path-notifications')
+      this.setState({
+        chartOne: { ...this.state.chartOne, data: dataOne },
+        lastestActivity,
+        chartTwo: { ...this.state.chartTwo, data: dataTwo },
+        recentlyFinished,
+        loading: false,
+      })
+    } catch (e) {
+      console.log(e.response)
+    }
   }
 
   updateChartOne = async (newPeriod, newWhen) => {
