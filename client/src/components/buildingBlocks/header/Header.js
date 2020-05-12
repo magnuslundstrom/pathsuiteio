@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import axios from 'axios'
 
 import { logOut } from '../../../redux/actions/logInOut'
 import { unsetUser } from '../../../redux/actions/unsetUser'
@@ -9,7 +10,8 @@ import Dropdown from './Dropdown'
 import logo from '../../../images/logo.png'
 
 const Header = (props) => {
-  const onLogOut = () => {
+  const onLogOut = async () => {
+    await axios.get('/api/logout')
     props.logOut()
     props.unsetUser()
   }
@@ -31,9 +33,6 @@ const Header = (props) => {
             <div>
               <Link to="/employees" className="mr-8 hover-blue font-semibold">
                 <i className="fas fa-users"></i> Employees
-              </Link>
-              <Link to="/reports" className="mr-16 hover-blue font-semibold text-red">
-                <i className="fas fa-chart-pie"></i> Reports
               </Link>
               <Link to="#" className="btn btn-green px-5 py-2 mr-8">
                 Upgrade now

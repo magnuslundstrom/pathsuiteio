@@ -8,6 +8,7 @@ import Container from '../buildingBlocks/Container'
 import ScreenLoader from '../buildingBlocks/utils/ScreenLoader'
 import NotificationList from '../buildingBlocks/notifications/NotificationList'
 import Chart from '../buildingBlocks/Chart'
+import findHighestNumber from '../../utilsFn/findHighestNumber'
 
 class Dashboard extends React.Component {
   state = {
@@ -16,12 +17,12 @@ class Dashboard extends React.Component {
     recentlyFinished: [],
     chartOne: {
       period: 'week',
-      when: 'last-week',
+      when: 'this-week',
       data: [],
     },
     chartTwo: {
       period: 'week',
-      when: 'last-week',
+      when: 'this-week',
       data: [],
     },
   }
@@ -92,7 +93,11 @@ class Dashboard extends React.Component {
                 </div>
 
                 <div className="bg-white p-5 rounded-lg shadow-md">
-                  <Chart data={this.state.chartOne.data} period={this.state.chartOne.period} />
+                  <Chart
+                    data={this.state.chartOne.data}
+                    period={this.state.chartOne.period}
+                    suggestedMax={findHighestNumber(this.state.chartOne.data) + 10}
+                  />
                 </div>
               </div>
               <div className="w-1/3">
@@ -111,7 +116,11 @@ class Dashboard extends React.Component {
                 </div>
 
                 <div className="bg-white p-5 rounded-lg shadow-md">
-                  <Chart data={this.state.chartTwo.data} period={this.state.chartTwo.period} />
+                  <Chart
+                    data={this.state.chartTwo.data}
+                    period={this.state.chartTwo.period}
+                    suggestedMax={findHighestNumber(this.state.chartTwo.data) + 10}
+                  />
                 </div>
               </div>
               <div className="w-1/3">

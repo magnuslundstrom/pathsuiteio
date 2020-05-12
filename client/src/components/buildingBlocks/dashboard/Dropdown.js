@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
 
 const Dropdown = (props) => {
-  const [displayedItem, setDisplayedItem] = useState('Last week')
+  const [displayedItem, setDisplayedItem] = useState('This week')
   const [displayDropdown, setDisplayDropdown] = useState(false)
 
   const updateUpperButton = (input) => {
