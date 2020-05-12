@@ -17,13 +17,17 @@ const PathCard = (props) => {
   let progress = progressCalc(goals)
 
   const onGoalComplete = async (index, goalId) => {
-    const curGoals = [...goals]
-    curGoals[index].isCompleted = !curGoals[index].isCompleted
-    setGoals(curGoals)
-    await axios.post('/api/update-goal-status', {
-      pathId: props.path._id,
-      goalId,
-    })
+    try {
+      const curGoals = [...goals]
+      curGoals[index].isCompleted = !curGoals[index].isCompleted
+      setGoals(curGoals)
+      await axios.post('/api/update-goal-status', {
+        pathId: props.path._id,
+        goalId,
+      })
+    } catch (e) {
+      console.log(e.response)
+    }
   }
 
   return (

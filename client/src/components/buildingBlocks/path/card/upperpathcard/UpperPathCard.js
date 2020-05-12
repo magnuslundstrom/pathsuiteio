@@ -3,7 +3,6 @@ import React from 'react'
 // If props.image is true , return image else return no profile image - Pass the props from parent component
 
 const UpperPathCard = (props) => {
-  console.log(props.image)
   const renderUpperCard = () => {
     return props.image ? (
       <div className="flex">
