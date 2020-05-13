@@ -10,11 +10,6 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
 class Paths extends React.Component {
-  constructor(props) {
-    super(props)
-    this.calenderRef = React.createRef()
-  }
-
   state = {
     title: '',
     category: '',
@@ -126,37 +121,40 @@ class Paths extends React.Component {
           ]}
         />
         <h1>New path</h1>
-        <button className='mt-10 font-semibold' onClick={() => this.props.history.goBack()}>
-          <i className='fas fa-trash-alt mr-2'></i> Discard path
+        <button className="mt-10 font-semibold" onClick={() => this.props.history.goBack()}>
+          <i className="fas fa-trash-alt mr-2"></i> Discard path
         </button>
-        <div className='bg-white p-10 shadow-md rounded-lg mt-4'>
+        <div className="bg-white p-10 shadow-md rounded-lg mt-4">
           <input
-            className='input-border-trans text-xl block'
-            type='text'
-            placeholder='Add a title'
+            className="input-border-trans text-xl block"
+            type="text"
+            placeholder="Add a title"
             value={this.state.title}
             onChange={(e) => this.setState({ title: e.target.value })}
           />
-          <div className='relative'>
-            <i className='fas fa-user mr-2'></i>{' '}
+          <div className="relative">
+            <i className="fas fa-user mr-2"></i>{' '}
             <input
-              className='input-border-trans'
-              type='text'
-              placeholder='Who owns this path'
+              className="input-border-trans"
+              type="text"
+              placeholder="Who owns this path"
               value={this.state.userSearch}
               onChange={(e) => this.onSearch(e, false)}
             />
             {this.state.userSearchResult.length > 0 && (
-              <SearchResultList searchList={this.state.userSearchResult} onClick={this.onSearchResultClick} />
+              <SearchResultList
+                searchList={this.state.userSearchResult}
+                onClick={this.onSearchResultClick}
+              />
             )}
           </div>
 
           <div>
-            <div className='inline-block mr-2'>
-              <div className='w-40 flex items-center justify-start mr-2  overflow-x-hidden'>
-                <i className='far fa-calendar-alt mr-3'></i>
+            <div className="inline-block mr-2">
+              <div className="w-40 flex items-center justify-start mr-2  overflow-x-hidden">
+                <i className="far fa-calendar-alt mr-3"></i>
                 {!this.state.displayDatePicker && (
-                  <button onClick={this.calenderClick} className='text-left text-secGray'>
+                  <button onClick={this.calenderClick} className="text-left text-secGray">
                     Pick a deadline
                   </button>
                 )}
@@ -169,37 +167,44 @@ class Paths extends React.Component {
                 )}
               </div>
             </div>
-            <i className='fas fa-sticky-note mr-2'></i>{' '}
+            <i className="fas fa-sticky-note mr-2"></i>{' '}
             <input
-              className='input-border-trans mr-2'
-              type='text'
-              placeholder='Add category'
+              className="input-border-trans mr-2"
+              type="text"
+              placeholder="Add category"
               value={this.state.category}
               onChange={(e) => this.setState({ category: e.target.value })}
             />
-            <div className='inline relative'>
-              <i className='fas fa-user mr-2'></i>{' '}
+            <div className="inline relative">
+              <i className="fas fa-user mr-2"></i>{' '}
               <input
-                className='input-border-trans'
-                type='text'
-                placeholder='Responsible for this path'
+                className="input-border-trans"
+                type="text"
+                placeholder="Responsible for this path"
                 value={this.state.responsibleSearch}
                 onChange={(e) => this.onSearch(e, true)}
               />
               {this.state.responsibleSearchResult.length > 0 && (
-                <SearchResultList searchList={this.state.responsibleSearchResult} onClick={this.onSearchResultClick} />
+                <SearchResultList
+                  searchList={this.state.responsibleSearchResult}
+                  onClick={this.onSearchResultClick}
+                />
               )}
             </div>
           </div>
-          <h3 className='my-2'>Goals</h3>
-          <CreateGoals goals={this.state.goals} onChange={this.onGoalChange} onDelete={this.onGoalDelete} />
-          <button className='flex items-center mt-5 font-semibold' onClick={this.addGoal}>
-            <i className='fas fa-plus text-2xl mr-4'></i>
+          <h3 className="my-2">Goals</h3>
+          <CreateGoals
+            goals={this.state.goals}
+            onChange={this.onGoalChange}
+            onDelete={this.onGoalDelete}
+          />
+          <button className="flex items-center mt-5 font-semibold" onClick={this.addGoal}>
+            <i className="fas fa-plus text-2xl mr-4"></i>
             Add new learning goal
           </button>
         </div>
-        <div className='flex justify-end'>
-          <button className='btn btn-green mt-5 py-3 px-10' onClick={this.onSubmit}>
+        <div className="flex justify-end">
+          <button className="btn btn-green mt-5 py-3 px-10" onClick={this.onSubmit}>
             Save path
           </button>
         </div>

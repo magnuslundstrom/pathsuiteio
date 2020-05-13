@@ -3,3 +3,6 @@ note:  <i className="far fa-sticky-note"></i>
 calender: <i className="far fa-calendar-alt"></i>
 plus: <i className='fas fa-plus'></i>
 trash: <i className='fas fa-trash-alt'></i>
+cross: <i className="fas fa-times"></i>
+question: <i className="far fa-question-circle"></i>
+link: <i className="fas fa-link"></i>
