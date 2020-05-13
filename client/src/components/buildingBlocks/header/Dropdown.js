@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import axios from 'axios'
 import OutsideClickHandler from 'react-outside-click-handler'
 
 const Dropdown = (props) => {

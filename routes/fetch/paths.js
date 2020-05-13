@@ -1,3 +1,4 @@
+const moment = require('moment')
 const Path = require('../../models/Path')
 const auth = require('../../middleware/auth')
 
@@ -15,11 +16,11 @@ module.exports = (router) => {
       .populate('user', 'firstName lastName jobTitle image')
       .populate('responsible', 'firstName lastName')
       .exec()
-
     const actualPaths = []
-    paths.forEach((path) => {
+    paths.forEach((path, index) => {
+      const date = moment(path.deadline).format('MMM Do YYYY')
       const image = path.user.image.toString('base64')
-      const newPath = { ...path._doc, user: { ...path._doc.user._doc, image } }
+      const newPath = { ...path._doc, user: { ...path._doc.user._doc, image }, date }
       actualPaths.unshift(newPath)
     })
     res.send(actualPaths)

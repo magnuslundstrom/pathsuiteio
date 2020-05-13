@@ -6,11 +6,6 @@ const Dropdown = (props) => {
   const [displayedItem, setDisplayedItem] = useState('This week')
   const [displayDropdown, setDisplayDropdown] = useState(false)
 
-  const updateUpperButton = (input) => {
-    setDisplayedItem(input)
-    setDisplayDropdown(false)
-  }
-
   const update = (input, period, when) => {
     setDisplayedItem(input)
     setDisplayDropdown(false)

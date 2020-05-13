@@ -12,7 +12,6 @@ module.exports = (router) => {
     const companyPathNotifications = await PathNotification.find({
       company: req.user.company._id,
     })
-    console.log(companyPathNotifications)
     let numbers
     if (period.includes('week')) numbers = completedWeek(companyPathNotifications, period)
     if (period.includes('year')) numbers = completedYear(companyPathNotifications, period)
@@ -33,7 +32,7 @@ module.exports = (router) => {
         const image = noti.user._doc.image.toString('base64')
         const date = moment(noti.date).format('MMM Do')
         const notification = { ...noti._doc, user: { ...noti._doc.user._doc, image }, date }
-        newPaths.push(notification)
+        newPaths.unshift(notification)
       })
       res.send(newPaths)
     } catch (e) {

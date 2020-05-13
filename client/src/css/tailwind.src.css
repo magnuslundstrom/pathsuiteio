@@ -2,6 +2,7 @@
 @import 'tailwindcss/components';
 @import './components';
 @import './loadingSpinner';
+@import './datepicker';
 @import 'tailwindcss/utilities';
 
 body {

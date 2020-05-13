@@ -1,15 +1,19 @@
 import React from 'react'
 import axios from 'axios'
 
-import { Redirect } from 'react-router-dom'
-
 import Container from '../buildingBlocks/Container'
 import CreateGoals from '../buildingBlocks/path/CreateGoals'
 import SearchResultList from '../buildingBlocks/utils/SearchResultList'
 import { LimitationBox } from '../buildingBlocks/utils/ErrorMessages'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
-// AuthError
 class Paths extends React.Component {
+  constructor(props) {
+    super(props)
+    this.calenderRef = React.createRef()
+  }
+
   state = {
     title: '',
     category: '',
@@ -27,9 +31,10 @@ class Paths extends React.Component {
         goalNote: '',
       },
     ],
-    redirect: false,
+    deadline: new Date(),
     showLimitations: true,
     isTyping: false,
+    displayDatePicker: false,
   }
 
   addGoal = () => {
@@ -93,17 +98,24 @@ class Paths extends React.Component {
         category: this.state.category,
         responsible: this.state.responsible,
         goals: [...this.state.goals],
+        deadline: this.state.deadline,
       })
-      this.setState({ redirect: true })
+      this.props.history.goBack()
     } catch (e) {
       console.log(e)
     }
   }
 
+  calenderClick = () => {
+    this.setState({ displayDatePicker: true })
+    setTimeout(() => {
+      this.calenderRef.current.setOpen(true)
+    }, 1)
+  }
+
   render() {
     return (
       <Container>
-        {this.state.redirect && <Redirect to="/paths" />}
         <LimitationBox
           limits={[
             'Please be sure that you have employees connected to the company',
@@ -112,7 +124,7 @@ class Paths extends React.Component {
           ]}
         />
         <h1>New path</h1>
-        <button className="mt-10 font-semibold" onClick={() => this.setState({ redirect: true })}>
+        <button className="mt-10 font-semibold" onClick={() => this.props.history.goBack()}>
           <i className="fas fa-trash-alt mr-2"></i> Discard path
         </button>
         <div className="bg-white p-10 shadow-md rounded-lg mt-4">
@@ -141,9 +153,26 @@ class Paths extends React.Component {
           </div>
 
           <div>
+            <div className="inline-block mr-2">
+              <div className="w-40 flex items-center justify-start mr-2  overflow-x-hidden">
+                <i className="far fa-calendar-alt mr-3"></i>
+                {!this.state.displayDatePicker && (
+                  <button onClick={this.calenderClick} className="text-left text-secGray">
+                    Pick a deadline
+                  </button>
+                )}
+                {this.state.displayDatePicker && (
+                  <DatePicker
+                    selected={this.state.deadline}
+                    onChange={(date) => this.setState({ deadline: date })}
+                    ref={this.calenderRef}
+                  />
+                )}
+              </div>
+            </div>
             <i className="fas fa-sticky-note mr-2"></i>{' '}
             <input
-              className="input-border-trans"
+              className="input-border-trans mr-2"
               type="text"
               placeholder="Add category"
               value={this.state.category}
@@ -152,7 +181,7 @@ class Paths extends React.Component {
             <div className="inline relative">
               <i className="fas fa-user mr-2"></i>{' '}
               <input
-                className="input-border-trans inline"
+                className="input-border-trans"
                 type="text"
                 placeholder="Responsible for this path"
                 value={this.state.responsibleSearch}

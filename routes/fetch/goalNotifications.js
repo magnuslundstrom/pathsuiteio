@@ -33,7 +33,7 @@ module.exports = (router) => {
         const image = noti.user._doc.image.toString('base64')
         const date = moment(noti.date).format('MMM Do')
         const notification = { ...noti._doc, user: { ...noti._doc.user._doc, image }, date }
-        newGoals.push(notification)
+        newGoals.unshift(notification)
       })
       res.send(newGoals)
     } catch (e) {

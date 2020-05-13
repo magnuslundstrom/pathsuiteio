@@ -24,6 +24,7 @@ const PathList = (props) => {
             company: path.company,
             title: path.title,
             _id: path._id,
+            date: path.date,
           }}
           responsible={path.responsible}
           user={path.user}

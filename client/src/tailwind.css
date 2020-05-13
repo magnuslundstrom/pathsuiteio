@@ -651,6 +651,10 @@ video {
   width: 100%;
 }
 
+.input-border-trans::placeholder {
+  color: #a9a9a9;
+}
+
 .input-border-trans {
   border-color: transparent;
   border-radius: 0.375rem;
@@ -765,6 +769,33 @@ video {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.react-datepicker {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 0.5rem;
+  border-color: #a9a9a9;
+}
+
+.react-datepicker * {
+  font-family: Inter;
+}
+
+.react-datepicker__header {
+  background-color: #edf1f4;
+}
+
+.react-datepicker__day--selected {
+  background-color: #2f3756;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: #7394f4;
+}
+
+.react-datepicker-ignore-onclickoutside,
+.react-datepicker__input-container {
+  cursor: pointer;
 }
 
 .space-y-0 > :not(template) ~ :not(template) {

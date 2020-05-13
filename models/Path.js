@@ -41,6 +41,9 @@ const PathSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Company',
   },
+  deadline: {
+    type: Date,
+  },
 })
 
 const Path = mongoose.model('Path', PathSchema, 'paths')

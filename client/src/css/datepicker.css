@@ -1,0 +1,20 @@
+.react-datepicker {
+  @apply shadow-md rounded-lg border-secGray;
+}
+.react-datepicker * {
+  font-family: Inter;
+}
+.react-datepicker__header {
+  @apply bg-gray;
+}
+.react-datepicker__day--selected {
+  @apply bg-blue;
+}
+
+.react-datepicker__day--keyboard-selected {
+  @apply bg-secBlue;
+}
+.react-datepicker-ignore-onclickoutside,
+.react-datepicker__input-container {
+  @apply cursor-pointer;
+}

@@ -54,6 +54,7 @@ const PathCard = (props) => {
       <MetaLine
         category={props.path.category}
         responsible={props.responsible.firstName + ' ' + props.responsible.lastName}
+        date={props.path.date}
       />
 
       <ProgressBar progress={progress} />

@@ -10,6 +10,10 @@
   @apply border-2 border-solid border-gray rounded-md px-4 py-2 block mb-5 w-full;
 }
 
+.input-border-trans::placeholder {
+  @apply text-secGray;
+}
+
 .input-border-trans {
   @apply border-transparent rounded-md py-1;
 }
