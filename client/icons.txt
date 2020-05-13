@@ -1,0 +1,5 @@
+user: <i className="far fa-user"></i>
+note:  <i className="far fa-sticky-note"></i>
+calender: <i className="far fa-calendar-alt"></i>
+plus: <i className='fas fa-plus'></i>
+trash: <i className='fas fa-trash-alt'></i>

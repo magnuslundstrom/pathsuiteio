@@ -18,3 +18,16 @@
 .react-datepicker__input-container {
   @apply cursor-pointer;
 }
+
+.react-datepicker-ignore-onclickoutside:focus {
+  @apply rounded-md;
+  outline: #edf1f4 solid 2px;
+}
+
+.react-datepicker-ignore-onclickoutside {
+  @apply rounded-md py-2;
+}
+
+.react-datepicker__input-container input {
+  @apply px-3 block w-full;
+}
