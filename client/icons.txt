@@ -6,3 +6,62 @@ trash: <i className='fas fa-trash-alt'></i>
 cross: <i className="fas fa-times"></i>
 question: <i className="far fa-question-circle"></i>
 link: <i className="fas fa-link"></i>
+
+
+// EDITOR
+
+
+
+import React from 'react'
+import { EditorState, convertToRaw } from 'draft-js'
+import { convertToHTML } from 'draft-convert'
+import { Editor } from 'react-draft-wysiwyg'
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+
+class ControlledEditor extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      editorState: EditorState.createEmpty(),
+    }
+    this.textBox = React.createRef()
+  }
+
+  onEditorStateChange = (editorState) => {
+    this.setState({
+      editorState,
+    })
+  }
+
+  componentDidUpdate() {
+    const html = convertToHTML(this.state.editorState.getCurrentContent())
+    document.querySelector('#html').innerHTML = html
+  }
+
+  render() {
+    const { editorState } = this.state
+
+    return (
+      <div>
+        <div id="html"></div>
+
+        <Editor
+          editorState={editorState}
+          wrapperClassName="demo-wrapper"
+          editorClassName="demo-editor"
+          onEditorStateChange={this.onEditorStateChange}
+          toolbar={{
+            options: ['inline', 'blockType', 'history'],
+            inline: {
+              options: ['bold', 'italic', 'underline'],
+            },
+            blockType: {
+              options: ['Normal', 'H1', 'H2', 'H3'],
+            },
+          }}
+        />
+      </div>
+    )
+  }
+}
+export default ControlledEditor

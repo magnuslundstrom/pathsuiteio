@@ -9,6 +9,7 @@ export const insertNewSubtask = () => {
 }
 
 export const removeSubtask = (arr, index) => {
-  const newSubtaskArr = arr.splice(index, 1)
-  return newSubtaskArr
+  const newArr = [...arr]
+  newArr.splice(index, 1)
+  return newArr
 }

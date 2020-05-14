@@ -3,8 +3,14 @@ import CreateSubtask from './CreateSubtask'
 
 const CreateSubtaskList = (props) => {
   const renderSubtasks = () => {
-    return props.subtasks.map((goal, index) => (
-      <CreateSubtask index={index} subtask={goal} key={index} />
+    return props.subtasks.map((subtask, index) => (
+      <CreateSubtask
+        index={index}
+        subtask={subtask}
+        key={index}
+        onDelete={props.onDelete}
+        onChange={props.onChange}
+      />
     ))
   }
 

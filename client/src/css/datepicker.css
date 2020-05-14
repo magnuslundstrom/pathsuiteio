@@ -1,5 +1,8 @@
 .react-datepicker {
-  @apply shadow-md rounded-lg border-secGray;
+  @apply shadow-md rounded-lg border-secGray z-30;
+}
+.react-datepicker-popper {
+  @apply z-30;
 }
 .react-datepicker * {
   font-family: Inter;
