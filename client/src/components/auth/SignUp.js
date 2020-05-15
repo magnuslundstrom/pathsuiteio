@@ -42,7 +42,7 @@ class SignUp extends React.Component {
         <AuthFormWrapper header="Create your account" signUp>
           <form className="flex justify-center flex-col mx-auto" onSubmit={this.onSubmit}>
             <input
-              className="input-border-gray"
+              className="auth-input"
               type="text"
               placeholder="First name"
               value={this.state.firstName}
@@ -50,7 +50,7 @@ class SignUp extends React.Component {
             />
             {this.state.errors.firstName && <AuthError msg={this.state.errors.firstName} />}
             <input
-              className="input-border-gray"
+              className="auth-input"
               type="text"
               placeholder="Last name"
               value={this.state.lastName}
@@ -58,7 +58,7 @@ class SignUp extends React.Component {
             />
             {this.state.errors.lastName && <AuthError msg={this.state.errors.lastName} />}
             <input
-              className="input-border-gray"
+              className="auth-input"
               type="text"
               placeholder="Email"
               value={this.state.email}
@@ -66,7 +66,7 @@ class SignUp extends React.Component {
             />
             {this.state.errors.email && <AuthError msg={this.state.errors.email} />}
             <input
-              className="input-border-gray"
+              className="auth-input"
               type="password"
               placeholder="Password"
               value={this.state.password}

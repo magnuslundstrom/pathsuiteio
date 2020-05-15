@@ -32,14 +32,14 @@ class Login extends React.Component {
       <AuthFormWrapper header="Sign in" logIn>
         <form className="flex justify-center flex-col mx-auto" onSubmit={this.onSubmit}>
           <input
-            className="input-border-gray"
+            className="auth-input"
             type="text"
             placeholder="Email"
             value={this.state.email}
             onChange={(e) => this.setState({ email: e.target.value })}
           />
           <input
-            className="input-border-gray"
+            className="auth-input"
             type="password"
             placeholder="Password"
             value={this.state.password}

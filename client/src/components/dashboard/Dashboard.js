@@ -30,9 +30,9 @@ class Dashboard extends React.Component {
   async componentDidMount() {
     try {
       const { data: dataOne } = await axios.get(
-        `/api/goals-completed?when=${this.state.chartOne.when}`
+        `/api/subtasks-completed?when=${this.state.chartOne.when}`
       )
-      const { data: lastestActivity } = await axios.get('/api/goal-notifications')
+      const { data: lastestActivity } = await axios.get('/api/subtask-notifications')
       const { data: dataTwo } = await axios.get(
         `/api/paths-completed?when=${this.state.chartTwo.when}`
       )
@@ -53,7 +53,7 @@ class Dashboard extends React.Component {
     this.setState(
       { chartOne: { ...this.state.chartOne, period: newPeriod, when: newWhen, data: [] } },
       async () => {
-        const { data: newRes } = await axios.get(`/api/goals-completed?when=${newWhen}`)
+        const { data: newRes } = await axios.get(`/api/subtasks-completed?when=${newWhen}`)
         this.setState({
           chartOne: { ...this.state.chartOne, period: newPeriod, when: newWhen, data: newRes },
         })

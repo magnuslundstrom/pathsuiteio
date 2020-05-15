@@ -21,7 +21,7 @@ const UpperPathCard = (props) => {
       <div>
         <h3>{props.pathTitle}</h3>
         <p className="mt-5">
-          <i className="fas fa-user"></i> {props.name}
+          <i className="fas fa-user mr-2"></i> {props.name}
         </p>
       </div>
     )

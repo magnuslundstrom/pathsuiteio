@@ -22,3 +22,10 @@
 .input-border-trans:focus {
   @apply outline-none;
 }
+
+.auth-input {
+  @apply border border-gray p-2 px-3 block mb-5 rounded-md border-2;
+}
+.auth-input:focus {
+  @apply outline-none;
+}

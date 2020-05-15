@@ -1,4 +1,3 @@
-const moment = require('moment')
 const Path = require('../../models/Path')
 const auth = require('../../middleware/auth')
 
@@ -13,7 +12,7 @@ module.exports = (router) => {
       await path.save()
       res.send('Success!')
     } catch (e) {
-      res.send(e)
+      res.status(406).send(e)
     }
   })
 }

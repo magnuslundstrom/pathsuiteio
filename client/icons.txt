@@ -9,9 +9,6 @@ link: <i className="fas fa-link"></i>
 
 
 // EDITOR
-
-
-
 import React from 'react'
 import { EditorState, convertToRaw } from 'draft-js'
 import { convertToHTML } from 'draft-convert'

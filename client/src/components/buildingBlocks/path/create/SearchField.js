@@ -6,8 +6,8 @@ import SearchResults from './SearchResults'
 class SearchField extends React.Component {
   state = {
     chosenUser: {
-      name: '',
-      id: '',
+      name: this.props.name,
+      id: this.props.id,
     },
     inputValue: '',
     results: [],

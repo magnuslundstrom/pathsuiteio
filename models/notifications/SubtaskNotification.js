@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const GoalNotificationSchema = new mongoose.Schema({
+const SubtaskNotificationSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now,
@@ -12,7 +12,7 @@ const GoalNotificationSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-  goal: {
+  subtask: {
     type: mongoose.Schema.Types.ObjectId,
     unique: true,
   },
@@ -25,9 +25,9 @@ const GoalNotificationSchema = new mongoose.Schema({
   },
 })
 
-const GoalNotification = mongoose.model(
-  'goalnotification',
-  GoalNotificationSchema,
-  'goalnotifications'
+const SubtaskNotification = mongoose.model(
+  'subtasknotification',
+  SubtaskNotificationSchema,
+  'subtasknotifications'
 )
-module.exports = GoalNotification
+module.exports = SubtaskNotification

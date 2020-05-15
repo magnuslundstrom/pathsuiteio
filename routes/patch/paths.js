@@ -1,40 +1,40 @@
 const auth = require('../../middleware/auth')
 const Path = require('../../models/Path')
-const GoalNotification = require('../../models/notifications/GoalNotification')
+const SubtaskNotification = require('../../models/notifications/SubtaskNotification')
 const PathNotification = require('../../models/notifications/PathNotification')
 
 module.exports = (router) => {
-  router.post('/api/update-goal-status', auth, async (req, res) => {
+  router.post('/api/update-subtask-status', auth, async (req, res) => {
     try {
-      // Essential logic updating goal status
+      // Essential logic updating subtask status
       const path = await Path.findById(req.body.pathId)
         .populate('user', 'firstName lastName')
         .exec()
       console.log(path)
-      const goalIndex = path.goals.findIndex((goal) => goal._id == req.body.goalId)
-      path.goals[goalIndex].isCompleted = !path.goals[goalIndex].isCompleted
+      const subtaskIndex = path.subtasks.findIndex((subtask) => subtask._id == req.body.subtaskId)
+      path.subtasks[subtaskIndex].isCompleted = !path.subtasks[subtaskIndex].isCompleted
       await path.save()
 
       // @@ Notification logic -- REFACTOR -- CONSIDER: MIDDLEWARE, POST.SAVE ON MODEL, PRE.SAVE ON MODEL
 
       // GOAL NOTIFICATION
-      if (path.goals[goalIndex].isCompleted) {
-        const goalNotification = new GoalNotification({
-          description: `${path.user.firstName} ${path.user.lastName} completed the goal "${path.goals[goalIndex].goalTitle}"`,
+      if (path.subtasks[subtaskIndex].isCompleted) {
+        const subtaskNotification = new SubtaskNotification({
+          description: `${path.user.firstName} ${path.user.lastName} completed the subtask "${path.subtasks[subtaskIndex].subtaskTitle}"`,
           user: path.user._id,
-          goal: path.goals[goalIndex]._id,
+          subtask: path.subtasks[subtaskIndex]._id,
           path: path._id,
           company: req.user.company._id,
         })
-        await goalNotification.save()
+        await subtaskNotification.save()
       } else {
-        await GoalNotification.findOneAndDelete({ goal: path.goals[goalIndex]._id })
+        await SubtaskNotification.findOneAndDelete({ subtask: path.subtasks[subtaskIndex]._id })
       }
 
       // PATH NOTIFICATION
-      if (path.goals.every((goal) => goal.isCompleted)) {
+      if (path.subtasks.every((subtask) => subtask.isCompleted)) {
         const pathNotification = new PathNotification({
-          description: `${path.user.firstName} ${path.user.lastName} completed the path "${path.title}"`,
+          description: `${path.user.firstName} ${path.user.lastName} completed the path "${path.pathTitle}"`,
           path: path._id,
           user: path.user._id,
           company: req.user.company._id,

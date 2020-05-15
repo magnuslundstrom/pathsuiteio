@@ -4,7 +4,6 @@ import CreateSubtaskList from './create/CreateSubtaskList'
 import Calender from './create/Calender'
 import { insertNewSubtask, removeSubtask } from './create/fns/helpers'
 import SearchField from './create/SearchField'
-import { createPathFormState } from './data/createPathFormState' // has a form property that holds all data to be send to api endpoint
 
 // PROPS: edit=true/false onSubmit recieves form obj
 // Pathform is ment to be used on /create-path /edit-path
@@ -16,18 +15,9 @@ class PathForm extends React.Component {
     super(props)
     this.startDateRef = React.createRef()
     this.endDateRef = React.createRef()
-    this.state = { loading: true }
+    this.state = { ...this.props.state }
   }
 
-  componentDidMount = async () => {
-    if (this.props.edit) {
-      // FETCH DATA FROM CURRENT PATH
-    }
-    if (!this.props.edit) {
-      this.setState({ ...createPathFormState, loading: false })
-    }
-  }
-  // used to update static inputs, date and user in this.state.form
   onInputChange = (value, input) => {
     this.setState({ form: { ...this.state.form, [`${input}`]: value } })
   }
@@ -68,7 +58,7 @@ class PathForm extends React.Component {
                 placeholder="Add a title"
                 className="input-border-gray text-xl font-semibold mb-5"
                 onChange={(e) => this.onInputChange(e.target.value, 'pathTitle')}
-                value={this.state.pathTitle}
+                value={this.state.form.pathTitle}
               ></input>
               {/* Owner, responsible */}
               <div className="grid grid-cols-2 gap-5 mb-5">
@@ -77,12 +67,16 @@ class PathForm extends React.Component {
                     placeholder="Who owns this path"
                     isAdmin={false}
                     onClick={(id) => this.onInputChange(id, 'user')}
+                    name={this.state.userName ? this.state.userName : ''}
+                    id={this.state.form.user ? this.state.form.user : ''}
                   />
                 </div>
                 <SearchField
                   placeholder="Who is responsible for this path"
                   isAdmin={true}
                   onClick={(id) => this.onInputChange(id, 'responsible')}
+                  name={this.state.responsibleName ? this.state.responsibleName : ''}
+                  id={this.state.form.responsible ? this.state.form.responsible : ''}
                 />
               </div>
               {/* Category, startDate, endDate*/}

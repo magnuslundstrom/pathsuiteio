@@ -2,28 +2,28 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
-import GoalList from './goals/GoalsList'
+import SubtaskList from './subtasks/SubtaskList'
 import UpperPathCard from './upperpathcard/UpperPathCard'
 import MetaLine from './upperpathcard/MetaLine'
 import ProgressBar from './upperpathcard/ProgressBar'
 
 import progressCalc from '../../../../utilsFn/progressCalc'
 
-// RECIEVES: Path, responsible, user, goals, isAdmin(User component)
+// RECIEVES: Path, responsible, user, subtasks, isAdmin(User component)
 
 const PathCard = (props) => {
   const [display, setDisplay] = useState(false)
-  const [goals, setGoals] = useState(props.goals)
-  let progress = progressCalc(goals)
+  const [subtasks, setSubtasks] = useState(props.subtasks)
+  let progress = progressCalc(subtasks)
 
-  const onGoalComplete = async (index, goalId) => {
+  const onSubtaskComplete = async (index, subtaskId) => {
     try {
-      const curGoals = [...goals]
-      curGoals[index].isCompleted = !curGoals[index].isCompleted
-      setGoals(curGoals)
-      await axios.post('/api/update-goal-status', {
+      const curSubtasks = [...subtasks]
+      curSubtasks[index].isCompleted = !curSubtasks[index].isCompleted
+      setSubtasks(curSubtasks)
+      await axios.post('/api/update-subtask-status', {
         pathId: props.path._id,
-        goalId,
+        subtaskId,
       })
     } catch (e) {
       console.log(e.response)
@@ -31,7 +31,7 @@ const PathCard = (props) => {
   }
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-10 mt-10">
+    <div className="bg-white shadow-md rounded-lg p-10 mt-5">
       <div className="flex justify-between">
         {/* UPPER AREA */}
         <UpperPathCard
@@ -39,9 +39,9 @@ const PathCard = (props) => {
           profilePhoto={props.user.image}
           name={props.user.firstName + ' ' + props.user.lastName}
           jobTitle={props.user.jobTitle}
-          pathTitle={props.path.title}
+          pathTitle={props.path.pathTitle}
         />
-        <div className="flex items-center h-1">
+        <div className="flex items-center h-1 mt-3">
           <button onClick={() => setDisplay(!display)}>
             <i className="fas fa-angle-down text-2xl"></i>
           </button>
@@ -54,13 +54,18 @@ const PathCard = (props) => {
       <MetaLine
         category={props.path.category}
         responsible={props.responsible.firstName + ' ' + props.responsible.lastName}
-        date={props.path.date}
+        startDate={props.path.startDate}
+        endDate={props.path.endDate}
       />
 
       <ProgressBar progress={progress} />
 
       {display && (
-        <GoalList goals={goals} pathId={props.path._id} onGoalComplete={onGoalComplete} />
+        <SubtaskList
+          subtasks={subtasks}
+          pathId={props.path._id}
+          onSubtaskComplete={onSubtaskComplete}
+        />
       )}
     </div>
   )

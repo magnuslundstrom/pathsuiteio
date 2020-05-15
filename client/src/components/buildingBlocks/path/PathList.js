@@ -7,9 +7,9 @@ Expects 2 props: [paths], isAdmin
 
 
 every path should contain:
-root: 'category', 'company', {responsible}, [goals], 'title', {user}, '_id' <- path ID
+root: 'category', 'company', {responsible}, [subtasks], 'title', {user}, '_id' <- path ID
 responsible: {firstName, lastName, fullName }
-goals: [{isCompleted, goalLink, goalNote, goalTitle, goalType}]
+subtasks: [{isCompleted, subtaskLink, subtaskNote, subtaskTitle, subtaskType}]
 optional: image
 */
 
@@ -22,13 +22,14 @@ const PathList = (props) => {
           path={{
             category: path.category,
             company: path.company,
-            title: path.title,
+            pathTitle: path.pathTitle,
             _id: path._id,
-            date: path.date,
+            startDate: path.startDate,
+            endDate: path.endDate,
           }}
           responsible={path.responsible}
           user={path.user}
-          goals={path.goals}
+          subtasks={path.subtasks}
           isAdmin={props.isAdmin}
           image={props.image}
         />

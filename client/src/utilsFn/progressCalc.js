@@ -1,4 +1,4 @@
-export default (goals) => {
-  const completed = goals.filter((goal) => goal.isCompleted)
-  return (completed.length / goals.length) * 100
+export default (subtasks) => {
+  const completed = subtasks.filter((subtask) => subtask.isCompleted)
+  return (completed.length / subtasks.length) * 100
 }

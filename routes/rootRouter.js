@@ -26,8 +26,9 @@ const fetchRoutes = [
   require('./fetch/searchUser'),
   require('./fetch/user'),
   require('./fetch/paths'),
-  require('./fetch/goalNotifications'),
+  require('./fetch/subtaskNotifications'),
   require('./fetch/pathNotifications'),
+  require('./fetch/singleEditPath'),
 ]
 
 // @@ PATCH ROUTES
