@@ -7,9 +7,13 @@ import PathForm from '../buildingBlocks/path/PathForm'
 const CreatePath = (props) => {
   const [editPathState, setEditPathState] = useState('')
 
+  const params = new URLSearchParams(props.location.search)
+
+  const [pathId] = useState(params.get('id'))
+
   const onSubmit = async (stateobj) => {
     try {
-      const res = await axios.post('/api/create-path', {
+      const res = await axios.patch(`/api/update-path?id=${pathId}`, {
         ...stateobj,
       })
       console.log(res)
@@ -21,8 +25,6 @@ const CreatePath = (props) => {
 
   const onDelete = async () => {
     try {
-      const params = new URLSearchParams(props.location.search)
-      const pathId = params.get('id')
       const res = await axios.get(`/api/delete-path?id=${pathId}`)
       if (res) props.history.goBack()
     } catch (e) {
@@ -32,8 +34,6 @@ const CreatePath = (props) => {
 
   useEffect(() => {
     const getData = async () => {
-      const params = new URLSearchParams(props.location.search)
-      const pathId = params.get('id')
       const { data: path } = await axios.get(`/api/single-edit-path?id=${pathId}`)
       const startDate = new Date(path.startDate)
       const endDate = new Date(path.endDate)
@@ -44,14 +44,14 @@ const CreatePath = (props) => {
       })
     }
     getData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  console.log(editPathState)
   return (
     <Container>
       <h1>Edit path</h1>
-      <button className="mt-8 font-semibold mb-5" onClick={() => onDelete()}>
-        <i className="fas fa-trash-alt mr-2"></i> Discard path
+      <button className='mt-8 font-semibold mb-5' onClick={() => onDelete()}>
+        <i className='fas fa-trash-alt mr-2'></i> Discard path
       </button>
       {editPathState && <PathForm edit={true} onSubmit={onSubmit} state={editPathState} />}
     </Container>

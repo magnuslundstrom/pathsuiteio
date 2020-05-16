@@ -7,9 +7,7 @@ module.exports = (router) => {
   router.post('/api/update-subtask-status', auth, async (req, res) => {
     try {
       // Essential logic updating subtask status
-      const path = await Path.findById(req.body.pathId)
-        .populate('user', 'firstName lastName')
-        .exec()
+      const path = await Path.findById(req.body.pathId).populate('user', 'firstName lastName').exec()
       console.log(path)
       const subtaskIndex = path.subtasks.findIndex((subtask) => subtask._id == req.body.subtaskId)
       path.subtasks[subtaskIndex].isCompleted = !path.subtasks[subtaskIndex].isCompleted
@@ -49,7 +47,11 @@ module.exports = (router) => {
   })
 
   router.patch('/api/update-path', auth, async (req, res) => {
-    await Path.findByIdAndUpdate(req.query.id, { ...req.body })
-    res.send({ message: 'Successfully updated!' })
+    try {
+      await Path.findByIdAndUpdate(req.query.id, { ...req.body })
+      res.send({ message: 'Successfully updated!' })
+    } catch (e) {
+      res.status(406).send(e)
+    }
   })
 }
