@@ -11,19 +11,23 @@ class SearchField extends React.Component {
     },
     inputValue: '',
     results: [],
+    loading: false,
   }
 
   // Fetches new list everytime input is changed
   onInputChange = (target) => {
-    this.setState({ inputValue: target, chosenUser: { name: '', id: '' } }, async () => {
-      const { data: fetchedResults } = await axios.post(
-        `/api/find-user?isAdmin=${this.props.isAdmin}`,
-        {
-          find: this.state.inputValue,
-        }
-      )
-      this.setState({ results: [...fetchedResults] })
-    })
+    this.setState(
+      { inputValue: target, chosenUser: { name: '', id: '' }, loading: true },
+      async () => {
+        const { data: fetchedResults } = await axios.post(
+          `/api/find-user?isAdmin=${this.props.isAdmin}`,
+          {
+            find: this.state.inputValue,
+          }
+        )
+        this.setState({ results: [...fetchedResults], loading: false })
+      }
+    )
   }
 
   // Used when a user is clicked
@@ -46,7 +50,13 @@ class SearchField extends React.Component {
   // Renders searchResults if inputValue exists
   renderResults = () => {
     if (this.state.inputValue) {
-      return <SearchResults list={this.state.results} onClick={this.onUserClick} />
+      return (
+        <SearchResults
+          list={this.state.results}
+          onClick={this.onUserClick}
+          loading={this.state.loading}
+        />
+      )
     }
   }
 

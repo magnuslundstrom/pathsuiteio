@@ -78,10 +78,10 @@ class Dashboard extends React.Component {
     return (
       <Container>
         {this.props.isFirstTime && <Onboard isAdmin={this.props.isAdmin} />}
+        <h1>Welcome back, {this.props.firstName}!</h1>
+        <p>Get status on your teams performance</p>
         {(this.state.loading && <ScreenLoader />) || (
           <div>
-            <h1>Welcome back, {this.props.firstName}!</h1>
-            <p>Get status on your teams performance</p>
             {/* Tasks + lastest activity */}
             <div className="flex mt-10">
               <div className="w-2/3 mr-10">

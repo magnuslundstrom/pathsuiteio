@@ -107,7 +107,7 @@ class Profile extends React.Component {
                   First name
                 </label>
                 <input
-                  className="input-border-gray"
+                  className="auth-input"
                   type="text"
                   value={this.state.firstName}
                   id="firstName"
@@ -119,7 +119,7 @@ class Profile extends React.Component {
                 </label>
                 <input
                   type="text"
-                  className="input-border-gray"
+                  className="auth-input"
                   value={this.state.lastName}
                   id="lastName"
                   onChange={(e) => this.onChangeHandler(e, 'lastName')}
@@ -130,7 +130,7 @@ class Profile extends React.Component {
                 </label>
                 <input
                   type="text"
-                  className="input-border-gray"
+                  className="auth-input"
                   value={this.state.jobTitle}
                   id="jobTitle"
                   onChange={(e) => this.onChangeHandler(e, 'jobTitle')}
@@ -140,7 +140,7 @@ class Profile extends React.Component {
                   Email
                 </label>
                 <input
-                  className="input-border-gray"
+                  className="auth-input"
                   value={this.state.email}
                   id="email"
                   type="text"
@@ -156,7 +156,7 @@ class Profile extends React.Component {
                   Current password
                 </label>
                 <input
-                  className="input-border-gray"
+                  className="auth-input"
                   id="currentPassword"
                   type="password"
                   onChange={(e) => this.onChangeHandler(e, 'currentPassword')}
@@ -167,7 +167,7 @@ class Profile extends React.Component {
                   New password
                 </label>
                 <input
-                  className="input-border-gray"
+                  className="auth-input"
                   id="newPassword"
                   type="password"
                   onChange={(e) => this.onChangeHandler(e, 'newPassword')}
@@ -178,7 +178,7 @@ class Profile extends React.Component {
                   Confirm new password
                 </label>
                 <input
-                  className="input-border-gray"
+                  className="auth-input"
                   id="confirmNewPassword"
                   type="password"
                   onChange={(e) => this.onChangeHandler(e, 'confirmNewPassword')}

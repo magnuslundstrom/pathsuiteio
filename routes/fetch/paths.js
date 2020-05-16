@@ -6,9 +6,6 @@ module.exports = (router) => {
   // Used on /paths on admin side
 
   router.get('/api/paths', auth, async (req, res) => {
-    // req.query (/?user=...)
-    // req.query (/?path=...)
-    console.log(req.query)
     let search
     if (req.query) search = { ...req.query, company: req.user.company._id }
     if (!req.query) search = { company: req.user.company._id }
@@ -17,7 +14,7 @@ module.exports = (router) => {
       .populate('responsible', 'firstName lastName')
       .exec()
     const actualPaths = []
-    paths.forEach((path, index) => {
+    paths.forEach((path) => {
       const startDate = moment(path.startDate).format('MMM Do YYYY')
       const endDate = moment(path.endDate).format('MMM Do YYYY')
       const image = path.user.image.toString('base64')

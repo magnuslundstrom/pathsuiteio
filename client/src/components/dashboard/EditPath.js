@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
+import ScreenLoader from '../buildingBlocks/utils/ScreenLoader'
 import Container from '../buildingBlocks/Container'
 import PathForm from '../buildingBlocks/path/PathForm'
 
 const CreatePath = (props) => {
   const [editPathState, setEditPathState] = useState('')
+  const [loading, setLoading] = useState(true)
 
   const onSubmit = async (stateobj) => {
     try {
       const res = await axios.post('/api/create-path', {
         ...stateobj,
       })
-      console.log(res)
       if (res) props.history.goBack()
     } catch (e) {
       console.log(e.response)
@@ -29,7 +30,6 @@ const CreatePath = (props) => {
       console.log(e.response)
     }
   }
-
   useEffect(() => {
     const getData = async () => {
       const params = new URLSearchParams(props.location.search)
@@ -42,18 +42,27 @@ const CreatePath = (props) => {
         userName: `${path.user.firstName} ${path.user.lastName}`,
         responsibleName: `${path.responsible.firstName} ${path.responsible.lastName}`,
       })
+      setLoading(false)
     }
     getData()
-  }, [])
+  }, [props.location.search])
 
   console.log(editPathState)
   return (
     <Container>
       <h1>Edit path</h1>
-      <button className="mt-8 font-semibold mb-5" onClick={() => onDelete()}>
+
+      <button className="block mt-8 font-semibold">
+        <i className="fas fa-arrow-left mr-2"></i> Go back{' '}
+      </button>
+      <button className="mt-2 font-semibold mb-5" onClick={() => onDelete()}>
         <i className="fas fa-trash-alt mr-2"></i> Discard path
       </button>
-      {editPathState && <PathForm edit={true} onSubmit={onSubmit} state={editPathState} />}
+      {loading ? (
+        <ScreenLoader />
+      ) : (
+        editPathState && <PathForm edit={true} onSubmit={onSubmit} state={editPathState} />
+      )}
     </Container>
   )
 }

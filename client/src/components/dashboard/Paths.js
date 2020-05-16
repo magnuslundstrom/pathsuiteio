@@ -35,13 +35,11 @@ class Paths extends React.Component {
   render() {
     return (
       <Container>
+        <h1>Paths</h1>
         {(this.state.loading && <BoxLoader />) || (
           <div>
             <div className="flex justify-between items-center">
-              <div>
-                <h1>Paths</h1>
-                {this.state.paths.length === 0 && <p>You have no paths yet!</p>}
-              </div>
+              <div>{this.state.paths.length === 0 && <p>You have no paths yet!</p>}</div>
 
               {this.props.isAdmin && (
                 <Link to="/create-path">

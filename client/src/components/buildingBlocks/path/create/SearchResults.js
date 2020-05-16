@@ -17,7 +17,15 @@ const SearchResults = (props) => {
 
   return (
     <ul className="absolute top-0 left-0 mt-10 bg-gray rounded-lg shadow-md p-5 w-64 overflow-x-hidden z-10 ml-6">
-      {props.list.length === 0 ? <p>No users was found</p> : renderUsers()}
+      {props.loading ? (
+        <p>
+          Loading <i className="fas fa-spinner own-spinner ml-2"></i>
+        </p>
+      ) : props.list.length === 0 ? (
+        <p>No users was found</p>
+      ) : (
+        renderUsers()
+      )}
     </ul>
   )
 }

@@ -30,6 +30,7 @@ class Chart extends React.Component {
                 data: this.props.data,
                 backgroundColor: '#46cc8c',
                 hoverBackgroundColor: '#46cc8c',
+                barThickness: 50,
               },
             ],
           }}
@@ -38,7 +39,6 @@ class Chart extends React.Component {
             scales: {
               xAxes: [
                 {
-                  barThickness: 50,
                   ticks: {
                     fontColor: '#2f3756',
                     fontFamily: 'Inter',
@@ -73,44 +73,5 @@ class Chart extends React.Component {
     )
   }
 }
-
-// Chart options
-// const chartOptions = (mySuggestedMax) => {
-//   return {
-//     maintainAspectRatio: false,
-//     scales: {
-//       xAxes: [
-//         {
-//           barThickness: 50,
-//           ticks: {
-//             fontColor: '#2f3756',
-//             fontFamily: 'Inter',
-//             fontSize: 13,
-//             fontStyle: 600,
-//           },
-//           gridLines: {
-//             color: '#edf1f4',
-//           },
-//         },
-//       ],
-//       yAxes: [
-//         {
-//           ticks: {
-//             fontColor: '#a9a9a9',
-//             fontFamily: 'Inter',
-//             beginAtZero: true,
-//             suggestedMax: mySuggestedMax,
-//           },
-//           gridLines: {
-//             color: '#edf1f4',
-//           },
-//         },
-//       ],
-//     },
-//     legend: {
-//       display: false,
-//     },
-//   }
-// }
 
 export default Chart

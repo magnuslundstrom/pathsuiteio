@@ -6,7 +6,8 @@ trash: <i className='fas fa-trash-alt'></i>
 cross: <i className="fas fa-times"></i>
 question: <i className="far fa-question-circle"></i>
 link: <i className="fas fa-link"></i>
-
+back: <i className="fas fa-arrow-left"></i>
+loadingSpinner: <i className="fas fa-spinner own-spinner"></i>
 
 // EDITOR
 import React from 'react'
