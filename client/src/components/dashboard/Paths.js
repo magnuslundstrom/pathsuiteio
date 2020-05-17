@@ -15,18 +15,21 @@ import appendFilters from '../../utilsFn/appendFilters'
 // URL: /paths
 
 class Paths extends React.Component {
-  skip = 0
   state = {
     loading: true,
     paths: [],
     skip: 0,
     limit: 1,
-    filters: [{ isCompleted: '' }, { category: 'ewq' }, { search: '' }],
+    filters: {
+      isCompleted: '',
+      category: '',
+      search: '',
+    },
   }
 
-  fetchUrl = `/api/paths?limit=${this.state.limit}&skip=${this.state.skip}${appendFilters(
-    this.state.filters
-  )}`
+  getCurrentFetchUrl = () => {
+    return `/api/paths?limit=${this.state.limit}&skip=${this.state.skip}${appendFilters(this.state.filters)}`
+  }
 
   // Fetching paths depending on isAdmin
   // /paths on admin-side fetching all paths in company
@@ -35,7 +38,7 @@ class Paths extends React.Component {
   async componentDidMount() {
     let paths
     if (this.props.isAdmin) {
-      const { data } = await axios.get(this.fetchUrl)
+      const { data } = await axios.get(this.getCurrentFetchUrl())
       paths = data
     } else {
       const { data } = await axios.get('/api/own-paths')
@@ -44,26 +47,35 @@ class Paths extends React.Component {
     this.setState({ paths, loading: false })
   }
 
+  onFilterChange = (value, key) => {
+    const currentFilters = { ...this.state.filters }
+    currentFilters[key] = value
+    this.setState({ filters: currentFilters })
+  }
+
   leftSide = () => {
     return (
-      <div className="flex">
-        <DropdownFilter sortProp="Sort" list={['Completed', 'Unfinished']} />
-        <DropdownFilter sortProp="Category" list={['Programming', 'Design', 'Gardening']} />
+      <div className='flex'>
+        <DropdownFilter sortProp='Sort' list={['Completed', 'Unfinished']} boolean />
+        <DropdownFilter
+          title='Category'
+          list={['Programming', 'Design', 'Gardening']}
+          onClick={(value) => this.onFilterChange(value, 'category')}
+          data={{ name: 'category', current: this.state.filters.category }}
+        />
       </div>
     )
   }
 
   render() {
-    console.log(this.fetchUrl)
     return (
       <Container>
-        {this.fetchUrl}
-
-        <div className="flex justify-between items-center">
+        {this.getCurrentFetchUrl()}
+        <div className='flex justify-between items-center'>
           <h1>Paths</h1>
           {this.props.isAdmin && (
-            <Link to="/create-path">
-              <i className="fas fa-plus text-2xl font-semibold"></i>
+            <Link to='/create-path'>
+              <i className='fas fa-plus text-2xl font-semibold'></i>
             </Link>
           )}
         </div>
@@ -72,10 +84,8 @@ class Paths extends React.Component {
 
         {(this.state.loading && <BoxLoader />) || (
           <div>
-            <div className="flex justify-between items-center">
-              <div>
-                {this.state.paths.length === 0 && <p className="mt-10">You have no paths yet!</p>}
-              </div>
+            <div className='flex justify-between items-center'>
+              <div>{this.state.paths.length === 0 && <p className='mt-10'>You have no paths yet!</p>}</div>
             </div>
             {this.state.paths.length > 0 && (
               <PathList paths={[...this.state.paths]} isAdmin={this.props.isAdmin} image={true} />
