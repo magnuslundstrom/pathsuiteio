@@ -55,7 +55,7 @@ class Dashboard extends React.Component {
       async () => {
         const { data: newRes } = await axios.get(`/api/subtasks-completed?when=${newWhen}`)
         this.setState({
-          chartOne: { ...this.state.chartOne, period: newPeriod, when: newWhen, data: newRes },
+          chartOne: { ...this.state.chartOne, data: newRes },
         })
       }
     )

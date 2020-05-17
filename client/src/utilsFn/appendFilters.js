@@ -1,9 +1,7 @@
-export default (filterArr) => {
-  let filterString = ''
-  filterArr.forEach((filter) => {
-    const key = Object.keys(filter)[0]
-    if (filter[key] === '') filterString += ''
-    else filterString += `&${key}=${filter[key]}`
-  })
-  return filterString
+export default (obj) => {
+  let string = ''
+  for (const prop in obj) {
+    if (obj[prop] !== '') string += `&${prop}=${obj[prop]}`
+  }
+  return string
 }
