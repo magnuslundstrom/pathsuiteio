@@ -6,10 +6,16 @@ module.exports = (router) => {
   // Used on /paths on admin side
 
   router.get('/api/paths', auth, async (req, res) => {
-    let search
-    if (req.query) search = { ...req.query, company: req.user.company._id }
-    if (!req.query) search = { company: req.user.company._id }
-    const paths = await Path.find({ ...search })
+    const searchObj = {
+      ...req.query,
+    }
+    delete searchObj.limit
+    delete searchObj.skip
+
+    const paths = await Path.find({ ...searchObj, company: req.user.company._id })
+      .limit(parseInt(req.query.limit))
+      .skip(parseInt(req.query.skip))
+      .sort('endDate')
       .populate('user', 'firstName lastName jobTitle image')
       .populate('responsible', 'firstName lastName')
       .exec()

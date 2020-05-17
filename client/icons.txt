@@ -8,6 +8,9 @@ question: <i className="far fa-question-circle"></i>
 link: <i className="fas fa-link"></i>
 back: <i className="fas fa-arrow-left"></i>
 loadingSpinner: <i className="fas fa-spinner own-spinner"></i>
+search: <i className="fas fa-search"></i>
+angleDown: <i className="fas fa-angle-down"></i>
+check: <i className="fas fa-check"></i>
 
 // EDITOR
 import React from 'react'
