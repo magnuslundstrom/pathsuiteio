@@ -51,7 +51,7 @@ const CreatePath = (props) => {
     <Container>
       <h1>Edit path</h1>
 
-      <button className="block mt-8 font-semibold">
+      <button className="block mt-8 font-semibold" onClick={() => props.history.goBack()}>
         <i className="fas fa-arrow-left mr-2"></i> Go back{' '}
       </button>
       <button className="mt-2 font-semibold mb-5" onClick={() => onDelete()}>
