@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
@@ -14,6 +14,9 @@ import progressCalc from '../../../../utilsFn/progressCalc'
 const PathCard = (props) => {
   const [display, setDisplay] = useState(false)
   const [subtasks, setSubtasks] = useState(props.subtasks)
+  const [haveTriggered, setHaveTriggered] = useState(false)
+  const lastCard = useRef(null)
+
   let progress = progressCalc(subtasks)
 
   const onSubtaskComplete = async (index, subtaskId) => {
@@ -30,8 +33,32 @@ const PathCard = (props) => {
     }
   }
 
+  // runs observer once the component was mounted
+  useEffect(() => {
+    const options = {
+      threshold: 1.0,
+    }
+
+    let observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          onScroll()
+        }
+      })
+    }, options)
+    if (props.index === props.length - 1) observer.observe(lastCard.current)
+  }, [props.length])
+
+  const onScroll = () => {
+    console.log(props.index)
+    console.log(props.length)
+    if (props.index === props.length - 1) {
+      props.onScroll()
+    }
+  }
+
   return (
-    <div className="bg-white shadow-md rounded-lg p-10 mt-5">
+    <div className="bg-white shadow-md rounded-lg p-10 mt-5" ref={lastCard}>
       <div className="flex justify-between">
         {/* UPPER AREA */}
         <UpperPathCard

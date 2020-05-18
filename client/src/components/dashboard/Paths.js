@@ -19,7 +19,7 @@ class Paths extends React.Component {
     loading: true,
     paths: [],
     skip: 0,
-    limit: 1,
+    limit: 3,
     filters: {
       isCompleted: '',
       category: '',
@@ -51,10 +51,12 @@ class Paths extends React.Component {
   }
 
   /// MAKE REQUESTS EVERYTIME THE FILTER OBJ UPDATES
-  async componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevState.filters !== this.state.filters) {
-      const { data: foundPaths } = await axios.get(this.getCurrentFetchUrl())
-      this.setState({ paths: foundPaths })
+      this.setState({ loading: true, skip: 0 }, async () => {
+        const { data: foundPaths } = await axios.get(this.getCurrentFetchUrl())
+        this.setState({ paths: foundPaths, loading: false })
+      })
     }
   }
 
@@ -64,24 +66,10 @@ class Paths extends React.Component {
     this.setState({ filters: currentFilters })
   }
 
-  leftSide = () => {
-    return (
-      <div className="flex">
-        <DropdownFilter
-          title="Sort"
-          list={['Completed', 'Unfinished']}
-          data={{ name: 'isCompleted', current: this.state.filters.isCompleted }}
-          boolean
-          onClick={(value) => this.onFilterChange(value, 'isCompleted')}
-        />
-        <DropdownFilter
-          title="Category"
-          list={['Programming', 'Design', 'Gardening']}
-          onClick={(value) => this.onFilterChange(value, 'category')}
-          data={{ name: 'category', current: this.state.filters.category }}
-        />
-      </div>
-    )
+  onScroll = async () => {
+    this.setState({ skip: this.state.skip + 3 })
+    const { data: extendPaths } = await axios.get(this.getCurrentFetchUrl())
+    this.setState({ paths: [...this.state.paths, ...extendPaths] })
   }
 
   render() {
@@ -98,7 +86,23 @@ class Paths extends React.Component {
         </div>
 
         <FilterBar
-          left={this.leftSide()}
+          left={
+            <div className="flex">
+              <DropdownFilter
+                title="Sort"
+                list={['Completed', 'Unfinished']}
+                data={{ name: 'isCompleted', current: this.state.filters.isCompleted }}
+                boolean
+                onClick={(value) => this.onFilterChange(value, 'isCompleted')}
+              />
+              <DropdownFilter
+                title="Category"
+                list={['Programming', 'Design', 'Gardening']}
+                onClick={(value) => this.onFilterChange(value, 'category')}
+                data={{ name: 'category', current: this.state.filters.category }}
+              />
+            </div>
+          }
           right={
             <SearchBar
               value={this.state.filters.search}
@@ -110,12 +114,15 @@ class Paths extends React.Component {
         {(this.state.loading && <BoxLoader />) || (
           <div>
             <div className="flex justify-between items-center">
-              <div>
-                {this.state.paths.length === 0 && <p className="mt-10">You have no paths yet!</p>}
-              </div>
+              <div>{this.state.paths.length === 0 && <p className="mt-10">No paths found</p>}</div>
             </div>
             {this.state.paths.length > 0 && (
-              <PathList paths={[...this.state.paths]} isAdmin={this.props.isAdmin} image={true} />
+              <PathList
+                paths={this.state.paths}
+                isAdmin={this.props.isAdmin}
+                image={true}
+                onScroll={this.onScroll}
+              />
             )}
           </div>
         )}
