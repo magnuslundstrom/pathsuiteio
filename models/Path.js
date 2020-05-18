@@ -51,6 +51,10 @@ const PathSchema = new mongoose.Schema({
   endDate: {
     type: Date,
   },
+  isCompleted: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const Path = mongoose.model('Path', PathSchema, 'paths')

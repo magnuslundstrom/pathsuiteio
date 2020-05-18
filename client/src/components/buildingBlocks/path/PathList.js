@@ -32,9 +32,9 @@ const PathList = (props) => {
           subtasks={path.subtasks}
           isAdmin={props.isAdmin}
           image={props.image}
-          onScroll={props.onScroll}
           length={props.paths.length}
           index={index}
+          onScroll={props.onScroll}
         />
       )
     })

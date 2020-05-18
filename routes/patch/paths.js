@@ -7,10 +7,15 @@ module.exports = (router) => {
   router.post('/api/update-subtask-status', auth, async (req, res) => {
     try {
       // Essential logic updating subtask status
-      const path = await Path.findById(req.body.pathId).populate('user', 'firstName lastName').exec()
+      const path = await Path.findById(req.body.pathId)
+        .populate('user', 'firstName lastName')
+        .exec()
       console.log(path)
       const subtaskIndex = path.subtasks.findIndex((subtask) => subtask._id == req.body.subtaskId)
       path.subtasks[subtaskIndex].isCompleted = !path.subtasks[subtaskIndex].isCompleted
+      path.subtasks.every((subtask) => subtask.isCompleted)
+        ? (path.isCompleted = true)
+        : (path.isCompleted = false)
       await path.save()
 
       // @@ Notification logic -- REFACTOR -- CONSIDER: MIDDLEWARE, POST.SAVE ON MODEL, PRE.SAVE ON MODEL

@@ -29,6 +29,7 @@ const fetchRoutes = [
   require('./fetch/subtaskNotifications'),
   require('./fetch/pathNotifications'),
   require('./fetch/singleEditPath'),
+  require('./fetch/categories'),
 ]
 
 // @@ PATCH ROUTES

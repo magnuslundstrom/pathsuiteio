@@ -9,6 +9,7 @@ module.exports = (router) => {
     const searchObj = {
       ...req.query,
     }
+    console.log(searchObj)
     delete searchObj.limit
     delete searchObj.skip
 
@@ -19,13 +20,14 @@ module.exports = (router) => {
       .populate('user', 'firstName lastName jobTitle image')
       .populate('responsible', 'firstName lastName')
       .exec()
+    console.log(paths)
     const actualPaths = []
     paths.forEach((path) => {
       const startDate = moment(path.startDate).format('MMM Do YYYY')
       const endDate = moment(path.endDate).format('MMM Do YYYY')
       const image = path.user.image.toString('base64')
       const newPath = { ...path._doc, user: { ...path._doc.user._doc, image }, startDate, endDate }
-      actualPaths.unshift(newPath)
+      actualPaths.push(newPath)
     })
     res.send(actualPaths)
   })

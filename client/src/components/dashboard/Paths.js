@@ -17,14 +17,16 @@ import appendFilters from '../../utilsFn/appendFilters'
 class Paths extends React.Component {
   state = {
     loading: true,
+    extendedLoading: false,
     paths: [],
     skip: 0,
     limit: 3,
     filters: {
       isCompleted: '',
       category: '',
-      search: '',
+      pathTitle: '',
     },
+    categories: [],
   }
 
   getCurrentFetchUrl = () => {
@@ -38,16 +40,11 @@ class Paths extends React.Component {
   // /paths on employee-side fetch own paths
 
   async componentDidMount() {
-    let paths
     if (this.props.isAdmin) {
-      const { data } = await axios.get(this.getCurrentFetchUrl())
-      paths = data
-    } else {
-      ////////////////// @EMPLOYEE SIDE MOST BE UPDATED
-      const { data } = await axios.get('/api/own-paths')
-      paths = data
+      const { data: paths } = await axios.get(this.getCurrentFetchUrl())
+      const { data: categories } = await axios.get('/api/get-categories')
+      this.setState({ paths, loading: false, categories })
     }
-    this.setState({ paths, loading: false })
   }
 
   /// MAKE REQUESTS EVERYTIME THE FILTER OBJ UPDATES
@@ -67,9 +64,9 @@ class Paths extends React.Component {
   }
 
   onScroll = async () => {
-    this.setState({ skip: this.state.skip + 3 })
+    this.setState({ skip: this.state.skip + 3, extendedLoading: true })
     const { data: extendPaths } = await axios.get(this.getCurrentFetchUrl())
-    this.setState({ paths: [...this.state.paths, ...extendPaths] })
+    this.setState({ paths: [...this.state.paths, ...extendPaths], extendedLoading: false })
   }
 
   render() {
@@ -95,9 +92,10 @@ class Paths extends React.Component {
                 boolean
                 onClick={(value) => this.onFilterChange(value, 'isCompleted')}
               />
+
               <DropdownFilter
                 title="Category"
-                list={['Programming', 'Design', 'Gardening']}
+                list={this.state.categories}
                 onClick={(value) => this.onFilterChange(value, 'category')}
                 data={{ name: 'category', current: this.state.filters.category }}
               />
@@ -123,6 +121,11 @@ class Paths extends React.Component {
                 image={true}
                 onScroll={this.onScroll}
               />
+            )}
+            {this.state.extendedLoading && (
+              <p className="mt-10">
+                Fetching more paths <i className="fas fa-spinner own-spinner"></i>
+              </p>
             )}
           </div>
         )}
