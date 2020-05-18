@@ -5,9 +5,22 @@ const auth = require('../../middleware/auth')
 module.exports = (router) => {
   // Used on /paths on admin side
 
+  //     if (req.body.find.length > 0) {
+  //       const find = req.body.find
+  //       const reg = new RegExp('^' + find, 'i')
+  //       const user = await User.find({
+  //         firstName: reg,
+  //         isAdmin: req.query.isAdmin,
+  //         company: req.user.company._id,
+  //       }).select('firstName lastName isAdmin')
+
+  const find = req.body.find
+  const findPathTitle = new RegExp('^' + find, 'i')
+
   router.get('/api/paths', auth, async (req, res) => {
     const searchObj = {
       ...req.query,
+      pathTitle: ('^' + req.query.pathTitle, 'i'),
     }
     console.log(searchObj)
     delete searchObj.limit
