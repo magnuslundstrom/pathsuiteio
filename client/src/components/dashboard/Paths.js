@@ -28,7 +28,9 @@ class Paths extends React.Component {
   }
 
   getCurrentFetchUrl = () => {
-    return `/api/paths?limit=${this.state.limit}&skip=${this.state.skip}${appendFilters(this.state.filters)}`
+    return `/api/paths?limit=${this.state.limit}&skip=${this.state.skip}${appendFilters(
+      this.state.filters
+    )}`
   }
 
   // Fetching paths depending on isAdmin
@@ -41,10 +43,19 @@ class Paths extends React.Component {
       const { data } = await axios.get(this.getCurrentFetchUrl())
       paths = data
     } else {
+      ////////////////// @EMPLOYEE SIDE MOST BE UPDATED
       const { data } = await axios.get('/api/own-paths')
       paths = data
     }
     this.setState({ paths, loading: false })
+  }
+
+  /// MAKE REQUESTS EVERYTIME THE FILTER OBJ UPDATES
+  async componentDidUpdate(prevProps, prevState) {
+    if (prevState.filters !== this.state.filters) {
+      const { data: foundPaths } = await axios.get(this.getCurrentFetchUrl())
+      this.setState({ paths: foundPaths })
+    }
   }
 
   onFilterChange = (value, key) => {
@@ -55,10 +66,16 @@ class Paths extends React.Component {
 
   leftSide = () => {
     return (
-      <div className='flex'>
-        <DropdownFilter sortProp='Sort' list={['Completed', 'Unfinished']} boolean />
+      <div className="flex">
         <DropdownFilter
-          title='Category'
+          title="Sort"
+          list={['Completed', 'Unfinished']}
+          data={{ name: 'isCompleted', current: this.state.filters.isCompleted }}
+          boolean
+          onClick={(value) => this.onFilterChange(value, 'isCompleted')}
+        />
+        <DropdownFilter
+          title="Category"
           list={['Programming', 'Design', 'Gardening']}
           onClick={(value) => this.onFilterChange(value, 'category')}
           data={{ name: 'category', current: this.state.filters.category }}
@@ -71,21 +88,31 @@ class Paths extends React.Component {
     return (
       <Container>
         {this.getCurrentFetchUrl()}
-        <div className='flex justify-between items-center'>
+        <div className="flex justify-between items-center">
           <h1>Paths</h1>
           {this.props.isAdmin && (
-            <Link to='/create-path'>
-              <i className='fas fa-plus text-2xl font-semibold'></i>
+            <Link to="/create-path">
+              <i className="fas fa-plus text-2xl font-semibold"></i>
             </Link>
           )}
         </div>
 
-        <FilterBar left={this.leftSide()} right={<SearchBar />} />
+        <FilterBar
+          left={this.leftSide()}
+          right={
+            <SearchBar
+              value={this.state.filters.search}
+              onChange={(value) => this.onFilterChange(value, 'search')}
+            />
+          }
+        />
 
         {(this.state.loading && <BoxLoader />) || (
           <div>
-            <div className='flex justify-between items-center'>
-              <div>{this.state.paths.length === 0 && <p className='mt-10'>You have no paths yet!</p>}</div>
+            <div className="flex justify-between items-center">
+              <div>
+                {this.state.paths.length === 0 && <p className="mt-10">You have no paths yet!</p>}
+              </div>
             </div>
             {this.state.paths.length > 0 && (
               <PathList paths={[...this.state.paths]} isAdmin={this.props.isAdmin} image={true} />

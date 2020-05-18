@@ -68,7 +68,7 @@ class Dashboard extends React.Component {
       async () => {
         const { data: newRes } = await axios.get(`/api/paths-completed?when=${newWhen}`)
         this.setState({
-          chartTwo: { ...this.state.chartTwo, period: newPeriod, when: newWhen, data: newRes },
+          chartTwo: { ...this.state.chartTwo, data: newRes },
         })
       }
     )
