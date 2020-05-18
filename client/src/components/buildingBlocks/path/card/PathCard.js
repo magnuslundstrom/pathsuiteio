@@ -31,31 +31,31 @@ const PathCard = (props) => {
     }
   }
 
-  const options = {
-    threshold: 1.0,
-  }
-  let observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        onScroll()
-        observer.unobserve(lastCard.current)
-      }
-    })
-  }, options)
-
-  useEffect(() => {
-    observer.observe(lastCard.current)
-  }, [props.length])
-
   const onScroll = () => {
     if (props.index === props.length - 1) {
       props.onScroll()
     }
   }
 
+  useEffect(() => {
+    const options = {
+      threshold: 1.0,
+    }
+    let observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          onScroll()
+          observer.unobserve(lastCard.current)
+        }
+      })
+    }, options)
+    observer.observe(lastCard.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
-    <div className="bg-white shadow-md rounded-lg p-10 mt-5" ref={lastCard}>
-      <div className="flex justify-between">
+    <div className='bg-white shadow-md rounded-lg p-10 mt-5' ref={lastCard}>
+      <div className='flex justify-between'>
         {/* UPPER AREA */}
         <UpperPathCard
           image={props.image}
@@ -64,12 +64,12 @@ const PathCard = (props) => {
           jobTitle={props.user.jobTitle}
           pathTitle={props.path.pathTitle}
         />
-        <div className="flex items-center h-1 mt-3">
+        <div className='flex items-center h-1 mt-3'>
           <button onClick={() => setDisplay(!display)}>
-            <i className="fas fa-angle-down text-2xl"></i>
+            <i className='fas fa-angle-down text-2xl'></i>
           </button>
-          <Link to={`/edit-path?id=${props.path._id}`} className="">
-            <i className="fas fa-pencil-alt text-sm ml-3"></i>
+          <Link to={`/edit-path?id=${props.path._id}`} className=''>
+            <i className='fas fa-pencil-alt text-sm ml-3'></i>
           </Link>
         </div>
       </div>
@@ -83,13 +83,7 @@ const PathCard = (props) => {
 
       <ProgressBar progress={progress} />
 
-      {display && (
-        <SubtaskList
-          subtasks={subtasks}
-          pathId={props.path._id}
-          onSubtaskComplete={onSubtaskComplete}
-        />
-      )}
+      {display && <SubtaskList subtasks={subtasks} pathId={props.path._id} onSubtaskComplete={onSubtaskComplete} />}
     </div>
   )
 }

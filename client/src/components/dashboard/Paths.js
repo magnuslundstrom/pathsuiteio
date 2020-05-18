@@ -12,12 +12,11 @@ import SearchBar from '../buildingBlocks/filters/SearchBar'
 import DropdownFilter from '../buildingBlocks/filters/DropdownFilter'
 import appendFilters from '../../utilsFn/appendFilters'
 
-// URL: /paths
-
 class Paths extends React.Component {
   state = {
     loading: true,
     extendedLoading: false,
+    currentLimit: false,
     paths: [],
     skip: 0,
     limit: 3,
@@ -30,9 +29,7 @@ class Paths extends React.Component {
   }
 
   getCurrentFetchUrl = () => {
-    return `/api/paths?limit=${this.state.limit}&skip=${this.state.skip}${appendFilters(
-      this.state.filters
-    )}`
+    return `/api/paths?limit=${this.state.limit}&skip=${this.state.skip}${appendFilters(this.state.filters)}`
   }
 
   // Fetching paths depending on isAdmin
@@ -50,7 +47,7 @@ class Paths extends React.Component {
   /// MAKE REQUESTS EVERYTIME THE FILTER OBJ UPDATES
   componentDidUpdate(prevProps, prevState) {
     if (prevState.filters !== this.state.filters) {
-      this.setState({ loading: true, skip: 0 }, async () => {
+      this.setState({ loading: true, skip: 0, currentLimit: false }, async () => {
         const { data: foundPaths } = await axios.get(this.getCurrentFetchUrl())
         this.setState({ paths: foundPaths, loading: false })
       })
@@ -64,29 +61,31 @@ class Paths extends React.Component {
   }
 
   onScroll = async () => {
-    this.setState({ skip: this.state.skip + 3, extendedLoading: true })
-    const { data: extendPaths } = await axios.get(this.getCurrentFetchUrl())
-    this.setState({ paths: [...this.state.paths, ...extendPaths], extendedLoading: false })
+    if (!this.state.currentLimit && this.state.paths.length % 3 === 0) {
+      this.setState({ skip: this.state.skip + 3, extendedLoading: true })
+      const { data: extendPaths } = await axios.get(this.getCurrentFetchUrl())
+      this.setState({ paths: [...this.state.paths, ...extendPaths], extendedLoading: false })
+      if (extendPaths.length === 0) this.setState({ currentLimit: true })
+    }
   }
 
   render() {
     return (
       <Container>
-        {this.getCurrentFetchUrl()}
-        <div className="flex justify-between items-center">
+        <div className='flex justify-between items-center'>
           <h1>Paths</h1>
           {this.props.isAdmin && (
-            <Link to="/create-path">
-              <i className="fas fa-plus text-2xl font-semibold"></i>
+            <Link to='/create-path'>
+              <i className='fas fa-plus text-2xl font-semibold'></i>
             </Link>
           )}
         </div>
 
         <FilterBar
           left={
-            <div className="flex">
+            <div className='flex'>
               <DropdownFilter
-                title="Sort"
+                title='Sort'
                 list={['Completed', 'Unfinished']}
                 data={{ name: 'isCompleted', current: this.state.filters.isCompleted }}
                 boolean
@@ -94,7 +93,7 @@ class Paths extends React.Component {
               />
 
               <DropdownFilter
-                title="Category"
+                title='Category'
                 list={this.state.categories}
                 onClick={(value) => this.onFilterChange(value, 'category')}
                 data={{ name: 'category', current: this.state.filters.category }}
@@ -103,28 +102,23 @@ class Paths extends React.Component {
           }
           right={
             <SearchBar
-              value={this.state.filters.search}
-              onChange={(value) => this.onFilterChange(value, 'search')}
+              value={this.state.filters.pathTitle}
+              onChange={(value) => this.onFilterChange(value, 'pathTitle')}
             />
           }
         />
 
         {(this.state.loading && <BoxLoader />) || (
           <div>
-            <div className="flex justify-between items-center">
-              <div>{this.state.paths.length === 0 && <p className="mt-10">No paths found</p>}</div>
+            <div className='flex justify-between items-center'>
+              <div>{this.state.paths.length === 0 && <p className='mt-10'>No paths found</p>}</div>
             </div>
             {this.state.paths.length > 0 && (
-              <PathList
-                paths={this.state.paths}
-                isAdmin={this.props.isAdmin}
-                image={true}
-                onScroll={this.onScroll}
-              />
+              <PathList paths={this.state.paths} isAdmin={this.props.isAdmin} image={true} onScroll={this.onScroll} />
             )}
             {this.state.extendedLoading && (
-              <p className="mt-10">
-                Fetching more paths <i className="fas fa-spinner own-spinner"></i>
+              <p className='mt-10'>
+                Fetching more paths <i className='fas fa-spinner own-spinner'></i>
               </p>
             )}
           </div>

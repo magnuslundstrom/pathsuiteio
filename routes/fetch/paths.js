@@ -5,27 +5,16 @@ const auth = require('../../middleware/auth')
 module.exports = (router) => {
   // Used on /paths on admin side
 
-  //     if (req.body.find.length > 0) {
-  //       const find = req.body.find
-  //       const reg = new RegExp('^' + find, 'i')
-  //       const user = await User.find({
-  //         firstName: reg,
-  //         isAdmin: req.query.isAdmin,
-  //         company: req.user.company._id,
-  //       }).select('firstName lastName isAdmin')
-
-  const find = req.body.find
-  const findPathTitle = new RegExp('^' + find, 'i')
-
   router.get('/api/paths', auth, async (req, res) => {
+    const reg = new RegExp('^' + req.query.pathTitle, 'i')
     const searchObj = {
       ...req.query,
-      pathTitle: ('^' + req.query.pathTitle, 'i'),
     }
     console.log(searchObj)
     delete searchObj.limit
     delete searchObj.skip
-
+    if (searchObj.pathTitle) searchObj.pathTitle = reg
+    console.log(searchObj)
     const paths = await Path.find({ ...searchObj, company: req.user.company._id })
       .limit(parseInt(req.query.limit))
       .skip(parseInt(req.query.skip))
@@ -33,7 +22,7 @@ module.exports = (router) => {
       .populate('user', 'firstName lastName jobTitle image')
       .populate('responsible', 'firstName lastName')
       .exec()
-    console.log(paths)
+
     const actualPaths = []
     paths.forEach((path) => {
       const startDate = moment(path.startDate).format('MMM Do YYYY')
