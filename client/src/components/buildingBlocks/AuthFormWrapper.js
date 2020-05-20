@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 const AuthFormWrapper = (props) => {
   return (
-    <div className="min-h-screen flex flex-col items-center pt-24 mb-20">
+    <div className="min-h-screen flex flex-col items-center pt-24 pb-20">
       <Link to="/">
         <img src={logo} alt="logo" className="w-48 mb-10"></img>
       </Link>

@@ -21,6 +21,15 @@ class User extends React.Component {
     this.setState({ paths, user, loading: false }, () => console.log(this.state))
   }
 
+  onScroll = async () => {
+    if (!this.state.currentLimit && this.state.paths.length % 3 === 0) {
+      this.setState({ skip: this.state.skip + 3, extendedLoading: true })
+      const { data: extendPaths } = await axios.get(this.getCurrentFetchUrl())
+      this.setState({ paths: [...this.state.paths, ...extendPaths], extendedLoading: false })
+      if (extendPaths.length === 0) this.setState({ currentLimit: true })
+    }
+  }
+
   render() {
     return (
       <Container>
@@ -53,6 +62,7 @@ class User extends React.Component {
                   paths={[...this.state.paths]}
                   isAdmin={this.props.isAdmin}
                   image={false}
+                  onScroll={this.onScroll}
                 />
               )}
             </div>

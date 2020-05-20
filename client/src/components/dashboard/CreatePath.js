@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-
+import { connect } from 'react-redux'
+import { setSuccessMessage } from '../../redux/actions/successMessage'
 import Container from '../buildingBlocks/Container'
 import PathForm from '../buildingBlocks/path/PathForm'
 import { createPathFormState } from '../buildingBlocks/path/data/createPathFormState' // has a clean obj that holds all data to be send to api endpoint
@@ -14,7 +15,10 @@ const CreatePath = (props) => {
         ...stateobj,
       })
       console.log(res)
-      if (res) props.history.goBack()
+      if (res) {
+        props.history.goBack()
+        props.setSuccessMessage('Path was succesfully created!')
+      }
     } catch (e) {
       console.log(e.response)
     }
@@ -47,4 +51,4 @@ const CreatePath = (props) => {
   )
 }
 
-export default CreatePath
+export default connect(null, { setSuccessMessage })(CreatePath)

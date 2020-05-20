@@ -47,8 +47,9 @@ module.exports = (router) => {
             lastName: req.body.lastName,
             email: req.body.email,
             password: req.body.password,
-            isAdmin: true,
+            isAdmin: req.body.isAdmin || true,
             image: newPhoto,
+            company: req.body.company || undefined,
           })
           user
             .save()

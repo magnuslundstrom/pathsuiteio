@@ -31,7 +31,7 @@ class CreateCompany extends React.Component {
         <p className="mb-6">What company is connected to this account?</p>
         <form className="flex justify-center flex-col mx-auto" onSubmit={this.onSubmit}>
           <input
-            className="input-border-gray"
+            className="auth-input w-full"
             type="text"
             placeholder="Company name"
             value={this.state.companyName}
