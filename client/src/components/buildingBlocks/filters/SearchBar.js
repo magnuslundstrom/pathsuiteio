@@ -2,7 +2,7 @@ import React from 'react'
 
 const SearchBar = (props) => {
   return (
-    <div className="bg-white rounded-md shadow-md">
+    <div className="bg-white rounded-md shadow-md hover:shadow-lg duration-300">
       <i className="fas fa-search text-secGray p-2 text-sm"></i>{' '}
       <input
         type="text"

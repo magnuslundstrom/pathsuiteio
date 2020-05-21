@@ -25,6 +25,7 @@ module.exports = (router) => {
 
   // Get the notifications in sidebar
   router.get('/api/subtask-notifications', auth, async (req, res) => {
+    console.log(req.query.skip, req.query.limit)
     const query = {
       company: req.user.company._id,
     }
@@ -34,6 +35,8 @@ module.exports = (router) => {
         ...query,
       })
         .select('date description user')
+        .limit(parseInt(req.query.limit))
+        .skip(parseInt(req.query.skip))
         .populate('user', 'firstName lastName image')
         .exec()
       const newSubtasks = []

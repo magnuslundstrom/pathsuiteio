@@ -25,23 +25,43 @@ class Dashboard extends React.Component {
       when: 'this-week',
       data: [],
     },
+    skipLatestActivity: 0,
+    latestActivityLoading: false,
+    skipFinishedPaths: 0,
+    finishedPathsLoading: false,
   }
 
+  onScroll = async (list, skip, loading, url) => {
+    if (this.state[list].length % 5 === 0) {
+      this.setState({ [`${skip}`]: this.state[skip] + 5, [`${loading}`]: true })
+      const { data: extendedList } = await axios.get(url)
+      this.setState({ [`${list}`]: [...this.state[list], ...extendedList], [`${loading}`]: false })
+    }
+  }
+
+  // For chart one
   getSubtaskFetchUrl = () => {
     return `/api/subtasks-completed?when=${this.state.chartOne.when}${
       !this.props.isAdmin ? `&user=${this.props.userId}` : ''
     }`
   }
+  // for upper sidebar
   getSubtaskNotificationFetchUrl = () => {
-    return `/api/subtask-notifications${!this.props.isAdmin ? `?user=${this.props.userId}` : ''}`
+    return `/api/subtask-notifications?limit=5&skip=${this.state.skipLatestActivity}${
+      !this.props.isAdmin ? `&user=${this.props.userId}` : ''
+    }`
   }
+  // for completed learning paths
   getPathsFetchUrl = () => {
     return `/api/paths-completed?when=${this.state.chartTwo.when}${
       !this.props.isAdmin ? `&user=${this.props.userId}` : ''
     }`
   }
+  // for lower sidebar
   getPathNotificationUrl = () => {
-    return `/api/path-notifications${!this.props.isAdmin ? `?user=${this.props.userId}` : ''}`
+    return `/api/path-notifications?limit=5&skip=${this.state.skipFinishedPaths}${
+      !this.props.isAdmin ? `&user=${this.props.userId}` : ''
+    }`
   }
 
   async componentDidMount() {
@@ -63,12 +83,15 @@ class Dashboard extends React.Component {
   }
 
   updateChartOne = async (newPeriod, newWhen) => {
-    this.setState({ chartOne: { ...this.state.chartOne, period: newPeriod, when: newWhen, data: [] } }, async () => {
-      const { data: newRes } = await axios.get(`/api/subtasks-completed?when=${newWhen}`)
-      this.setState({
-        chartOne: { ...this.state.chartOne, data: newRes },
-      })
-    })
+    this.setState(
+      { chartOne: { ...this.state.chartOne, period: newPeriod, when: newWhen, data: [] } },
+      async () => {
+        const { data: newRes } = await axios.get(`/api/subtasks-completed?when=${newWhen}`)
+        this.setState({
+          chartOne: { ...this.state.chartOne, data: newRes },
+        })
+      }
+    )
   }
   updateChartTwo = (newPeriod, newWhen) => {
     this.setState(
@@ -89,21 +112,23 @@ class Dashboard extends React.Component {
       <Container>
         {this.props.isFirstTime && <Onboard isAdmin={this.props.isAdmin} />}
         <h1>Welcome back, {this.props.firstName}!</h1>
-        {(this.props.isAdmin && <p>Get status on your teams performance</p>) || <p>Get status on your performance</p>}
+        {(this.props.isAdmin && <p>Get status on your teams performance</p>) || (
+          <p>Get status on your performance</p>
+        )}
 
         {(this.state.loading && <ScreenLoader />) || (
           <div>
             {/* Tasks + lastest activity */}
-            <div className='flex mt-10'>
-              <div className='w-2/3 mr-10'>
-                <div className='flex justify-between'>
-                  <h3 className='mb-3 font-semibold'>Subtasks completed</h3>
-                  <div className='flex items-center mb-3'>
+            <div className="flex mt-10">
+              <div className="w-2/3 mr-10">
+                <div className="flex justify-between">
+                  <h3 className="mb-3 font-semibold">Subtasks completed</h3>
+                  <div className="flex items-center mb-3">
                     <Dropdown onClick={this.updateChartOne} />
                   </div>
                 </div>
 
-                <div className='bg-white p-5 rounded-lg shadow-md'>
+                <div className="bg-white p-5 rounded-lg shadow-md">
                   <Chart
                     data={this.state.chartOne.data}
                     period={this.state.chartOne.period}
@@ -111,26 +136,34 @@ class Dashboard extends React.Component {
                   />
                 </div>
               </div>
-              <div className='w-1/3'>
-                <h3 className='mb-3'>Lastest activity</h3>
-                <div className='bg-white p-5 rounded-lg shadow-md'>
+              <div className="w-1/3">
+                <h3 className="mb-3">Lastest activity</h3>
+                <div className="bg-white p-5 rounded-lg shadow-md">
                   <NotificationList
                     notifications={this.state.lastestActivity}
                     isAdmin={this.props.isAdmin}
-                    zeroMessage='No subtasks completed yet'
+                    onScroll={() =>
+                      this.onScroll(
+                        'lastestActivity',
+                        'skipLatestActivity',
+                        'latestActivityLoading',
+                        this.getSubtaskNotificationFetchUrl()
+                      )
+                    }
+                    zeroMessage="No subtasks completed yet"
                   />
                 </div>
               </div>
             </div>
             {/* learning paths + recently finished */}
-            <div className='flex mt-10'>
-              <div className='w-2/3 mr-10'>
-                <div className='flex justify-between'>
-                  <h3 className='mb-3'>Learning paths completed</h3>
+            <div className="flex mt-10">
+              <div className="w-2/3 mr-10">
+                <div className="flex justify-between">
+                  <h3 className="mb-3">Learning paths completed</h3>
                   <Dropdown onClick={this.updateChartTwo} />
                 </div>
 
-                <div className='bg-white p-5 rounded-lg shadow-md'>
+                <div className="bg-white p-5 rounded-lg shadow-md">
                   <Chart
                     data={this.state.chartTwo.data}
                     period={this.state.chartTwo.period}
@@ -138,13 +171,13 @@ class Dashboard extends React.Component {
                   />
                 </div>
               </div>
-              <div className='w-1/3'>
-                <h3 className='mb-3 font-semibold'>Recently finished paths</h3>
-                <div className='bg-white p-5 rounded-lg shadow-md'>
+              <div className="w-1/3">
+                <h3 className="mb-3 font-semibold">Recently finished paths</h3>
+                <div className="bg-white p-5 rounded-lg shadow-md">
                   <NotificationList
                     notifications={this.state.recentlyFinished}
                     isAdmin={this.props.isAdmin}
-                    zeroMessage='No paths completed yet'
+                    zeroMessage="No paths completed yet"
                   />
                 </div>
               </div>

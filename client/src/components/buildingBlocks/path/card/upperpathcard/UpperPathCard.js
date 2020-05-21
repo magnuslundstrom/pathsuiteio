@@ -14,7 +14,7 @@ const UpperPathCard = (props) => {
         <div className="ml-3">
           <h3>{props.name}</h3>
           <p>{props.jobTitle}</p>
-          <p className="mt-3">{props.pathTitle}</p>
+          <p className="mt-3 font-semibold">{props.pathTitle}</p>
         </div>
       </div>
     ) : (

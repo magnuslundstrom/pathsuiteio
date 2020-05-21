@@ -31,20 +31,6 @@ h3 {
   @apply border-b;
 }
 
-.hover-blue {
-  position: relative;
-}
-
-.hover-blue:hover::after {
-  content: '';
-  height: 1px;
-  width: 100%;
-  position: absolute;
-  top: 100%;
-  left: 0px;
-  @apply bg-blue;
-}
-
 .error {
   @apply text-red;
 }
@@ -67,4 +53,36 @@ h3 {
 
 .special-scroll::-webkit-scrollbar-thumb:hover {
   @apply bg-secGray;
+}
+
+.hover-card:hover {
+  @apply shadow-lg duration-300;
+  transform: translate(0px, -3px);
+}
+.hover-card {
+  @apply duration-300;
+}
+
+.hover-underline {
+  position: relative;
+}
+.hover-underline:focus {
+  outline: 0;
+}
+.hover-underline::after {
+  @apply bg-blue rounded-lg;
+  content: '';
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  left: 0px;
+  transform: scale(0, 1);
+  transition: 400ms;
+  transform-origin: center;
+}
+
+.hover-underline:hover::after {
+  transform: scale(1, 1);
+  transition: 400ms;
 }

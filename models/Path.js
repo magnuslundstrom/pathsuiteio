@@ -23,6 +23,7 @@ const PathSchema = new mongoose.Schema({
       },
       subtaskLink: {
         type: String,
+        lowercase: true,
       },
       subtaskNote: {
         type: String,
@@ -55,6 +56,15 @@ const PathSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+})
+
+PathSchema.pre('save', function (next) {
+  const pattern = /^((http|https):\/\/)/
+  this.subtasks.forEach((subtask) => {
+    if (subtask.subtaskLink && !pattern.test(subtask.subtaskLink))
+      subtask.subtaskLink = 'https://' + subtask.subtaskLink
+  })
+  next()
 })
 
 const Path = mongoose.model('Path', PathSchema, 'paths')

@@ -33,6 +33,8 @@ module.exports = (router) => {
         ...query,
       })
         .select('date description user')
+        .limit(parseInt(req.query.limit))
+        .skip(parseInt(req.query.skip))
         .populate('user', 'firstName lastName image')
         .exec()
       const newPaths = []

@@ -24,14 +24,14 @@ const Header = (props) => {
         </Link>
 
         <div className="flex items-center">
-          <Link to="/paths" className="mr-8 hover-blue font-semibold">
+          <Link to="/paths" className="mr-8 hover-underline font-semibold">
             <i className="fas fa-chart-line"></i> Paths
           </Link>
 
           {/* Extra menu items if isAdmin */}
           {props.isAdmin && (
             <div>
-              <Link to="/employees" className="mr-16 hover-blue font-semibold">
+              <Link to="/employees" className="mr-16 hover-underline font-semibold">
                 <i className="fas fa-users"></i> Employees
               </Link>
               <Link to="#" className="btn btn-green px-5 py-2 mr-8">

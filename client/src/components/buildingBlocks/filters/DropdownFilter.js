@@ -31,7 +31,9 @@ const DropdownFilter = (props) => {
     props.list.map((item, index) => (
       <button
         onClick={() => onButtonClick(item, index)}
-        className={`focus:outline-none ${index === highLightItem ? 'font-semibold' : ''}`}
+        className={`focus:outline-none hover:font-semibold ${
+          index === highLightItem ? 'font-semibold' : ''
+        }`}
         key={index}
       >
         {item} {index === highLightItem && <i className="fas fa-check ml-1 text-sm"></i>}
@@ -41,7 +43,7 @@ const DropdownFilter = (props) => {
   return (
     <OutsideClickHandler onOutsideClick={() => setDisplay(false)}>
       <div className="relative mr-10">
-        <button className="font-semibold focus:outline-none" onClick={() => setDisplay(!display)}>
+        <button className="font-semibold hover-underline" onClick={() => setDisplay(!display)}>
           {props.title}
           <i className="fas fa-angle-down ml-2"></i>
         </button>

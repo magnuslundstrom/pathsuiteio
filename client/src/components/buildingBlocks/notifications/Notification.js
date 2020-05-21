@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 
 const Notification = (props) => {
   const notificationString = (description) => {
@@ -7,10 +7,25 @@ const Notification = (props) => {
     }
     return description
   }
-  console.log(props.data.description)
-  console.log(props.data.user)
+
+  const notificationRef = useRef(null)
+  const options = {
+    threshold: 1.0,
+  }
+  let observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        if (props.length - 1 === props.index) props.onScroll()
+      }
+    })
+  }, options)
+
+  useEffect(() => {
+    observer.observe(notificationRef.current)
+  }, [])
+
   return (
-    <div className="flex mb-5">
+    <div className="flex mb-5" ref={notificationRef}>
       <img
         src={`data:image/png;base64, ${props.data.user.image}`}
         className="rounded-full block w-16 h-16 mr-3"

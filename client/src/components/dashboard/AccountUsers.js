@@ -6,11 +6,13 @@ import axios from 'axios'
 
 import Container from '../buildingBlocks/Container'
 import BoxLoader from '../buildingBlocks/utils/ScreenLoader'
+import InviteOverlay from '../buildingBlocks/employee/InviteOverlay'
 
 class AccountUsers extends React.Component {
   state = {
     loading: true,
     users: [],
+    displayInvite: false,
   }
 
   async componentDidMount() {
@@ -63,9 +65,9 @@ class AccountUsers extends React.Component {
           <div className="bg-white rounded-lg shadow-md p-10 mt-10">
             <div className="flex justify-between items-center">
               <h2>Manage users</h2>
-              <Link to="/create-user">
+              <button onClick={() => this.setState({ displayInvite: true })}>
                 <i className="fas fa-plus text-xl font-semibold"></i>
-              </Link>
+              </button>
             </div>
             {this.state.loading && <BoxLoader />}
 
@@ -81,6 +83,9 @@ class AccountUsers extends React.Component {
               </thead>
               <tbody>{this.renderUsers()}</tbody>
             </table>
+            {this.state.displayInvite && (
+              <InviteOverlay onClose={() => this.setState({ displayInvite: false })} />
+            )}
           </div>
         )}
       </Container>

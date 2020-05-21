@@ -54,7 +54,7 @@ const PathCard = (props) => {
   }, [])
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-10 mt-5" ref={lastCard}>
+    <div className="bg-white shadow-md rounded-lg p-10 mt-5 hover-card" ref={lastCard}>
       <div className="flex justify-between">
         {/* UPPER AREA */}
         <UpperPathCard
@@ -65,10 +65,10 @@ const PathCard = (props) => {
           pathTitle={props.path.pathTitle}
         />
         <div className="flex items-center h-1 mt-3">
-          <button onClick={() => setDisplay(!display)}>
+          <button onClick={() => setDisplay(!display)} className="hover-underline">
             <i className="fas fa-angle-down text-2xl"></i>
           </button>
-          <Link to={`/edit-path?id=${props.path._id}`} className="">
+          <Link to={`/edit-path?id=${props.path._id}`} className="hover-underline">
             <i className="fas fa-pencil-alt text-sm ml-3"></i>
           </Link>
         </div>
