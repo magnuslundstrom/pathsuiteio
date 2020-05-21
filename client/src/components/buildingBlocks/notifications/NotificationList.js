@@ -4,7 +4,7 @@ import Notification from './Notification'
 const NotificationList = (props) => {
   const renderNotifications = () => {
     return props.notifications.map((notification, index) => {
-      return <Notification data={notification} key={index} />
+      return <Notification data={notification} key={index} isAdmin={props.isAdmin} />
     })
   }
 

@@ -8,9 +8,14 @@ const completedYear = require('../../utilFns/completedYear')
 
 module.exports = (router) => {
   router.get('/api/paths-completed', auth, async (req, res) => {
+    console.log(req.query)
     const period = req.query.when
-    const companyPathNotifications = await PathNotification.find({
+    const query = {
       company: req.user.company._id,
+    }
+    if (req.query.user) query.user = req.query.user
+    const companyPathNotifications = await PathNotification.find({
+      ...query,
     })
     let numbers
     if (period.includes('week')) numbers = completedWeek(companyPathNotifications, period)

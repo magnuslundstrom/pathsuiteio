@@ -1,6 +1,14 @@
 import React from 'react'
 
 const Notification = (props) => {
+  const notificationString = (description) => {
+    if (!props.isAdmin) {
+      return description.replace(props.data.user.firstName + ' ' + props.data.user.lastName, 'You')
+    }
+    return description
+  }
+  console.log(props.data.description)
+  console.log(props.data.user)
   return (
     <div className="flex mb-5">
       <img
@@ -11,7 +19,7 @@ const Notification = (props) => {
 
       <div>
         <p className="font-semibold">{props.data.date}</p>
-        <p>{props.data.description}</p>
+        <p>{notificationString(props.data.description)}</p>
       </div>
     </div>
   )

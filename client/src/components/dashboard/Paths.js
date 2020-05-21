@@ -29,19 +29,15 @@ class Paths extends React.Component {
   }
 
   getCurrentFetchUrl = () => {
-    return `/api/paths?limit=${this.state.limit}&skip=${this.state.skip}${appendFilters(this.state.filters)}`
+    return `/api/paths?limit=${this.state.limit}&skip=${this.state.skip}${appendFilters(
+      this.state.filters
+    )}${!this.props.isAdmin ? `&user=${this.props.userId}` : ''}`
   }
 
-  // Fetching paths depending on isAdmin
-  // /paths on admin-side fetching all paths in company
-  // /paths on employee-side fetch own paths
-
   async componentDidMount() {
-    if (this.props.isAdmin) {
-      const { data: paths } = await axios.get(this.getCurrentFetchUrl())
-      const { data: categories } = await axios.get('/api/get-categories')
-      this.setState({ paths, loading: false, categories })
-    }
+    const { data: paths } = await axios.get(this.getCurrentFetchUrl())
+    const { data: categories } = await axios.get('/api/get-categories')
+    this.setState({ paths, loading: false, categories })
   }
 
   /// MAKE REQUESTS EVERYTIME THE FILTER OBJ UPDATES
@@ -72,20 +68,20 @@ class Paths extends React.Component {
   render() {
     return (
       <Container>
-        <div className='flex justify-between items-center'>
+        <div className="flex justify-between items-center">
           <h1>Paths</h1>
           {this.props.isAdmin && (
-            <Link to='/create-path'>
-              <i className='fas fa-plus text-2xl font-semibold'></i>
+            <Link to="/create-path">
+              <i className="fas fa-plus text-2xl font-semibold"></i>
             </Link>
           )}
         </div>
 
         <FilterBar
           left={
-            <div className='flex'>
+            <div className="flex">
               <DropdownFilter
-                title='Sort'
+                title="Sort"
                 list={['Completed', 'Unfinished']}
                 data={{ name: 'isCompleted', current: this.state.filters.isCompleted }}
                 boolean
@@ -93,7 +89,7 @@ class Paths extends React.Component {
               />
 
               <DropdownFilter
-                title='Category'
+                title="Category"
                 list={this.state.categories}
                 onClick={(value) => this.onFilterChange(value, 'category')}
                 data={{ name: 'category', current: this.state.filters.category }}
@@ -110,15 +106,20 @@ class Paths extends React.Component {
 
         {(this.state.loading && <BoxLoader />) || (
           <div>
-            <div className='flex justify-between items-center'>
-              <div>{this.state.paths.length === 0 && <p className='mt-10'>No paths found</p>}</div>
+            <div className="flex justify-between items-center">
+              <div>{this.state.paths.length === 0 && <p className="mt-10">No paths found</p>}</div>
             </div>
             {this.state.paths.length > 0 && (
-              <PathList paths={this.state.paths} isAdmin={this.props.isAdmin} image={true} onScroll={this.onScroll} />
+              <PathList
+                paths={this.state.paths}
+                isAdmin={this.props.isAdmin}
+                image={true}
+                onScroll={this.onScroll}
+              />
             )}
             {this.state.extendedLoading && (
-              <p className='mt-10'>
-                Fetching more paths <i className='fas fa-spinner own-spinner'></i>
+              <p className="mt-10">
+                Fetching more paths <i className="fas fa-spinner own-spinner"></i>
               </p>
             )}
           </div>
@@ -131,6 +132,7 @@ class Paths extends React.Component {
 const mapStateToProps = (state) => {
   return {
     isAdmin: state.user.isAdmin,
+    userId: state.user._id,
   }
 }
 

@@ -27,16 +27,29 @@ class Dashboard extends React.Component {
     },
   }
 
+  getSubtaskFetchUrl = () => {
+    return `/api/subtasks-completed?when=${this.state.chartOne.when}${
+      !this.props.isAdmin ? `&user=${this.props.userId}` : ''
+    }`
+  }
+  getSubtaskNotificationFetchUrl = () => {
+    return `/api/subtask-notifications${!this.props.isAdmin ? `?user=${this.props.userId}` : ''}`
+  }
+  getPathsFetchUrl = () => {
+    return `/api/paths-completed?when=${this.state.chartTwo.when}${
+      !this.props.isAdmin ? `&user=${this.props.userId}` : ''
+    }`
+  }
+  getPathNotificationUrl = () => {
+    return `/api/path-notifications${!this.props.isAdmin ? `?user=${this.props.userId}` : ''}`
+  }
+
   async componentDidMount() {
     try {
-      const { data: dataOne } = await axios.get(
-        `/api/subtasks-completed?when=${this.state.chartOne.when}`
-      )
-      const { data: lastestActivity } = await axios.get('/api/subtask-notifications')
-      const { data: dataTwo } = await axios.get(
-        `/api/paths-completed?when=${this.state.chartTwo.when}`
-      )
-      const { data: recentlyFinished } = await axios.get('/api/path-notifications')
+      const { data: dataOne } = await axios.get(this.getSubtaskFetchUrl())
+      const { data: lastestActivity } = await axios.get(this.getSubtaskNotificationFetchUrl())
+      const { data: dataTwo } = await axios.get(this.getPathsFetchUrl())
+      const { data: recentlyFinished } = await axios.get(this.getPathNotificationUrl())
       this.setState({
         chartOne: { ...this.state.chartOne, data: dataOne },
         lastestActivity,
@@ -79,14 +92,17 @@ class Dashboard extends React.Component {
       <Container>
         {this.props.isFirstTime && <Onboard isAdmin={this.props.isAdmin} />}
         <h1>Welcome back, {this.props.firstName}!</h1>
-        <p>Get status on your teams performance</p>
+        {(this.props.isAdmin && <p>Get status on your teams performance</p>) || (
+          <p>Get status on your performance</p>
+        )}
+
         {(this.state.loading && <ScreenLoader />) || (
           <div>
             {/* Tasks + lastest activity */}
             <div className="flex mt-10">
               <div className="w-2/3 mr-10">
                 <div className="flex justify-between">
-                  <h3 className="mb-3 font-semibold">Tasks completed</h3>
+                  <h3 className="mb-3 font-semibold">Subtasks completed</h3>
                   <div className="flex items-center mb-3">
                     <Dropdown onClick={this.updateChartOne} />
                   </div>
@@ -103,7 +119,10 @@ class Dashboard extends React.Component {
               <div className="w-1/3">
                 <h3 className="mb-3">Lastest activity</h3>
                 <div className="bg-white p-5 rounded-lg shadow-md">
-                  <NotificationList notifications={this.state.lastestActivity} />
+                  <NotificationList
+                    notifications={this.state.lastestActivity}
+                    isAdmin={this.props.isAdmin}
+                  />
                 </div>
               </div>
             </div>
@@ -126,7 +145,10 @@ class Dashboard extends React.Component {
               <div className="w-1/3">
                 <h3 className="mb-3 font-semibold">Recently finished paths</h3>
                 <div className="bg-white p-5 rounded-lg shadow-md">
-                  <NotificationList notifications={this.state.recentlyFinished} />
+                  <NotificationList
+                    notifications={this.state.recentlyFinished}
+                    isAdmin={this.props.isAdmin}
+                  />
                 </div>
               </div>
             </div>
@@ -142,6 +164,7 @@ const mapStateToProps = (state) => {
     firstName: state.user.firstName,
     isAdmin: state.user.isAdmin,
     isFirstTime: state.user.isFirstTime,
+    userId: state.user._id,
   }
 }
 

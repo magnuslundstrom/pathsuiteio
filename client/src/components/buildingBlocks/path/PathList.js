@@ -19,14 +19,7 @@ const PathList = (props) => {
       return (
         <PathCard
           key={index}
-          path={{
-            category: path.category,
-            company: path.company,
-            pathTitle: path.pathTitle,
-            _id: path._id,
-            startDate: path.startDate,
-            endDate: path.endDate,
-          }}
+          path={path}
           responsible={path.responsible}
           user={path.user}
           subtasks={path.subtasks}
