@@ -63,15 +63,12 @@ class Dashboard extends React.Component {
   }
 
   updateChartOne = async (newPeriod, newWhen) => {
-    this.setState(
-      { chartOne: { ...this.state.chartOne, period: newPeriod, when: newWhen, data: [] } },
-      async () => {
-        const { data: newRes } = await axios.get(`/api/subtasks-completed?when=${newWhen}`)
-        this.setState({
-          chartOne: { ...this.state.chartOne, data: newRes },
-        })
-      }
-    )
+    this.setState({ chartOne: { ...this.state.chartOne, period: newPeriod, when: newWhen, data: [] } }, async () => {
+      const { data: newRes } = await axios.get(`/api/subtasks-completed?when=${newWhen}`)
+      this.setState({
+        chartOne: { ...this.state.chartOne, data: newRes },
+      })
+    })
   }
   updateChartTwo = (newPeriod, newWhen) => {
     this.setState(
@@ -92,23 +89,21 @@ class Dashboard extends React.Component {
       <Container>
         {this.props.isFirstTime && <Onboard isAdmin={this.props.isAdmin} />}
         <h1>Welcome back, {this.props.firstName}!</h1>
-        {(this.props.isAdmin && <p>Get status on your teams performance</p>) || (
-          <p>Get status on your performance</p>
-        )}
+        {(this.props.isAdmin && <p>Get status on your teams performance</p>) || <p>Get status on your performance</p>}
 
         {(this.state.loading && <ScreenLoader />) || (
           <div>
             {/* Tasks + lastest activity */}
-            <div className="flex mt-10">
-              <div className="w-2/3 mr-10">
-                <div className="flex justify-between">
-                  <h3 className="mb-3 font-semibold">Subtasks completed</h3>
-                  <div className="flex items-center mb-3">
+            <div className='flex mt-10'>
+              <div className='w-2/3 mr-10'>
+                <div className='flex justify-between'>
+                  <h3 className='mb-3 font-semibold'>Subtasks completed</h3>
+                  <div className='flex items-center mb-3'>
                     <Dropdown onClick={this.updateChartOne} />
                   </div>
                 </div>
 
-                <div className="bg-white p-5 rounded-lg shadow-md">
+                <div className='bg-white p-5 rounded-lg shadow-md'>
                   <Chart
                     data={this.state.chartOne.data}
                     period={this.state.chartOne.period}
@@ -116,25 +111,26 @@ class Dashboard extends React.Component {
                   />
                 </div>
               </div>
-              <div className="w-1/3">
-                <h3 className="mb-3">Lastest activity</h3>
-                <div className="bg-white p-5 rounded-lg shadow-md">
+              <div className='w-1/3'>
+                <h3 className='mb-3'>Lastest activity</h3>
+                <div className='bg-white p-5 rounded-lg shadow-md'>
                   <NotificationList
                     notifications={this.state.lastestActivity}
                     isAdmin={this.props.isAdmin}
+                    zeroMessage='No subtasks completed yet'
                   />
                 </div>
               </div>
             </div>
             {/* learning paths + recently finished */}
-            <div className="flex mt-10">
-              <div className="w-2/3 mr-10">
-                <div className="flex justify-between">
-                  <h3 className="mb-3">Learning paths completed</h3>
+            <div className='flex mt-10'>
+              <div className='w-2/3 mr-10'>
+                <div className='flex justify-between'>
+                  <h3 className='mb-3'>Learning paths completed</h3>
                   <Dropdown onClick={this.updateChartTwo} />
                 </div>
 
-                <div className="bg-white p-5 rounded-lg shadow-md">
+                <div className='bg-white p-5 rounded-lg shadow-md'>
                   <Chart
                     data={this.state.chartTwo.data}
                     period={this.state.chartTwo.period}
@@ -142,12 +138,13 @@ class Dashboard extends React.Component {
                   />
                 </div>
               </div>
-              <div className="w-1/3">
-                <h3 className="mb-3 font-semibold">Recently finished paths</h3>
-                <div className="bg-white p-5 rounded-lg shadow-md">
+              <div className='w-1/3'>
+                <h3 className='mb-3 font-semibold'>Recently finished paths</h3>
+                <div className='bg-white p-5 rounded-lg shadow-md'>
                   <NotificationList
                     notifications={this.state.recentlyFinished}
                     isAdmin={this.props.isAdmin}
+                    zeroMessage='No paths completed yet'
                   />
                 </div>
               </div>

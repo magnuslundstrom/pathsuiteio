@@ -8,7 +8,6 @@ const completedYear = require('../../utilFns/completedYear')
 
 module.exports = (router) => {
   router.get('/api/paths-completed', auth, async (req, res) => {
-    console.log(req.query)
     const period = req.query.when
     const query = {
       company: req.user.company._id,
@@ -25,9 +24,13 @@ module.exports = (router) => {
 
   // Get the notifications in sidebar
   router.get('/api/path-notifications', auth, async (req, res) => {
+    const query = {
+      company: req.user.company._id,
+    }
+    if (req.query.user) query.user = req.query.user
     try {
       const companyPathNotifications = await PathNotification.find({
-        company: req.user.company._id,
+        ...query,
       })
         .select('date description user')
         .populate('user', 'firstName lastName image')

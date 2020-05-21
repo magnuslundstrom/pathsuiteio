@@ -10,8 +10,12 @@ const completedYear = require('../../utilFns/completedYear')
 module.exports = (router) => {
   router.get('/api/subtasks-completed', auth, async (req, res) => {
     const period = req.query.when
-    const companySubtaskNotifications = await SubtaskNotification.find({
+    const query = {
       company: req.user.company._id,
+    }
+    if (req.query.user) query.user = req.query.user
+    const companySubtaskNotifications = await SubtaskNotification.find({
+      ...query,
     })
     let numbers
     if (period.includes('week')) numbers = completedWeek(companySubtaskNotifications, period)
@@ -21,9 +25,13 @@ module.exports = (router) => {
 
   // Get the notifications in sidebar
   router.get('/api/subtask-notifications', auth, async (req, res) => {
+    const query = {
+      company: req.user.company._id,
+    }
+    if (req.query.user) query.user = req.query.user
     try {
       const companySubtaskNotifications = await SubtaskNotification.find({
-        company: req.user.company._id,
+        ...query,
       })
         .select('date description user')
         .populate('user', 'firstName lastName image')
