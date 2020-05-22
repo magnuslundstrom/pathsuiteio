@@ -60,8 +60,10 @@ class Paths extends React.Component {
     if (!this.state.currentLimit && this.state.paths.length % 3 === 0) {
       this.setState({ skip: this.state.skip + 3, extendedLoading: true })
       const { data: extendPaths } = await axios.get(this.getCurrentFetchUrl())
-      this.setState({ paths: [...this.state.paths, ...extendPaths], extendedLoading: false })
-      if (extendPaths.length === 0) this.setState({ currentLimit: true })
+      setTimeout(() => {
+        this.setState({ paths: [...this.state.paths, ...extendPaths], extendedLoading: false })
+        if (extendPaths.length === 0) this.setState({ currentLimit: true })
+      }, 300)
     }
   }
 
@@ -71,7 +73,7 @@ class Paths extends React.Component {
         <div className="flex justify-between items-center">
           <h1>Paths</h1>
           {this.props.isAdmin && (
-            <Link to="/create-path">
+            <Link to="/create-path" className="hover-spin">
               <i className="fas fa-plus text-2xl font-semibold"></i>
             </Link>
           )}

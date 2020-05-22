@@ -49,7 +49,7 @@ const CreateSubtask = (props) => {
       </div>
       {/* right */}
       <div className="flex justify-end items-start">
-        <button onClick={() => props.onDelete(props.index)}>
+        <button onClick={() => props.onDelete(props.index)} className="hover-spin">
           <i className="fas fa-times"></i>
         </button>
       </div>

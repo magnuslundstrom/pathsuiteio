@@ -19,6 +19,7 @@ import Profile from './dashboard/Profile'
 import AccountUsers from './dashboard/AccountUsers'
 import User from './dashboard/User'
 import EditPath from './dashboard/EditPath'
+import AccountInformation from './dashboard/AccountInformation'
 import SuccessMessage from './buildingBlocks/utils/SuccessMessage'
 
 class App extends React.Component {
@@ -60,6 +61,7 @@ class App extends React.Component {
             <Route path="/account-users" exact component={AccountUsers} />
             <Route path="/user" component={User} />
             <Route path="/edit-path" component={EditPath} />
+            <Route path="/account-information" component={AccountInformation} />
             <Route path="*" render={() => <Redirect to="/" />} />
           </Switch>
         )

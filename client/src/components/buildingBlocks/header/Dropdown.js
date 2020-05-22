@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import OutsideClickHandler from 'react-outside-click-handler'
 
@@ -24,37 +24,39 @@ const Dropdown = (props) => {
             <p className="font-semibold">{props.fullName}</p>
             <p className="text-secGray border-b border-secGray pb-2">{props.email}</p>
             <div className="flex flex-col border-b border-secGray pb-2">
-              <Link to="/profile" className="mt-2 inline-block hover:font-semibold self-start">
+              <NavLink
+                to="/profile"
+                className="mt-2 inline-block hover:font-semibold self-start"
+                activeClassName="font-semibold"
+              >
                 Profile
-              </Link>
+              </NavLink>
 
               {/* Extra menu items if isAdmin */}
               {props.isAdmin && (
                 <div className="flex flex-col">
-                  <Link
-                    to="/account"
-                    className="mt-1 inline-block hover:font-semibold self-start text-red"
+                  <NavLink
+                    to="/account-information"
+                    className="mt-1 inline-block hover:font-semibold self-start"
+                    activeClassName="font-semibold"
                   >
                     Account
-                  </Link>
-                  <Link
-                    to="/account-users"
-                    className="mt-1 inline-block hover:font-semibold self-start"
-                  >
-                    Account users
-                  </Link>
-                  <Link
+                  </NavLink>
+
+                  <NavLink
                     to="/subscription"
                     className="mt-1 inline-block hover:font-semibold self-start text-red"
+                    activeClassName="font-semibold"
                   >
                     Subscription
-                  </Link>
-                  <Link
+                  </NavLink>
+                  <NavLink
                     to="/billing"
                     className="mt-1 inline-block hover:font-semibold self-start text-red"
+                    activeClassName="font-semibold"
                   >
                     Billing info
-                  </Link>
+                  </NavLink>
                   <a
                     href="https://pathsuite.webflow.io/support"
                     target="_blank"

@@ -52,7 +52,7 @@ class PathForm extends React.Component {
           <p>Loading</p>
         ) : (
           <form onSubmit={this.onSubmit}>
-            <div className="bg-white rounded-lg shadow-md p-10">
+            <div className="bg-white rounded-lg shadow-md p-10 hover-card">
               {/* Title */}
               <input
                 placeholder="Add a title"

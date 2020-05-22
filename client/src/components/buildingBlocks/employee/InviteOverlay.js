@@ -40,7 +40,7 @@ class InviteOverlay extends React.Component {
             </div>
             <div>
               <button onClick={this.props.onClose}>
-                <i className="fas fa-times"></i>
+                <i className="fas fa-times hover-spin"></i>
               </button>
             </div>
           </div>

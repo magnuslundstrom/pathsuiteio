@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Link } from 'react-router-dom'
+import AccountMenu from '../buildingBlocks/account/AccountMenu'
 
 import axios from 'axios'
 
@@ -47,7 +47,10 @@ class AccountUsers extends React.Component {
             <td className="pt-2">{user.jobTitle}</td>
             <td className="pt-2">{user.isAdmin ? 'Admin' : 'Employee'}</td>
             <td className="pt-2">
-              <button className="text-green" onClick={() => this.removeAccess(user._id, index)}>
+              <button
+                className="text-green hover:font-semibold"
+                onClick={() => this.removeAccess(user._id, index)}
+              >
                 Remove access
               </button>
             </td>
@@ -61,12 +64,13 @@ class AccountUsers extends React.Component {
     return (
       <Container>
         <h1>Account users</h1>
+        <AccountMenu />
         {!this.state.loading && (
           <div className="bg-white rounded-lg shadow-md p-10 mt-10">
             <div className="flex justify-between items-center">
               <h2>Manage users</h2>
               <button onClick={() => this.setState({ displayInvite: true })}>
-                <i className="fas fa-plus text-xl font-semibold"></i>
+                <i className="fas fa-plus text-xl font-semibold hover-spin"></i>
               </button>
             </div>
             {this.state.loading && <BoxLoader />}

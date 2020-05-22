@@ -35,6 +35,7 @@ module.exports = (router) => {
         ...query,
       })
         .select('date description user')
+        .sort('-date')
         .limit(parseInt(req.query.limit))
         .skip(parseInt(req.query.skip))
         .populate('user', 'firstName lastName image')
@@ -44,7 +45,7 @@ module.exports = (router) => {
         const image = noti.user._doc.image.toString('base64')
         const date = moment(noti.date).format('MMM Do')
         const notification = { ...noti._doc, user: { ...noti._doc.user._doc, image }, date }
-        newSubtasks.unshift(notification)
+        newSubtasks.push(notification)
       })
       res.send(newSubtasks)
     } catch (e) {

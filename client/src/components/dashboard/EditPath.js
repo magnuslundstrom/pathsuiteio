@@ -51,13 +51,20 @@ const CreatePath = (props) => {
     <Container>
       <h1>Edit path</h1>
 
-      <button className='block mt-8 font-semibold' onClick={() => props.history.goBack()}>
-        <i className='fas fa-arrow-left mr-2'></i> Go back{' '}
+      <button
+        className="block mt-8 font-semibold hover-underline"
+        onClick={() => props.history.goBack()}
+      >
+        <i className="fas fa-arrow-left mr-2"></i> Go back{' '}
       </button>
-      <button className='mt-2 font-semibold mb-5' onClick={() => onDelete()}>
-        <i className='fas fa-trash-alt mr-2'></i> Discard path
+      <button className="mt-2 font-semibold mb-5 hover-underline" onClick={() => onDelete()}>
+        <i className="fas fa-trash-alt mr-2"></i> Discard path
       </button>
-      {loading ? <ScreenLoader /> : editPathState && <PathForm edit={true} onSubmit={onSubmit} state={editPathState} />}
+      {loading ? (
+        <ScreenLoader />
+      ) : (
+        editPathState && <PathForm edit={true} onSubmit={onSubmit} state={editPathState} />
+      )}
     </Container>
   )
 }

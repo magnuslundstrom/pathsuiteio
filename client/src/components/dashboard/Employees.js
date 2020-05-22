@@ -36,7 +36,7 @@ class Employees extends React.Component {
         <div className="flex justify-between items-center">
           <h1>Employees</h1>
           <button onClick={() => this.setState({ displayInvite: true })}>
-            <i className="fas fa-plus text-2xl font-semibold"></i>
+            <i className="fas fa-plus text-2xl font-semibold hover-spin"></i>
           </button>
         </div>
         {(this.state.loading && <BoxLoader />) || (

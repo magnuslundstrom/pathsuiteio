@@ -11,6 +11,13 @@
   @apply rounded-md px-3 py-2 block w-full;
 }
 
+.input-border-gray:focus::placeholder {
+  @apply text-blue;
+}
+.input-border-gray:hover::placeholder {
+  @apply text-blue;
+}
+
 .input-border-trans::placeholder {
   @apply text-secGray;
 }

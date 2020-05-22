@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 
 import Container from '../buildingBlocks/Container'
+import AccountMenu from '../buildingBlocks/account/AccountMenu'
 
 class Profile extends React.Component {
   state = {
@@ -63,6 +64,7 @@ class Profile extends React.Component {
     return (
       <Container>
         <h1>User profile</h1>
+        <AccountMenu />
         <div className="bg-white shadow-md rounded-lg p-10 mt-10">
           <h3>Update profile photo</h3>
           <form onSubmit={this.onSubmit} id="form">
@@ -189,7 +191,21 @@ class Profile extends React.Component {
               {/* PASSWORD END */}
             </div>
           </form>
+          <h3 className="mt-5">Profile connections</h3>
+          <p>Your profile is linked with the following accounts:</p>
+          <div>
+            <div className="flex mt-3">
+              <h3 className="w-40">Company</h3>
+              <h3 className="w-40">Role</h3>
+            </div>
+            <div className="flex mt-1">
+              <p className="w-40">{this.props.user.company.companyName}</p>
+              <p className="w-40">{this.props.user.isAdmin ? 'Admin' : 'Employee'}</p>
+            </div>
+          </div>
         </div>
+
+        <div></div>
       </Container>
     )
   }

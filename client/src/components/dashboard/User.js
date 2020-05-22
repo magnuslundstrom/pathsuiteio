@@ -10,25 +10,22 @@ import PathList from '../buildingBlocks/path/PathList'
 class User extends React.Component {
   state = {
     loading: true,
-    paths: [],
+    completedPaths: [],
+    unfinishedPaths: [],
   }
 
   async componentDidMount() {
     const params = new URLSearchParams(this.props.location.search)
     const id = params.get('id')
     const { data: paths } = await axios.get(`/api/paths?user=${id}`)
+    const completedPaths = paths.filter((path) => path.isCompleted)
+    const unfinishedPaths = paths.filter((path) => !path.isCompleted)
     const { data: user } = await axios.get(`/api/user?id=${id}`)
-    this.setState({ paths, user, loading: false }, () => console.log(this.state))
+    this.setState({ completedPaths, unfinishedPaths, user, loading: false }, () =>
+      console.log(this.state)
+    )
   }
-
-  onScroll = async () => {
-    if (!this.state.currentLimit && this.state.paths.length % 3 === 0) {
-      this.setState({ skip: this.state.skip + 3, extendedLoading: true })
-      const { data: extendPaths } = await axios.get(this.getCurrentFetchUrl())
-      this.setState({ paths: [...this.state.paths, ...extendPaths], extendedLoading: false })
-      if (extendPaths.length === 0) this.setState({ currentLimit: true })
-    }
-  }
+  onScoll = () => {}
 
   render() {
     return (
@@ -49,22 +46,41 @@ class User extends React.Component {
                   <p className="font-semibold">{this.state.user.jobTitle}</p>
                 </div>
               </div>
-              <Link to="/create-path">
-                <i className="fas fa-plus text-2xl font-semibold mt-4"></i>
+              <Link to="/create-path" className="">
+                <i className="fas fa-plus text-2xl font-semibold mt-4 hover-spin"></i>
               </Link>
             </div>
-            <div className="mt-10">
+            <div className="mt-5">
               <h2 className="mb-3">Active paths</h2>
-              {this.state.paths.length === 0 ? (
-                <p>User have no paths yet!</p>
-              ) : (
-                <PathList
-                  paths={[...this.state.paths]}
-                  isAdmin={this.props.isAdmin}
-                  image={false}
-                  onScroll={this.onScroll}
-                />
-              )}
+              <Link to="/employees" className="font-semibold mb-5 hover-underline">
+                <i className="fas fa-arrow-left mr-1 "></i> Go back to employees
+              </Link>
+              <div>
+                <h2 className="mt-10 -mb-5">Completed paths</h2>
+                {this.state.completedPaths.length === 0 ? (
+                  <p className="mt-10">User has no completed paths yet</p>
+                ) : (
+                  <PathList
+                    paths={[...this.state.completedPaths]}
+                    isAdmin={this.props.isAdmin}
+                    image={false}
+                    onScroll={this.onScoll}
+                  />
+                )}
+              </div>
+              <div>
+                <h2 className="mt-10 -mb-5">Unfinished paths</h2>
+                {this.state.unfinishedPaths.length === 0 ? (
+                  <p className="mt-10">User has no unfinished paths</p>
+                ) : (
+                  <PathList
+                    paths={[...this.state.unfinishedPaths]}
+                    isAdmin={this.props.isAdmin}
+                    image={false}
+                    onScroll={this.onScoll}
+                  />
+                )}
+              </div>
             </div>
           </div>
         )}

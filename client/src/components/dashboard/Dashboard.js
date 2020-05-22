@@ -31,11 +31,35 @@ class Dashboard extends React.Component {
     finishedPathsLoading: false,
   }
 
-  onScroll = async (list, skip, loading, url) => {
-    if (this.state[list].length % 5 === 0) {
-      this.setState({ [`${skip}`]: this.state[skip] + 5, [`${loading}`]: true })
-      const { data: extendedList } = await axios.get(url)
-      this.setState({ [`${list}`]: [...this.state[list], ...extendedList], [`${loading}`]: false })
+  recentlyFinishedScroll = async () => {
+    if (this.state.recentlyFinished.length % 5 === 0) {
+      this.setState({
+        skipFinishedPaths: this.state.skipFinishedPaths + 5,
+        finishedPathsLoading: true,
+      })
+      const { data: extendedList } = await axios.get(this.getPathNotificationUrl())
+      setTimeout(() => {
+        this.setState({
+          recentlyFinished: [...this.state.recentlyFinished, ...extendedList],
+          finishedPathsLoading: false,
+        })
+      }, 300)
+    }
+  }
+
+  latestActivityScroll = async () => {
+    if (this.state.lastestActivity.length % 5 === 0) {
+      this.setState({
+        skipLatestActivity: this.state.skipLatestActivity + 5,
+        latestActivityLoading: true,
+      })
+      const { data: extendedList } = await axios.get(this.getSubtaskNotificationFetchUrl())
+      setTimeout(() => {
+        this.setState({
+          lastestActivity: [...this.state.lastestActivity, ...extendedList],
+          latestActivityLoading: false,
+        })
+      }, 300)
     }
   }
 
@@ -142,16 +166,14 @@ class Dashboard extends React.Component {
                   <NotificationList
                     notifications={this.state.lastestActivity}
                     isAdmin={this.props.isAdmin}
-                    onScroll={() =>
-                      this.onScroll(
-                        'lastestActivity',
-                        'skipLatestActivity',
-                        'latestActivityLoading',
-                        this.getSubtaskNotificationFetchUrl()
-                      )
-                    }
+                    onScroll={this.latestActivityScroll}
                     zeroMessage="No subtasks completed yet"
                   />
+                  {this.state.latestActivityLoading && (
+                    <p className="ml-5">
+                      Fetching more notifications <i className="fas fa-spinner own-spinner"></i>
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -178,7 +200,13 @@ class Dashboard extends React.Component {
                     notifications={this.state.recentlyFinished}
                     isAdmin={this.props.isAdmin}
                     zeroMessage="No paths completed yet"
+                    onScroll={this.recentlyFinishedScroll}
                   />
+                  {this.state.finishedPathsLoading && (
+                    <p className="ml-5">
+                      Fetching more notifications <i className="fas fa-spinner own-spinner"></i>
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

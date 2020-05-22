@@ -43,8 +43,11 @@ const CreatePath = (props) => {
   return (
     <Container>
       <h1>New path</h1>
-      <button className="mt-8 font-semibold mb-5" onClick={() => props.history.goBack()}>
-        <i className="fas fa-trash-alt mr-2"></i> Discard path
+      <button
+        className="mt-8 font-semibold mb-5 hover-underline"
+        onClick={() => props.history.goBack()}
+      >
+        <i className="fas fa-trash-alt mr-1"></i> Discard path
       </button>
       {!state.loading && <PathForm edit={false} onSubmit={onSubmit} state={state.obj} />}
     </Container>
