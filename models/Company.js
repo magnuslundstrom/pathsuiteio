@@ -21,7 +21,7 @@ const CompanySchema = new mongoose.Schema(
           throw new Error('Invalid email')
         }
       },
-      companyaddress: {
+      companyAddress: {
         type: String,
       },
       companyPhone: {

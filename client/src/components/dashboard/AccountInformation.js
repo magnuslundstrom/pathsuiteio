@@ -19,6 +19,11 @@ class Profile extends React.Component {
     this.setState({ [`${input}`]: e.target.value })
   }
 
+  async componentDidMount() {
+    const { data: res } = await axios.get('/api/account-information')
+    this.setState({ ...res })
+  }
+
   render() {
     return (
       <Container>
