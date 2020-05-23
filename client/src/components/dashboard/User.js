@@ -46,9 +46,11 @@ class User extends React.Component {
                   <p className="font-semibold">{this.state.user.jobTitle}</p>
                 </div>
               </div>
-              <Link to="/create-path" className="">
-                <i className="fas fa-plus text-2xl font-semibold mt-4 hover-spin"></i>
-              </Link>
+              {this.props.isAdmin && (
+                <Link to="/create-path" className="">
+                  <i className="fas fa-plus text-2xl font-semibold mt-4 hover-spin"></i>
+                </Link>
+              )}
             </div>
             <div className="mt-5">
               <Link to="/employees" className="font-semibold mb-5 hover-underline">

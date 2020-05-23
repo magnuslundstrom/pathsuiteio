@@ -24,9 +24,16 @@ const Header = (props) => {
         </Link>
 
         <div className="flex items-center">
-          <Link to="/paths" className="mr-8 hover-underline font-semibold">
-            <i className="fas fa-chart-line"></i> Paths
-          </Link>
+          {props.isAdmin &&
+            ((
+              <Link to="/paths" className="mr-8 hover-underline font-semibold">
+                <i className="fas fa-chart-line"></i> Paths
+              </Link>
+            ) || (
+              <Link to={`user?id=${props.id}`} className="mr-8 hover-underline font-semibold">
+                <i className="fas fa-chart-line"></i> Paths
+              </Link>
+            ))}
 
           {/* Extra menu items if isAdmin */}
           {props.isAdmin && (
@@ -60,6 +67,7 @@ const mapStateToProps = (state) => {
     fullName: state.user.firstName + ' ' + state.user.lastName,
     email: state.user.email,
     isAdmin: state.user.isAdmin,
+    id: state.user._id,
   }
 }
 
