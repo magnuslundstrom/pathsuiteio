@@ -30,6 +30,7 @@ const fetchRoutes = [
   require('./fetch/pathNotifications'),
   require('./fetch/singleEditPath'),
   require('./fetch/categories'),
+  require('./fetch/accountInformation'),
 ]
 
 // @@ PATCH ROUTES

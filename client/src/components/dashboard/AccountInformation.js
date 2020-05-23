@@ -7,8 +7,10 @@ import AccountMenu from '../buildingBlocks/account/AccountMenu'
 
 class Profile extends React.Component {
   state = {
-    jobTitle: this.props.user.jobTitle,
-    email: this.props.user.email,
+    companyName: '',
+    companyEmail: '',
+    companyAddress: '',
+    companyPhone: '',
   }
 
   onSubmit = async (e) => {}
@@ -28,37 +30,27 @@ class Profile extends React.Component {
               {/* BASIC INFORMATION */}
               <div className="flex flex-col">
                 <h3 className="mb-5">Basic information</h3>
-                <label htmlFor="firstName" className="font-semibold">
-                  Username
-                </label>
-                <input
-                  className="auth-input"
-                  type="text"
-                  value={this.state.firstName}
-                  id="firstName"
-                  onChange={(e) => this.onChangeHandler(e, 'firstName')}
-                />
 
-                <label htmlFor="lastName" className="font-semibold">
+                <label htmlFor="companyName" className="font-semibold">
                   Company
                 </label>
                 <input
                   type="text"
                   className="auth-input"
-                  value={this.state.lastName}
-                  id="lastName"
-                  onChange={(e) => this.onChangeHandler(e, 'lastName')}
+                  value={this.state.companyName}
+                  id="companyName"
+                  onChange={(e) => this.onChangeHandler(e, 'companyName')}
                 />
 
-                <label htmlFor="jobTitle" className="font-semibold">
+                <label htmlFor="companyAddress" className="font-semibold">
                   Address
                 </label>
                 <input
                   type="text"
                   className="auth-input"
                   value={this.state.jobTitle}
-                  id="jobTitle"
-                  onChange={(e) => this.onChangeHandler(e, 'jobTitle')}
+                  id="companyAddress"
+                  onChange={(e) => this.onChangeHandler(e, 'companyAddress')}
                 />
 
                 <label htmlFor="email" className="font-semibold">
