@@ -51,17 +51,16 @@ class User extends React.Component {
               </Link>
             </div>
             <div className="mt-5">
-              <h2 className="mb-3">Active paths</h2>
               <Link to="/employees" className="font-semibold mb-5 hover-underline">
                 <i className="fas fa-arrow-left mr-1 "></i> Go back to employees
               </Link>
               <div>
-                <h2 className="mt-10 -mb-5">Completed paths</h2>
-                {this.state.completedPaths.length === 0 ? (
-                  <p className="mt-10">User has no completed paths yet</p>
+                <h2 className="mt-10 -mb-5">Active paths</h2>
+                {this.state.unfinishedPaths.length === 0 ? (
+                  <p className="mt-10">User has no active paths</p>
                 ) : (
                   <PathList
-                    paths={[...this.state.completedPaths]}
+                    paths={[...this.state.unfinishedPaths]}
                     isAdmin={this.props.isAdmin}
                     image={false}
                     onScroll={this.onScoll}
@@ -69,12 +68,12 @@ class User extends React.Component {
                 )}
               </div>
               <div>
-                <h2 className="mt-10 -mb-5">Unfinished paths</h2>
-                {this.state.unfinishedPaths.length === 0 ? (
-                  <p className="mt-10">User has no unfinished paths</p>
+                <h2 className="mt-10 -mb-5">Completed paths</h2>
+                {this.state.completedPaths.length === 0 ? (
+                  <p className="mt-10">User has no completed paths</p>
                 ) : (
                   <PathList
-                    paths={[...this.state.unfinishedPaths]}
+                    paths={[...this.state.completedPaths]}
                     isAdmin={this.props.isAdmin}
                     image={false}
                     onScroll={this.onScoll}
