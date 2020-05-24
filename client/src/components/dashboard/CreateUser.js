@@ -1,9 +1,10 @@
 import React from 'react'
-
+import { logIn } from '../../redux/actions/logInOut'
 import Container from '../buildingBlocks/Container'
 import { AuthError, LimitationBox } from '../buildingBlocks/utils/ErrorMessages'
-
 import axios from 'axios'
+
+///// THIS COMPONENT IS DEPRECIATED -<<<<<<<<<<<<<<<<<<<<<<<<
 
 class CreateUser extends React.Component {
   state = {

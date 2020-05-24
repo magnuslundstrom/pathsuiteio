@@ -26,14 +26,32 @@ const fetchRoutes = [
   require('./fetch/searchUser'),
   require('./fetch/user'),
   require('./fetch/paths'),
-  require('./fetch/goalNotifications'),
+  require('./fetch/subtaskNotifications'),
   require('./fetch/pathNotifications'),
+  require('./fetch/singleEditPath'),
+  require('./fetch/categories'),
+  require('./fetch/accountInformation'),
 ]
 
 // @@ PATCH ROUTES
-const patchRoutes = [require('./patch/user'), require('./patch/paths'), require('./patch/welcome')]
+const patchRoutes = [
+  require('./patch/user'),
+  require('./patch/paths'),
+  require('./patch/welcome'),
+  require('./patch/accountInformation'),
+]
 
-const routes = [...authRoutes, ...createRoutes, ...deleteRoutes, ...fetchRoutes, ...patchRoutes]
+// @@ EMAIL ROUTES
+const emailRoutes = [require('./email/inviteUser')]
+
+const routes = [
+  ...authRoutes,
+  ...createRoutes,
+  ...deleteRoutes,
+  ...fetchRoutes,
+  ...patchRoutes,
+  ...emailRoutes,
+]
 routes.forEach((route) => route(router))
 
 module.exports = router

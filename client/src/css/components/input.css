@@ -3,11 +3,19 @@
 }
 
 .input-border-gray:focus {
-  @apply outline-none;
+  @apply rounded-md;
+  outline: #edf1f4 solid 2px;
 }
 
 .input-border-gray {
-  @apply border-2 border-solid border-gray rounded-md px-4 py-2 block mb-5 w-full;
+  @apply rounded-md px-3 py-2 block w-full;
+}
+
+.input-border-gray:focus::placeholder {
+  @apply text-blue;
+}
+.input-border-gray:hover::placeholder {
+  @apply text-blue;
 }
 
 .input-border-trans::placeholder {
@@ -19,5 +27,12 @@
 }
 
 .input-border-trans:focus {
+  @apply outline-none;
+}
+
+.auth-input {
+  @apply border border-gray p-2 px-3 block mb-5 rounded-md border-2;
+}
+.auth-input:focus {
   @apply outline-none;
 }

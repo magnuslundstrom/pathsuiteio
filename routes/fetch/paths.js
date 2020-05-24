@@ -6,22 +6,30 @@ module.exports = (router) => {
   // Used on /paths on admin side
 
   router.get('/api/paths', auth, async (req, res) => {
-    // req.query (/?user=...)
-    // req.query (/?path=...)
-    console.log(req.query)
-    let search
-    if (req.query) search = { ...req.query, company: req.user.company._id }
-    if (!req.query) search = { company: req.user.company._id }
-    const paths = await Path.find({ ...search })
+    const reg = new RegExp('^' + req.query.pathTitle, 'i')
+    const searchObj = {
+      ...req.query,
+    }
+    console.log(searchObj)
+    delete searchObj.limit
+    delete searchObj.skip
+    if (searchObj.pathTitle) searchObj.pathTitle = reg
+    console.log(searchObj)
+    const paths = await Path.find({ ...searchObj, company: req.user.company._id })
+      .limit(parseInt(req.query.limit))
+      .skip(parseInt(req.query.skip))
+      .sort('endDate')
       .populate('user', 'firstName lastName jobTitle image')
       .populate('responsible', 'firstName lastName')
       .exec()
+
     const actualPaths = []
-    paths.forEach((path, index) => {
-      const date = moment(path.deadline).format('MMM Do YYYY')
+    paths.forEach((path) => {
+      const startDate = moment(path.startDate).format('MMM Do YYYY')
+      const endDate = moment(path.endDate).format('MMM Do YYYY')
       const image = path.user.image.toString('base64')
-      const newPath = { ...path._doc, user: { ...path._doc.user._doc, image }, date }
-      actualPaths.unshift(newPath)
+      const newPath = { ...path._doc, user: { ...path._doc.user._doc, image }, startDate, endDate }
+      actualPaths.push(newPath)
     })
     res.send(actualPaths)
   })

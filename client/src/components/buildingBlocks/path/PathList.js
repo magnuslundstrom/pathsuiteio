@@ -7,9 +7,9 @@ Expects 2 props: [paths], isAdmin
 
 
 every path should contain:
-root: 'category', 'company', {responsible}, [goals], 'title', {user}, '_id' <- path ID
+root: 'category', 'company', {responsible}, [subtasks], 'title', {user}, '_id' <- path ID
 responsible: {firstName, lastName, fullName }
-goals: [{isCompleted, goalLink, goalNote, goalTitle, goalType}]
+subtasks: [{isCompleted, subtaskLink, subtaskNote, subtaskTitle, subtaskType}]
 optional: image
 */
 
@@ -19,18 +19,15 @@ const PathList = (props) => {
       return (
         <PathCard
           key={index}
-          path={{
-            category: path.category,
-            company: path.company,
-            title: path.title,
-            _id: path._id,
-            date: path.date,
-          }}
+          path={path}
           responsible={path.responsible}
           user={path.user}
-          goals={path.goals}
+          subtasks={path.subtasks}
           isAdmin={props.isAdmin}
           image={props.image}
+          length={props.paths.length}
+          index={index}
+          onScroll={props.onScroll}
         />
       )
     })

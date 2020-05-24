@@ -634,21 +634,26 @@ video {
 }
 
 .input-border-gray:focus {
-  outline: 0;
+  border-radius: 0.375rem;
+  outline: #edf1f4 solid 2px;
 }
 
 .input-border-gray {
-  border-width: 2px;
-  border-style: solid;
-  border-color: #edf1f4;
   border-radius: 0.375rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   display: block;
-  margin-bottom: 1.25rem;
   width: 100%;
+}
+
+.input-border-gray:focus::placeholder {
+  color: #2f3756;
+}
+
+.input-border-gray:hover::placeholder {
+  color: #2f3756;
 }
 
 .input-border-trans::placeholder {
@@ -664,6 +669,37 @@ video {
 
 .input-border-trans:focus {
   outline: 0;
+}
+
+.auth-input {
+  border-width: 1px;
+  border-color: #edf1f4;
+  padding: 0.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  display: block;
+  margin-bottom: 1.25rem;
+  border-radius: 0.375rem;
+  border-width: 2px;
+}
+
+.auth-input:focus {
+  outline: 0;
+}
+
+.own-spinner {
+  transform: rotate(0deg);
+  animation: ownSpinner 2s infinite linear;
+}
+
+@keyframes ownSpinner {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .lds-roller {
@@ -775,6 +811,11 @@ video {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   border-radius: 0.5rem;
   border-color: #a9a9a9;
+  z-index: 30;
+}
+
+.react-datepicker-popper {
+  z-index: 30;
 }
 
 .react-datepicker * {
@@ -796,6 +837,24 @@ video {
 .react-datepicker-ignore-onclickoutside,
 .react-datepicker__input-container {
   cursor: pointer;
+}
+
+.react-datepicker-ignore-onclickoutside:focus {
+  border-radius: 0.375rem;
+  outline: #edf1f4 solid 2px;
+}
+
+.react-datepicker-ignore-onclickoutside {
+  border-radius: 0.375rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.react-datepicker__input-container input {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  display: block;
+  width: 100%;
 }
 
 .space-y-0 > :not(template) ~ :not(template) {
@@ -10791,20 +10850,6 @@ h3 {
   border-bottom-width: 1px;
 }
 
-.hover-blue {
-  position: relative;
-}
-
-.hover-blue:hover::after {
-  content: '';
-  height: 1px;
-  width: 100%;
-  position: absolute;
-  top: 100%;
-  left: 0px;
-  background-color: #2f3756;
-}
-
 .error {
   color: #FC8181;
 }
@@ -10828,6 +10873,57 @@ h3 {
 
 .special-scroll::-webkit-scrollbar-thumb:hover {
   background-color: #a9a9a9;
+}
+
+.hover-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition-duration: 300ms;
+  transform: translate(0px, -3px);
+}
+
+.hover-card {
+  transition-duration: 300ms;
+}
+
+.hover-underline {
+  position: relative;
+}
+
+.hover-underline:focus {
+  outline: 0;
+}
+
+.hover-underline::after {
+  background-color: #2f3756;
+  border-radius: 0.5rem;
+  content: '';
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  left: 0px;
+  transform: scale(0, 1);
+  transition: 400ms;
+  transform-origin: center;
+}
+
+.hover-underline:hover::after {
+  transform: scale(1, 1);
+  transition: 400ms;
+}
+
+.hover-spin:hover {
+  animation: rotate-center 0.6s ease-in-out both;
+}
+
+@keyframes rotate-center {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @media (min-width: 640px) {

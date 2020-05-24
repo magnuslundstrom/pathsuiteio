@@ -14,7 +14,7 @@ const ProgressBar = (props) => {
           className={progress > 3 ? 'text-white' : 'text-blue'}
           style={{ fontWeight: '500', marginLeft: progress < 3 ? '40px' : '0px' }}
         >
-          {progress}%
+          {Math.round(progress)}%
         </p>
       </div>
     </div>

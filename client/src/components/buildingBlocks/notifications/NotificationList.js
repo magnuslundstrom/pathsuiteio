@@ -3,8 +3,18 @@ import Notification from './Notification'
 
 const NotificationList = (props) => {
   const renderNotifications = () => {
+    if (props.notifications.length === 0) return <p>{props.zeroMessage}</p>
     return props.notifications.map((notification, index) => {
-      return <Notification data={notification} key={index} />
+      return (
+        <Notification
+          data={notification}
+          key={index}
+          isAdmin={props.isAdmin}
+          index={index}
+          length={props.notifications.length}
+          onScroll={props.onScroll}
+        />
+      )
     })
   }
 

@@ -7,11 +7,11 @@ import { Link } from 'react-router-dom'
 
 const AuthFormWrapper = (props) => {
   return (
-    <div className="h-screen flex flex-col items-center pt-24">
+    <div className="min-h-screen flex flex-col items-center pt-24 pb-20">
       <Link to="/">
         <img src={logo} alt="logo" className="w-48 mb-10"></img>
       </Link>
-      <div className="text-center bg-white w- shadow-md rounded-lg p-12 w-96">
+      <div className="text-center bg-white shadow-md rounded-lg p-12 w-96">
         <h1 className="mb-6">{props.header}</h1>
         {props.children}
       </div>

@@ -22,6 +22,12 @@ const CompanySchema = new mongoose.Schema(
         }
       },
     },
+    companyAddress: {
+      type: String,
+    },
+    companyPhone: {
+      type: String,
+    },
   },
   {
     toObject: {

@@ -1,219 +1,57 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-
+import { connect } from 'react-redux'
+import { setSuccessMessage } from '../../redux/actions/successMessage'
 import Container from '../buildingBlocks/Container'
-import CreateGoals from '../buildingBlocks/path/CreateGoals'
-import SearchResultList from '../buildingBlocks/utils/SearchResultList'
-import { LimitationBox } from '../buildingBlocks/utils/ErrorMessages'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
+import PathForm from '../buildingBlocks/path/PathForm'
+import { createPathFormState } from '../buildingBlocks/path/data/createPathFormState' // has a clean obj that holds all data to be send to api endpoint
 
-class Paths extends React.Component {
-  constructor(props) {
-    super(props)
-    this.calenderRef = React.createRef()
-  }
+const CreatePath = (props) => {
+  const [state, setState] = useState({ obj: {}, loading: true })
 
-  state = {
-    title: '',
-    category: '',
-    user: '',
-    userSearch: '',
-    userSearchResult: [],
-    responsible: '',
-    responsibleSearch: '',
-    responsibleSearchResult: [],
-    goals: [
-      {
-        goalTitle: '',
-        goalType: '',
-        goalLink: '',
-        goalNote: '',
-      },
-    ],
-    deadline: new Date(),
-    showLimitations: true,
-    isTyping: false,
-    displayDatePicker: false,
-  }
-
-  addGoal = () => {
-    const goal = {
-      goalTitle: '',
-      goalType: '',
-      goalLink: '',
-      goalNote: '',
-    }
-    this.setState({ goals: [...this.state.goals, goal] })
-  }
-
-  onGoalChange = (index, property, e) => {
-    const currentState = [...this.state.goals]
-    currentState[index][property] = e.target.value
-    this.setState({ goals: currentState })
-  }
-
-  onGoalDelete = (index, e) => {
-    const currentState = [...this.state.goals]
-    currentState.splice(index, 1)
-    this.setState({ goals: currentState })
-  }
-
-  onSearch = (e, isAdmin) => {
-    let userType
-    isAdmin === true ? (userType = 'responsible') : (userType = 'user')
-    this.setState({ [`${userType}Search`]: e.target.value, isTyping: true }, async () => {
-      if (!this.isTyping) {
-        this.isTyping = true
-        const res = await axios.post(`/api/find-user?isAdmin=${isAdmin}`, {
-          find: this.state[`${userType}Search`],
-        })
-        if (this.state[`${userType}Search`].length > 0) {
-          this.setState({ [`${userType}SearchResult`]: [...res.data] })
-        } else {
-          this.setState({ [`${userType}SearchResult`]: [] })
-        }
-      }
-    })
-    setTimeout(() => {
-      this.isTyping = false
-    }, 250)
-  }
-
-  onSearchResultClick = (result, isAdmin) => {
-    let userType
-    isAdmin ? (userType = 'responsible') : (userType = 'user')
-    this.setState({
-      [userType]: result._id,
-      [`${userType}Search`]: `${result.firstName} ${result.lastName}`,
-      [`${userType}SearchResult`]: [],
-    })
-  }
-
-  onSubmit = async () => {
+  const onSubmit = async (stateobj) => {
     try {
-      await axios.post('/api/create-path', {
-        title: this.state.title,
-        user: this.state.user,
-        category: this.state.category,
-        responsible: this.state.responsible,
-        goals: [...this.state.goals],
-        deadline: this.state.deadline,
+      const res = await axios.post('/api/create-path', {
+        ...stateobj,
       })
-      this.props.history.goBack()
+      console.log(res)
+      if (res) {
+        props.history.goBack()
+        props.setSuccessMessage('Path was succesfully created!')
+      }
     } catch (e) {
-      console.log(e)
+      console.log(e.response)
     }
   }
 
-  calenderClick = () => {
-    this.setState({ displayDatePicker: true })
-    setTimeout(() => {
-      this.calenderRef.current.setOpen(true)
-    }, 1)
-  }
+  // FIX - subtasks bliver ikke resat, så har gjort det således
+  useEffect(() => {
+    setState({
+      obj: {
+        ...createPathFormState,
+        form: {
+          ...createPathFormState.form,
+          subtasks: [{ subtaskTitle: '', subtaskLink: '', subtaskNote: '', subtaskType: '' }],
+        },
+      },
+      loading: false,
+    })
+  }, [])
 
-  render() {
-    return (
-      <Container>
-        <LimitationBox
-          limits={[
-            'Please be sure that you have employees connected to the company',
-            'Please select a user from the dropdown when possible',
-            "Doesn't display errors",
-          ]}
-        />
-        <h1>New path</h1>
-        <button className="mt-10 font-semibold" onClick={() => this.props.history.goBack()}>
-          <i className="fas fa-trash-alt mr-2"></i> Discard path
-        </button>
-        <div className="bg-white p-10 shadow-md rounded-lg mt-4">
-          <input
-            className="input-border-trans text-xl block"
-            type="text"
-            placeholder="Add a title"
-            value={this.state.title}
-            onChange={(e) => this.setState({ title: e.target.value })}
-          />
-          <div className="relative">
-            <i className="fas fa-user mr-2"></i>{' '}
-            <input
-              className="input-border-trans"
-              type="text"
-              placeholder="Who owns this path"
-              value={this.state.userSearch}
-              onChange={(e) => this.onSearch(e, false)}
-            />
-            {this.state.userSearchResult.length > 0 && (
-              <SearchResultList
-                searchList={this.state.userSearchResult}
-                onClick={this.onSearchResultClick}
-              />
-            )}
-          </div>
+  console.log(state.obj)
 
-          <div>
-            <div className="inline-block mr-2">
-              <div className="w-40 flex items-center justify-start mr-2  overflow-x-hidden">
-                <i className="far fa-calendar-alt mr-3"></i>
-                {!this.state.displayDatePicker && (
-                  <button onClick={this.calenderClick} className="text-left text-secGray">
-                    Pick a deadline
-                  </button>
-                )}
-                {this.state.displayDatePicker && (
-                  <DatePicker
-                    selected={this.state.deadline}
-                    onChange={(date) => this.setState({ deadline: date })}
-                    ref={this.calenderRef}
-                  />
-                )}
-              </div>
-            </div>
-            <i className="fas fa-sticky-note mr-2"></i>{' '}
-            <input
-              className="input-border-trans mr-2"
-              type="text"
-              placeholder="Add category"
-              value={this.state.category}
-              onChange={(e) => this.setState({ category: e.target.value })}
-            />
-            <div className="inline relative">
-              <i className="fas fa-user mr-2"></i>{' '}
-              <input
-                className="input-border-trans"
-                type="text"
-                placeholder="Responsible for this path"
-                value={this.state.responsibleSearch}
-                onChange={(e) => this.onSearch(e, true)}
-              />
-              {this.state.responsibleSearchResult.length > 0 && (
-                <SearchResultList
-                  searchList={this.state.responsibleSearchResult}
-                  onClick={this.onSearchResultClick}
-                />
-              )}
-            </div>
-          </div>
-          <h3 className="my-2">Goals</h3>
-          <CreateGoals
-            goals={this.state.goals}
-            onChange={this.onGoalChange}
-            onDelete={this.onGoalDelete}
-          />
-          <button className="flex items-center mt-5 font-semibold" onClick={this.addGoal}>
-            <i className="fas fa-plus text-2xl mr-4"></i>
-            Add new learning goal
-          </button>
-        </div>
-        <div className="flex justify-end">
-          <button className="btn btn-green mt-5 py-3 px-10" onClick={this.onSubmit}>
-            Save path
-          </button>
-        </div>
-      </Container>
-    )
-  }
+  return (
+    <Container>
+      <h1>New path</h1>
+      <button
+        className="mt-8 font-semibold mb-5 hover-underline"
+        onClick={() => props.history.goBack()}
+      >
+        <i className="fas fa-trash-alt mr-1"></i> Discard path
+      </button>
+      {!state.loading && <PathForm edit={false} onSubmit={onSubmit} state={state.obj} />}
+    </Container>
+  )
 }
 
-export default Paths
+export default connect(null, { setSuccessMessage })(CreatePath)

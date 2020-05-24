@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 
 import Container from '../buildingBlocks/Container'
+import AccountMenu from '../buildingBlocks/account/AccountMenu'
 
 class Profile extends React.Component {
   state = {
@@ -63,133 +64,146 @@ class Profile extends React.Component {
     return (
       <Container>
         <h1>User profile</h1>
-        <div className="bg-white shadow-md rounded-lg p-10 mt-10">
+        {this.props.user.isAdmin && <AccountMenu />}
+
+        <div className='bg-white shadow-md rounded-lg p-10 mt-10'>
           <h3>Update profile photo</h3>
-          <form onSubmit={this.onSubmit} id="form">
-            <div className="flex items-between">
-              <div className="relative">
+          <form onSubmit={this.onSubmit} id='form'>
+            <div className='flex items-between'>
+              <div className='relative'>
                 <img
                   src={`data:image/png;base64, ${this.state.image}`}
-                  className="w-24 h-24 rounded-full mt-5"
-                  alt="profile"
+                  className='w-24 h-24 rounded-full mt-5'
+                  alt='profile'
                 />
                 {this.state.image !== this.props.user.image && (
-                  <button
-                    className="absolute top-0 right-0 mt-2 ml-2"
-                    onClick={this.setOriginalPhoto}
-                  >
-                    <i className="fas fa-times-circle"></i>
+                  <button className='absolute top-0 right-0 mt-2 ml-2' onClick={this.setOriginalPhoto}>
+                    <i className='fas fa-times-circle'></i>
                   </button>
                 )}
               </div>
-              <div className="mt-5 ml-5 relative">
-                <p className="font-semibold">Upload photo</p>
+              <div className='mt-5 ml-5 relative'>
+                <p className='font-semibold'>Upload photo</p>
                 <p>.jpg, .jpeg, .png</p>
-                <div className="relative mt-4">
-                  <label htmlFor="image" className="btn btn-green py-2 px-5 cursor-pointer">
+                <div className='relative mt-4'>
+                  <label htmlFor='image' className='btn btn-green py-2 px-5 cursor-pointer'>
                     Upload photo
                   </label>
                   <input
-                    type="file"
-                    className="hidden"
-                    name="image"
-                    id="image"
+                    type='file'
+                    className='hidden'
+                    name='image'
+                    id='image'
                     onChange={(e) => this.fetchNewPhoto(e.target.files[0])}
                   />
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-10 mt-10">
+            <div className='grid grid-cols-2 gap-10 mt-10'>
               {/* BASIC INFORMATION */}
-              <div className="flex flex-col">
-                <h3 className="mb-5">Basic information</h3>
-                <label htmlFor="firstName" className="font-semibold">
+              <div className='flex flex-col'>
+                <h3 className='mb-5'>Basic information</h3>
+                <label htmlFor='firstName' className='font-semibold'>
                   First name
                 </label>
                 <input
-                  className="input-border-gray"
-                  type="text"
+                  className='auth-input'
+                  type='text'
                   value={this.state.firstName}
-                  id="firstName"
+                  id='firstName'
                   onChange={(e) => this.onChangeHandler(e, 'firstName')}
                 />
 
-                <label htmlFor="lastName" className="font-semibold">
+                <label htmlFor='lastName' className='font-semibold'>
                   Last name
                 </label>
                 <input
-                  type="text"
-                  className="input-border-gray"
+                  type='text'
+                  className='auth-input'
                   value={this.state.lastName}
-                  id="lastName"
+                  id='lastName'
                   onChange={(e) => this.onChangeHandler(e, 'lastName')}
                 />
 
-                <label htmlFor="jobTitle" className="font-semibold">
+                <label htmlFor='jobTitle' className='font-semibold'>
                   Position
                 </label>
                 <input
-                  type="text"
-                  className="input-border-gray"
+                  type='text'
+                  className='auth-input'
                   value={this.state.jobTitle}
-                  id="jobTitle"
+                  id='jobTitle'
                   onChange={(e) => this.onChangeHandler(e, 'jobTitle')}
                 />
 
-                <label htmlFor="email" className="font-semibold">
+                <label htmlFor='email' className='font-semibold'>
                   Email
                 </label>
                 <input
-                  className="input-border-gray"
+                  className='auth-input'
                   value={this.state.email}
-                  id="email"
-                  type="text"
+                  id='email'
+                  type='text'
                   onChange={(e) => this.onChangeHandler(e, 'email')}
                 />
               </div>
               {/* BASIC INFORMATION END */}
 
               {/* PASSWORD */}
-              <div className="flex flex-col">
-                <h3 className="mb-5">Change password</h3>
-                <label htmlFor="currentPassword" className="font-semibold">
+              <div className='flex flex-col'>
+                <h3 className='mb-5'>Change password</h3>
+                <label htmlFor='currentPassword' className='font-semibold'>
                   Current password
                 </label>
                 <input
-                  className="input-border-gray"
-                  id="currentPassword"
-                  type="password"
+                  className='auth-input'
+                  id='currentPassword'
+                  type='password'
                   onChange={(e) => this.onChangeHandler(e, 'currentPassword')}
-                  autoComplete="new-password"
+                  autoComplete='new-password'
                 />
 
-                <label htmlFor="newPassword" className="font-semibold">
+                <label htmlFor='newPassword' className='font-semibold'>
                   New password
                 </label>
                 <input
-                  className="input-border-gray"
-                  id="newPassword"
-                  type="password"
+                  className='auth-input'
+                  id='newPassword'
+                  type='password'
                   onChange={(e) => this.onChangeHandler(e, 'newPassword')}
-                  autoComplete="new-password"
+                  autoComplete='new-password'
                 />
 
-                <label htmlFor="confirmNewPassword" className="font-semibold">
+                <label htmlFor='confirmNewPassword' className='font-semibold'>
                   Confirm new password
                 </label>
                 <input
-                  className="input-border-gray"
-                  id="confirmNewPassword"
-                  type="password"
+                  className='auth-input'
+                  id='confirmNewPassword'
+                  type='password'
                   onChange={(e) => this.onChangeHandler(e, 'confirmNewPassword')}
-                  autoComplete="new-password"
+                  autoComplete='new-password'
                 />
-                <button className="btn btn-green px-5 py-2 self-start">Submit updates</button>
+                <button className='btn btn-green px-5 py-2 self-start'>Submit updates</button>
               </div>
               {/* PASSWORD END */}
             </div>
           </form>
+          <h3 className='mt-5'>Profile connections</h3>
+          <p>Your profile is linked with the following accounts:</p>
+          <div>
+            <div className='flex mt-3'>
+              <h3 className='w-40'>Company</h3>
+              <h3 className='w-40'>Role</h3>
+            </div>
+            <div className='flex mt-1'>
+              <p className='w-40'>{this.props.user.company.companyName}</p>
+              <p className='w-40'>{this.props.user.isAdmin ? 'Admin' : 'Employee'}</p>
+            </div>
+          </div>
         </div>
+
+        <div></div>
       </Container>
     )
   }

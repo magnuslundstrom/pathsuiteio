@@ -9,8 +9,12 @@ const completedYear = require('../../utilFns/completedYear')
 module.exports = (router) => {
   router.get('/api/paths-completed', auth, async (req, res) => {
     const period = req.query.when
-    const companyPathNotifications = await PathNotification.find({
+    const query = {
       company: req.user.company._id,
+    }
+    if (req.query.user) query.user = req.query.user
+    const companyPathNotifications = await PathNotification.find({
+      ...query,
     })
     let numbers
     if (period.includes('week')) numbers = completedWeek(companyPathNotifications, period)
@@ -20,11 +24,18 @@ module.exports = (router) => {
 
   // Get the notifications in sidebar
   router.get('/api/path-notifications', auth, async (req, res) => {
+    const query = {
+      company: req.user.company._id,
+    }
+    if (req.query.user) query.user = req.query.user
     try {
       const companyPathNotifications = await PathNotification.find({
-        company: req.user.company._id,
+        ...query,
       })
         .select('date description user')
+        .sort('-date')
+        .limit(parseInt(req.query.limit))
+        .skip(parseInt(req.query.skip))
         .populate('user', 'firstName lastName image')
         .exec()
       const newPaths = []
@@ -32,7 +43,7 @@ module.exports = (router) => {
         const image = noti.user._doc.image.toString('base64')
         const date = moment(noti.date).format('MMM Do')
         const notification = { ...noti._doc, user: { ...noti._doc.user._doc, image }, date }
-        newPaths.unshift(notification)
+        newPaths.push(notification)
       })
       res.send(newPaths)
     } catch (e) {

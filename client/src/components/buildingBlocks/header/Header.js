@@ -17,24 +17,30 @@ const Header = (props) => {
   }
 
   return (
-    <div className="shadow-md bg-white py-6 px-5">
-      <div className="w-8/12 m-auto flex justify-between items-center">
-        <Link to="/">
-          <img src={logo} className="w-40" alt="logo" />
+    <div className='shadow-md bg-white py-6 px-5'>
+      <div className='w-8/12 m-auto flex justify-between items-center'>
+        <Link to='/'>
+          <img src={logo} className='w-40' alt='logo' />
         </Link>
 
-        <div className="flex items-center">
-          <Link to="/paths" className="mr-8 hover-blue font-semibold">
-            <i className="fas fa-chart-line"></i> Paths
-          </Link>
+        <div className='flex items-center'>
+          {(props.isAdmin && (
+            <Link to='/paths' className='mr-8 hover-underline font-semibold'>
+              <i className='fas fa-chart-line'></i> Paths
+            </Link>
+          )) || (
+            <Link to={`user?id=${props.id}`} className='mr-8 hover-underline font-semibold'>
+              <i className='fas fa-chart-line'></i> Paths
+            </Link>
+          )}
 
           {/* Extra menu items if isAdmin */}
           {props.isAdmin && (
             <div>
-              <Link to="/employees" className="mr-16 hover-blue font-semibold">
-                <i className="fas fa-users"></i> Employees
+              <Link to='/employees' className='mr-16 hover-underline font-semibold'>
+                <i className='fas fa-users'></i> Employees
               </Link>
-              <Link to="#" className="btn btn-green px-5 py-2 mr-8">
+              <Link to='#' className='btn btn-green px-5 py-2 mr-8'>
                 Upgrade now
               </Link>
             </div>
@@ -60,6 +66,7 @@ const mapStateToProps = (state) => {
     fullName: state.user.firstName + ' ' + state.user.lastName,
     email: state.user.email,
     isAdmin: state.user.isAdmin,
+    id: state.user._id,
   }
 }
 

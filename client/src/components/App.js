@@ -14,10 +14,13 @@ import Paths from './dashboard/Paths'
 import Employees from './dashboard/Employees'
 import CreatePath from './dashboard/CreatePath'
 import CreateUser from './dashboard/CreateUser'
+import InvitedUser from './auth/InvitedUser'
 import Profile from './dashboard/Profile'
 import AccountUsers from './dashboard/AccountUsers'
 import User from './dashboard/User'
 import EditPath from './dashboard/EditPath'
+import AccountInformation from './dashboard/AccountInformation'
+import SuccessMessage from './buildingBlocks/utils/SuccessMessage'
 
 class App extends React.Component {
   state = {
@@ -29,6 +32,7 @@ class App extends React.Component {
       const res = await axios.get('/api/mount')
       if (res) {
         this.props.logIn()
+
         this.setState({ loading: false })
       }
     } catch (e) {
@@ -57,6 +61,7 @@ class App extends React.Component {
             <Route path="/account-users" exact component={AccountUsers} />
             <Route path="/user" component={User} />
             <Route path="/edit-path" component={EditPath} />
+            <Route path="/account-information" component={AccountInformation} />
             <Route path="*" render={() => <Redirect to="/" />} />
           </Switch>
         )
@@ -67,6 +72,7 @@ class App extends React.Component {
         <Switch>
           <Route path="/" exact component={Login} />
           <Route path="/sign-up" exact component={SignUp} />
+          <Route path="/invited-user" exact component={InvitedUser} />
           <Route path="*" render={() => <Redirect to="/" />} />
         </Switch>
       )
@@ -74,7 +80,13 @@ class App extends React.Component {
   }
 
   render() {
-    return <BrowserRouter>{this.renderRoutes()}</BrowserRouter>
+    return (
+      <BrowserRouter>
+        {this.props.successMessage && <SuccessMessage />}
+
+        {this.renderRoutes()}
+      </BrowserRouter>
+    )
   }
 }
 
@@ -82,6 +94,7 @@ const mapStateToProps = (state) => {
   return {
     loggedIn: state.loggedIn,
     user: state.user,
+    successMessage: state.successMessage,
   }
 }
 

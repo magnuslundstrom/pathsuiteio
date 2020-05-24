@@ -25,18 +25,75 @@ class Dashboard extends React.Component {
       when: 'this-week',
       data: [],
     },
+    skipLatestActivity: 0,
+    latestActivityLoading: false,
+    skipFinishedPaths: 0,
+    finishedPathsLoading: false,
+  }
+
+  recentlyFinishedScroll = async () => {
+    if (this.state.recentlyFinished.length % 5 === 0) {
+      this.setState({
+        skipFinishedPaths: this.state.skipFinishedPaths + 5,
+        finishedPathsLoading: true,
+      })
+      const { data: extendedList } = await axios.get(this.getPathNotificationUrl())
+      setTimeout(() => {
+        this.setState({
+          recentlyFinished: [...this.state.recentlyFinished, ...extendedList],
+          finishedPathsLoading: false,
+        })
+      }, 300)
+    }
+  }
+
+  latestActivityScroll = async () => {
+    if (this.state.lastestActivity.length % 5 === 0) {
+      this.setState({
+        skipLatestActivity: this.state.skipLatestActivity + 5,
+        latestActivityLoading: true,
+      })
+      const { data: extendedList } = await axios.get(this.getSubtaskNotificationFetchUrl())
+      setTimeout(() => {
+        this.setState({
+          lastestActivity: [...this.state.lastestActivity, ...extendedList],
+          latestActivityLoading: false,
+        })
+      }, 300)
+    }
+  }
+
+  // For chart one
+  getSubtaskFetchUrl = () => {
+    return `/api/subtasks-completed?when=${this.state.chartOne.when}${
+      !this.props.isAdmin ? `&user=${this.props.userId}` : ''
+    }`
+  }
+  // for upper sidebar
+  getSubtaskNotificationFetchUrl = () => {
+    return `/api/subtask-notifications?limit=5&skip=${this.state.skipLatestActivity}${
+      !this.props.isAdmin ? `&user=${this.props.userId}` : ''
+    }`
+  }
+  // for completed learning paths
+  getPathsFetchUrl = () => {
+    return `/api/paths-completed?when=${this.state.chartTwo.when}${
+      !this.props.isAdmin ? `&user=${this.props.userId}` : ''
+    }`
+  }
+  // for lower sidebar
+  getPathNotificationUrl = () => {
+    return `/api/path-notifications?limit=5&skip=${this.state.skipFinishedPaths}${
+      !this.props.isAdmin ? `&user=${this.props.userId}` : ''
+    }`
   }
 
   async componentDidMount() {
     try {
-      const { data: dataOne } = await axios.get(
-        `/api/goals-completed?when=${this.state.chartOne.when}`
-      )
-      const { data: lastestActivity } = await axios.get('/api/goal-notifications')
-      const { data: dataTwo } = await axios.get(
-        `/api/paths-completed?when=${this.state.chartTwo.when}`
-      )
-      const { data: recentlyFinished } = await axios.get('/api/path-notifications')
+      const { data: dataOne } = await axios.get(this.getSubtaskFetchUrl())
+      const { data: lastestActivity } = await axios.get(this.getSubtaskNotificationFetchUrl())
+      const { data: dataTwo } = await axios.get(this.getPathsFetchUrl())
+      const { data: recentlyFinished } = await axios.get(this.getPathNotificationUrl())
       this.setState({
         chartOne: { ...this.state.chartOne, data: dataOne },
         lastestActivity,
@@ -53,9 +110,9 @@ class Dashboard extends React.Component {
     this.setState(
       { chartOne: { ...this.state.chartOne, period: newPeriod, when: newWhen, data: [] } },
       async () => {
-        const { data: newRes } = await axios.get(`/api/goals-completed?when=${newWhen}`)
+        const { data: newRes } = await axios.get(`/api/subtasks-completed?when=${newWhen}`)
         this.setState({
-          chartOne: { ...this.state.chartOne, period: newPeriod, when: newWhen, data: newRes },
+          chartOne: { ...this.state.chartOne, data: newRes },
         })
       }
     )
@@ -68,7 +125,7 @@ class Dashboard extends React.Component {
       async () => {
         const { data: newRes } = await axios.get(`/api/paths-completed?when=${newWhen}`)
         this.setState({
-          chartTwo: { ...this.state.chartTwo, period: newPeriod, when: newWhen, data: newRes },
+          chartTwo: { ...this.state.chartTwo, data: newRes },
         })
       }
     )
@@ -78,15 +135,18 @@ class Dashboard extends React.Component {
     return (
       <Container>
         {this.props.isFirstTime && <Onboard isAdmin={this.props.isAdmin} />}
+        <h1>Welcome back, {this.props.firstName}!</h1>
+        {(this.props.isAdmin && <p>Get status on your teams performance</p>) || (
+          <p>Get status on your performance</p>
+        )}
+
         {(this.state.loading && <ScreenLoader />) || (
           <div>
-            <h1>Welcome back, {this.props.firstName}!</h1>
-            <p>Get status on your teams performance</p>
             {/* Tasks + lastest activity */}
             <div className="flex mt-10">
               <div className="w-2/3 mr-10">
                 <div className="flex justify-between">
-                  <h3 className="mb-3 font-semibold">Tasks completed</h3>
+                  <h3 className="mb-3 font-semibold">Subtasks completed</h3>
                   <div className="flex items-center mb-3">
                     <Dropdown onClick={this.updateChartOne} />
                   </div>
@@ -103,7 +163,17 @@ class Dashboard extends React.Component {
               <div className="w-1/3">
                 <h3 className="mb-3">Lastest activity</h3>
                 <div className="bg-white p-5 rounded-lg shadow-md">
-                  <NotificationList notifications={this.state.lastestActivity} />
+                  <NotificationList
+                    notifications={this.state.lastestActivity}
+                    isAdmin={this.props.isAdmin}
+                    onScroll={this.latestActivityScroll}
+                    zeroMessage="No subtasks completed yet"
+                  />
+                  {this.state.latestActivityLoading && (
+                    <p className="ml-5">
+                      Fetching more notifications <i className="fas fa-spinner own-spinner"></i>
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -126,7 +196,17 @@ class Dashboard extends React.Component {
               <div className="w-1/3">
                 <h3 className="mb-3 font-semibold">Recently finished paths</h3>
                 <div className="bg-white p-5 rounded-lg shadow-md">
-                  <NotificationList notifications={this.state.recentlyFinished} />
+                  <NotificationList
+                    notifications={this.state.recentlyFinished}
+                    isAdmin={this.props.isAdmin}
+                    zeroMessage="No paths completed yet"
+                    onScroll={this.recentlyFinishedScroll}
+                  />
+                  {this.state.finishedPathsLoading && (
+                    <p className="ml-5">
+                      Fetching more notifications <i className="fas fa-spinner own-spinner"></i>
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -142,6 +222,7 @@ const mapStateToProps = (state) => {
     firstName: state.user.firstName,
     isAdmin: state.user.isAdmin,
     isFirstTime: state.user.isFirstTime,
+    userId: state.user._id,
   }
 }
 
