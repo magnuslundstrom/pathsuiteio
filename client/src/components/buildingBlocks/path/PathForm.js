@@ -22,7 +22,8 @@ class PathForm extends React.Component {
     this.setState({ form: { ...this.state.form, [`${input}`]: value } })
   }
 
-  addSubtask = () => {
+  addSubtask = (e) => {
+    e.preventDefault()
     this.setState({
       form: { ...this.state.form, subtasks: [...this.state.form.subtasks, insertNewSubtask()] },
     })

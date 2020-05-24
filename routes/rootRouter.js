@@ -34,7 +34,12 @@ const fetchRoutes = [
 ]
 
 // @@ PATCH ROUTES
-const patchRoutes = [require('./patch/user'), require('./patch/paths'), require('./patch/welcome')]
+const patchRoutes = [
+  require('./patch/user'),
+  require('./patch/paths'),
+  require('./patch/welcome'),
+  require('./patch/accountInformation'),
+]
 
 // @@ EMAIL ROUTES
 const emailRoutes = [require('./email/inviteUser')]

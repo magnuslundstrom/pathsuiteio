@@ -10,7 +10,6 @@ module.exports = (router) => {
       const path = await Path.findById(req.body.pathId)
         .populate('user', 'firstName lastName')
         .exec()
-      console.log(path)
       const subtaskIndex = path.subtasks.findIndex((subtask) => subtask._id == req.body.subtaskId)
       path.subtasks[subtaskIndex].isCompleted = !path.subtasks[subtaskIndex].isCompleted
       path.subtasks.every((subtask) => subtask.isCompleted)

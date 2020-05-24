@@ -48,7 +48,7 @@ const DropdownFilter = (props) => {
           <i className="fas fa-angle-down ml-2"></i>
         </button>
         {display && (
-          <div className="bg-white shadow-md rounded-md w-48 absolute top-0 mt-10 left-0">
+          <div className="bg-white shadow-md rounded-md w-48 absolute top-0 mt-10 left-0 z-30">
             <div className="flex flex-col p-4 items-start">{renderList()}</div>
           </div>
         )}

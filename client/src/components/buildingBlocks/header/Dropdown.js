@@ -40,7 +40,7 @@ const Dropdown = (props) => {
                     className="mt-1 inline-block hover:font-semibold self-start"
                     activeClassName="font-semibold"
                   >
-                    Account
+                    Company
                   </NavLink>
 
                   <NavLink

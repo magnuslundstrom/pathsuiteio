@@ -27,7 +27,7 @@ const AccountMenu = () => {
                 className="hover:font-semibold"
                 activeClassName="font-semibold"
               >
-                Account information
+                Company information
               </NavLink>
               <NavLink
                 to="/account-users"

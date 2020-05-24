@@ -13,10 +13,18 @@ class Profile extends React.Component {
     companyPhone: '',
   }
 
-  onSubmit = async (e) => {}
+  onSubmit = async (e) => {
+    e.preventDefault()
+    const res = await axios.patch('/api/update-account-information', {
+      ...this.state,
+    })
+    console.log(res)
+  }
 
   onChangeHandler = (e, input) => {
-    this.setState({ [`${input}`]: e.target.value })
+    this.setState({ [`${input}`]: e.target.value }, () => {
+      console.log(this.state)
+    })
   }
 
   async componentDidMount() {
@@ -53,30 +61,30 @@ class Profile extends React.Component {
                 <input
                   type="text"
                   className="auth-input"
-                  value={this.state.jobTitle}
+                  value={this.state.companyAddress}
                   id="companyAddress"
                   onChange={(e) => this.onChangeHandler(e, 'companyAddress')}
                 />
 
-                <label htmlFor="email" className="font-semibold">
+                <label htmlFor="companyEmail" className="font-semibold">
                   Email
                 </label>
                 <input
                   className="auth-input"
-                  value={this.state.email}
-                  id="email"
+                  value={this.state.companyEmail}
+                  id="companyEmail"
                   type="text"
-                  onChange={(e) => this.onChangeHandler(e, 'email')}
+                  onChange={(e) => this.onChangeHandler(e, 'companyEmail')}
                 />
-                <label htmlFor="email" className="font-semibold">
+                <label htmlFor="companyPhone" className="font-semibold">
                   Phone
                 </label>
                 <input
                   className="auth-input"
-                  value={this.state.email}
-                  id="email"
+                  value={this.state.companyPhone}
+                  id="companyPhone"
                   type="text"
-                  onChange={(e) => this.onChangeHandler(e, 'email')}
+                  onChange={(e) => this.onChangeHandler(e, 'companyPhone')}
                 />
               </div>
               {/* BASIC INFORMATION END */}
