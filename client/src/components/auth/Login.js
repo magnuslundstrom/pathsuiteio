@@ -7,6 +7,7 @@ import { logIn } from '../../redux/actions/logInOut'
 import { AuthError } from '../buildingBlocks/utils/ErrorMessages'
 import AuthFormWrapper from '../buildingBlocks/AuthFormWrapper'
 
+// Represents "/" when not loggedIn
 class Login extends React.Component {
   state = {
     email: '',

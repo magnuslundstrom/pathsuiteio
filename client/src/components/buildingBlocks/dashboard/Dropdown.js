@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-
 import OutsideClickHandler from 'react-outside-click-handler'
 
+// Represents the dropdown used for filtering on the charts section on dashboard
 const Dropdown = (props) => {
   const [displayedItem, setDisplayedItem] = useState('This week')
   const [displayDropdown, setDisplayDropdown] = useState(false)

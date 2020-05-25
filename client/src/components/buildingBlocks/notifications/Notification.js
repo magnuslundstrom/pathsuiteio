@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from 'react'
 
+// Represents a notification on /dashboard in the sidebar
 const Notification = (props) => {
   const notificationString = (description) => {
+    // replaces name with you if user !isAdmin
     if (!props.isAdmin) {
       return description.replace(props.data.user.firstName + ' ' + props.data.user.lastName, 'You')
     }
@@ -12,6 +14,7 @@ const Notification = (props) => {
   const options = {
     threshold: 1.0,
   }
+  // used to observe the last index and call props.onScroll which fetches extended list of notifications
   let observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -20,6 +23,7 @@ const Notification = (props) => {
     })
   }, options)
 
+  // Observes on render
   useEffect(() => {
     observer.observe(notificationRef.current)
   }, [])

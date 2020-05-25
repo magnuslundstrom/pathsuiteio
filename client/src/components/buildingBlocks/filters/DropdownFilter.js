@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
 
+// Represents the dropdown filter on "/paths"
 const DropdownFilter = (props) => {
   // used only for styling purposes
   const [display, setDisplay] = useState(false)
   const [highLightItem, setHighLightItem] = useState(-1)
 
   let onButtonClick
-  // if boolean inputs //// CHANGE THIS
+  // if boolean props, we want to change the state between true and false and NOT the passed text
   if (props.boolean) {
     onButtonClick = (value, index) => {
       if (value === props.list[0]) value = true
@@ -27,6 +28,7 @@ const DropdownFilter = (props) => {
     }
   }
 
+  // Renders list of passed filters
   const renderList = () =>
     props.list.map((item, index) => (
       <button

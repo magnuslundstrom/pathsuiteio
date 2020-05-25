@@ -13,7 +13,6 @@ module.exports = (router) => {
         company: req.user.company._id,
       }).select('firstName lastName isAdmin')
       res.send(user)
-      console.log(user, 'ekwqoeqw')
     }
   })
 }

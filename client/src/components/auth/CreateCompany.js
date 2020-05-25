@@ -1,12 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
 import axios from 'axios'
-
 import { logIn } from '../../redux/actions/logInOut'
 import AuthFormWrapper from '../buildingBlocks/AuthFormWrapper'
 import { AuthError } from '../buildingBlocks/utils/ErrorMessages'
 
+// Represents the second step when you sign up for the first time, and are asked to enter a company name
 class CreateCompany extends React.Component {
   state = {
     companyName: '',

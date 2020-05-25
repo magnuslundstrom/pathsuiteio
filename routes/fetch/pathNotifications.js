@@ -47,7 +47,7 @@ module.exports = (router) => {
       })
       res.send(newPaths)
     } catch (e) {
-      console.log(e)
+      res.status(401).send(e)
     }
   })
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import Notification from './Notification'
 
+// Represents the list of notifications. maps over list array and returns a notifcations for each i
 const NotificationList = (props) => {
   const renderNotifications = () => {
     if (props.notifications.length === 0) return <p>{props.zeroMessage}</p>

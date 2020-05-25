@@ -50,6 +50,7 @@ module.exports = (router) => {
     }
   })
 
+  // Used to update paths
   router.patch('/api/update-path', auth, async (req, res) => {
     try {
       await Path.findByIdAndUpdate(req.query.id, { ...req.body })

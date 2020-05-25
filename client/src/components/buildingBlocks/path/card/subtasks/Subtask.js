@@ -16,7 +16,7 @@ const Subtask = (props) => {
         <h3 className="mb-1">
           {props.index + 1}. {props.subtask.subtaskTitle}
         </h3>
-        {props.subtask.subtaskTitle && (
+        {props.subtask.subtaskType && (
           <p>
             <i className="far fa-question-circle mr-2 text-sm"></i> {props.subtask.subtaskType}
           </p>

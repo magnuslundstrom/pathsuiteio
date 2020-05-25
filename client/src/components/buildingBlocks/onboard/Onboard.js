@@ -6,17 +6,19 @@ import admin from './slides/admin.js'
 import employee from './slides/employee.js'
 
 // Expects props.isAdmin
-
+// Represent the onboard component/overlay
 const Onboard = (props) => {
   const [slideNumber, setSlideNumber] = useState(0)
   const [slides] = useState(props.isAdmin ? admin : employee)
 
+  // Goes next slide
   const onNextClick = () => {
     if (slideNumber < slides.length - 1) {
       setSlideNumber(slideNumber + 1)
     }
   }
 
+  // sets isFirstTime to false in DB
   const onClose = async () => {
     await axios.get('/api/welcome')
     window.location.reload()

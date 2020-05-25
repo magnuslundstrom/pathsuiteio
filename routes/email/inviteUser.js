@@ -23,14 +23,14 @@ module.exports = (router) => {
             <h1>Join ${req.user.company.companyName} on Pathsuite!</h1>
             <p>${req.user.firstName} wants to see you on their Pathsuite team!</p>
             <p>Sign up today and start exploring your learning paths</p>
-            <a href=${ahref} target="_blank" style="background-color: green; color: white; padding: 10px 20px;">Join now!</a>
+            <a href=${ahref} target="_blank" style="background-color: #46cc8c; color: white; padding: 10px 20px; text-decoration: none;">Join now!</a>
             `,
     }
     try {
       await sgMail.send(msg)
       res.send({ msg: 'Success' })
     } catch (e) {
-      console.log(e)
+      res.status(401).send(e)
     }
   })
 }

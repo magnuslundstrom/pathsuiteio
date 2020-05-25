@@ -1,7 +1,7 @@
 import React from 'react'
 
 // recieves numbers (numberOfSlides), currentpage, onClick to set slidepage to index
-
+// Represents the pageNumber bar on onboard component
 const PageNumber = (props) => {
   const pages = []
   for (var i = 0; i < props.numbers; i++) {

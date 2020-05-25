@@ -16,7 +16,6 @@ module.exports = (router) => {
       res.send({ message: 'Company was succesfully created!' })
     } catch (e) {
       const newErrors = errorHandler(e)
-      console.log(e)
       res.status(406).send(newErrors)
     }
   })

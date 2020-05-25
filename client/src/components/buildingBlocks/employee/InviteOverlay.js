@@ -1,9 +1,9 @@
 import React from 'react'
 import axios from 'axios'
-
 import { connect } from 'react-redux'
 import { setSuccessMessage } from '../../../redux/actions/successMessage'
 
+// Represents the overlay thats pops when you want to invite a new user to the app
 class InviteOverlay extends React.Component {
   state = {
     email: '',
@@ -14,6 +14,7 @@ class InviteOverlay extends React.Component {
     this.setState({ isAdmin: target })
   }
 
+  // Reaches to API endpoint that sends email
   onInviteClick = async () => {
     try {
       await axios.post('/api/invite-user', {
@@ -26,6 +27,7 @@ class InviteOverlay extends React.Component {
     }
   }
 
+  // Mark up
   render() {
     return (
       <div className="absolute top-0 left-0 w-full min-h-screen bg-transparent-gray flex justify-center items-center">

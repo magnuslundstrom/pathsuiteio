@@ -3,7 +3,9 @@ import { Link, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import OutsideClickHandler from 'react-outside-click-handler'
 
+// Represents the menu that shows on admin side under profile, company
 const AccountMenu = () => {
+  // State used for display of dropdowns only
   const [displayAccount, setDisplayAccount] = useState(false)
   const [displaySubscription, setDisplaySubscription] = useState(false)
   return (

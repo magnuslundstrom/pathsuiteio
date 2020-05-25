@@ -3,10 +3,11 @@ import { NavLink } from 'react-router-dom'
 
 import OutsideClickHandler from 'react-outside-click-handler'
 
+// The dropdown menu in the header that pops when profile image is clicked
+// Uses props.isAdmin to determine what content to show in the menu
 const Dropdown = (props) => {
+  // Used to set and unset display of dropdown
   const [dropdown, setDropdown] = useState(false)
-
-  // Uses props.isAdmin to determine what content to show in the menu
 
   return (
     <OutsideClickHandler onOutsideClick={() => setDropdown(false)}>

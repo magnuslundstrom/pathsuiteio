@@ -58,7 +58,6 @@ module.exports = (router) => {
               res.send({ success: 'User was successfully created' })
             })
             .catch((e) => {
-              console.log(e)
               res.status(401).send(errorHandler(e))
             })
         })

@@ -1,5 +1,6 @@
 import React from 'react'
 
+// Represents the searchbar component
 const SearchBar = (props) => {
   return (
     <div className="bg-white rounded-md shadow-md hover:shadow-lg duration-300">

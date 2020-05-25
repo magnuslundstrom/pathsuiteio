@@ -7,6 +7,7 @@ import axios from 'axios'
 import AuthFormWrapper from '../buildingBlocks/AuthFormWrapper'
 import { AuthError } from '../buildingBlocks/utils/ErrorMessages'
 
+// Represents the page users get invited to via e-mail
 class InvitedUser extends React.Component {
   state = {
     firstName: '',
@@ -36,6 +37,7 @@ class InvitedUser extends React.Component {
     }
   }
 
+  // Grabs params from the URL
   componentDidMount() {
     const params = new URLSearchParams(this.props.location.search)
     this.setState({

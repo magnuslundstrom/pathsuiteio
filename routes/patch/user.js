@@ -53,13 +53,13 @@ module.exports = (router) => {
             updates.password = await bcrypt.hash(req.body.newPassword, 8)
           }
         } else if (!match) {
-          console.log('Ikke match')
+          res.status(406).send("Password doesn't match")
         }
       }
       await User.updateOne({ _id: req.user._id }, { ...updates })
       res.send('User was updated!')
     } catch (e) {
-      console.log(e)
+      res.status(401).send(e)
     }
   })
 }

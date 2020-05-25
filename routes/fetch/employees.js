@@ -17,6 +17,8 @@ module.exports = (router) => {
         newUsers.push(newUser)
       })
       res.send(newUsers)
-    } catch (e) {}
+    } catch (e) {
+      res.send(e)
+    }
   })
 }

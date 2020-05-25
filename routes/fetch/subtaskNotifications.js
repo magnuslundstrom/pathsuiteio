@@ -25,7 +25,6 @@ module.exports = (router) => {
 
   // Get the notifications in sidebar
   router.get('/api/subtask-notifications', auth, async (req, res) => {
-    console.log(req.query.skip, req.query.limit)
     const query = {
       company: req.user.company._id,
     }

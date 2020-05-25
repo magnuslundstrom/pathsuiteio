@@ -7,6 +7,7 @@ import CreateCompany from './CreateCompany'
 import AuthFormWrapper from '../buildingBlocks/AuthFormWrapper'
 import { AuthError } from '../buildingBlocks/utils/ErrorMessages'
 
+// Represents the page where you sign up the first user of a company
 class SignUp extends React.Component {
   state = {
     firstName: '',
