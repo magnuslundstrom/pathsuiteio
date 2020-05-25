@@ -1,26 +1,14 @@
 import React from 'react'
 import { Bar } from 'react-chartjs-2'
 
+// Represents Chart Component used on "/dashboard"
 class Chart extends React.Component {
   days = ['Sun.', 'Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.']
-  months = [
-    'Jan.',
-    'Feb.',
-    'Mar.',
-    'Apr.',
-    'May',
-    'Jun.',
-    'Jul.',
-    'Aug.',
-    'Sep.',
-    'Oct.',
-    'Nov.',
-    'Dec.',
-  ]
+  months = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.']
 
   render() {
     return (
-      <div className="bg-white h-84">
+      <div className='bg-white h-84'>
         <Bar
           data={{
             labels: this.props.period === 'week' ? [...this.days] : [...this.months],

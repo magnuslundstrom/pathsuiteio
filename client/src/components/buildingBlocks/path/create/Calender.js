@@ -3,6 +3,7 @@ import React, { useRef } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
+// Represents a calender from react-datepicker
 const Calender = (props) => {
   const datePickerRef = useRef(null)
 
@@ -14,18 +15,14 @@ const Calender = (props) => {
   }
 
   return (
-    <div className="inline overflow-x-hidden flex items-center">
-      <i className="far fa-calendar-alt mr-2"></i>{' '}
+    <div className='inline overflow-x-hidden flex items-center'>
+      <i className='far fa-calendar-alt mr-2'></i>{' '}
       {!props.date ? (
-        <button className="input-border-gray text-left text-secGray" onClick={() => onDateClick()}>
+        <button className='input-border-gray text-left text-secGray' onClick={() => onDateClick()}>
           {props.buttonText}
         </button>
       ) : (
-        <DatePicker
-          selected={props.date}
-          onChange={(date) => props.updateDate(date)}
-          ref={datePickerRef}
-        />
+        <DatePicker selected={props.date} onChange={(date) => props.updateDate(date)} ref={datePickerRef} />
       )}
     </div>
   )

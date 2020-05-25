@@ -1,3 +1,5 @@
+// DEPRECIATED
+
 import React from 'react'
 
 const SearchResultList = (props) => {
@@ -12,7 +14,7 @@ const SearchResultList = (props) => {
   }
 
   return (
-    <div className="bg-gray shadow-md rounded-lg w-56 p-5 absolute top-0 mt-8 left-0 z-10">
+    <div className='bg-gray shadow-md rounded-lg w-56 p-5 absolute top-0 mt-8 left-0 z-10'>
       <ul>{renderSearchList()}</ul>
     </div>
   )

@@ -1,4 +1,5 @@
-// Represents the initial state object if edit is false
+// Represents the initial state object if !props.edit
+// used to shorten down lines of code in PathForm.js
 export const createPathFormState = {
   form: {
     pathTitle: '',

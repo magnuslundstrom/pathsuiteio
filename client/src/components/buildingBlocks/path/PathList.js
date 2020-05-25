@@ -13,6 +13,7 @@ subtasks: [{isCompleted, subtaskLink, subtaskNote, subtaskTitle, subtaskType}]
 optional: image
 */
 
+// Represents a list of PathCards from an array passed from parent
 const PathList = (props) => {
   const renderPaths = () => {
     return props.paths.map((path, index) => {
@@ -33,7 +34,7 @@ const PathList = (props) => {
     })
   }
 
-  return <div className="mt-10">{renderPaths()}</div>
+  return <div className='mt-10'>{renderPaths()}</div>
 }
 
 export default PathList

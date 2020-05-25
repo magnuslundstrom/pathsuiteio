@@ -11,12 +11,14 @@ import progressCalc from '../../../../utilsFn/progressCalc'
 
 // RECIEVES: Path, responsible, user, subtasks, isAdmin(User component)
 
+// Represents the entire pathcard
 const PathCard = (props) => {
   const [display, setDisplay] = useState(false)
   const [subtasks, setSubtasks] = useState(props.subtasks)
   const lastCard = useRef(null)
   let progress = progressCalc(subtasks)
 
+  // Used when path-completed button is clicked
   const onSubtaskComplete = async (index, subtaskId) => {
     try {
       const curSubtasks = [...subtasks]
@@ -31,6 +33,7 @@ const PathCard = (props) => {
     }
   }
 
+  // Used to render more paths
   const onScroll = () => {
     if (props.index === props.length - 1) {
       props.onScroll()
@@ -41,6 +44,7 @@ const PathCard = (props) => {
     const options = {
       threshold: 1.0,
     }
+    // Observes last card and triggers onScroll when in threshold
     let observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -54,8 +58,8 @@ const PathCard = (props) => {
   }, [])
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-10 mt-5 hover-card" ref={lastCard}>
-      <div className="flex justify-between">
+    <div className='bg-white shadow-md rounded-lg p-10 mt-5 hover-card' ref={lastCard}>
+      <div className='flex justify-between'>
         {/* UPPER AREA */}
         <UpperPathCard
           image={props.image}
@@ -64,12 +68,12 @@ const PathCard = (props) => {
           jobTitle={props.user.jobTitle}
           pathTitle={props.path.pathTitle}
         />
-        <div className="flex items-center h-1 mt-3">
-          <button onClick={() => setDisplay(!display)} className="hover-underline">
-            <i className="fas fa-angle-down text-2xl"></i>
+        <div className='flex items-center h-1 mt-3'>
+          <button onClick={() => setDisplay(!display)} className='hover-underline'>
+            <i className='fas fa-angle-down text-2xl'></i>
           </button>
-          <Link to={`/edit-path?id=${props.path._id}`} className="hover-underline">
-            <i className="fas fa-pencil-alt text-sm ml-3"></i>
+          <Link to={`/edit-path?id=${props.path._id}`} className='hover-underline'>
+            <i className='fas fa-pencil-alt text-sm ml-3'></i>
           </Link>
         </div>
       </div>
@@ -85,13 +89,9 @@ const PathCard = (props) => {
 
       {display && (
         <div>
-          <h2 className="mt-5">Goal</h2>
+          <h2 className='mt-5'>Goal</h2>
           <p>{props.path.goal}</p>
-          <SubtaskList
-            subtasks={subtasks}
-            pathId={props.path._id}
-            onSubtaskComplete={onSubtaskComplete}
-          />
+          <SubtaskList subtasks={subtasks} pathId={props.path._id} onSubtaskComplete={onSubtaskComplete} />
         </div>
       )}
     </div>

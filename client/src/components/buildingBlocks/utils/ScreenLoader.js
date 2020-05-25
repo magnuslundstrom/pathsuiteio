@@ -1,6 +1,7 @@
 import React from 'react'
 import '../../../css/loadingSpinner.css'
 
+// Represents the big loading spinner
 const ScreenLoader = () => {
   return (
     <div
@@ -17,7 +18,7 @@ const ScreenLoader = () => {
         left: '50%',
       }}
     >
-      <div className="lds-roller">
+      <div className='lds-roller'>
         <div></div>
         <div></div>
         <div></div>
