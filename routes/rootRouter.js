@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
+// USED to connect all routes in one file
+
 // @@ AUTH ROUTES
 const authRoutes = [
   require('./auth/login'),
@@ -44,6 +46,7 @@ const patchRoutes = [
 // @@ EMAIL ROUTES
 const emailRoutes = [require('./email/inviteUser')]
 
+// @@ ROOT ROUTER
 const routes = [
   ...authRoutes,
   ...createRoutes,

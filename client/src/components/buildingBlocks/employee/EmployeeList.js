@@ -11,7 +11,9 @@ const EmployeeList = (props) => {
     })
   }
 
-  return <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mt-10">{renderEmployees()}</div>
+  return (
+    <section className="grid grid-cols-2 lg:grid-cols-4 gap-5 mt-10">{renderEmployees()}</section>
+  )
 }
 
 export default EmployeeList

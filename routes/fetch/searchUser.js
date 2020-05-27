@@ -2,7 +2,7 @@ const User = require('../../models/User')
 const auth = require('../../middleware/auth')
 
 module.exports = (router) => {
-  // @@ Used to find users on search when creating paths - using req.body.find
+  // @@ Used to find users on search when creating paths - using req.body.find and regular expression
   router.post('/api/find-user', auth, async (req, res) => {
     if (req.body.find.length > 0) {
       const find = req.body.find

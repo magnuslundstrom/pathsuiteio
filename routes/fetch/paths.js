@@ -4,7 +4,6 @@ const auth = require('../../middleware/auth')
 
 module.exports = (router) => {
   // Used on /paths on admin side
-
   router.get('/api/paths', auth, async (req, res) => {
     const reg = new RegExp('^' + req.query.pathTitle, 'i')
     const searchObj = {

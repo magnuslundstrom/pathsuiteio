@@ -1,7 +1,6 @@
 import React from 'react'
-import { logIn } from '../../redux/actions/logInOut'
 import Container from '../buildingBlocks/Container'
-import { AuthError, LimitationBox } from '../buildingBlocks/utils/ErrorMessages'
+import { AuthError } from '../buildingBlocks/utils/ErrorMessages'
 import axios from 'axios'
 
 ///// THIS COMPONENT IS DEPRECIATED -<<<<<<<<<<<<<<<<<<<<<<<<
@@ -36,11 +35,6 @@ class CreateUser extends React.Component {
   render() {
     return (
       <Container>
-        <LimitationBox
-          limits={[
-            'Right now you will have to create a user individually. In later patches you will be able to invite them via email.',
-          ]}
-        />
         <h1>Create new user</h1>
         <form className="flex w-96 flex-col mt-6" onSubmit={this.onSubmit}>
           <input

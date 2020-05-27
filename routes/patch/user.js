@@ -18,7 +18,7 @@ module.exports = (router) => {
     },
   })
 
-  // @@ Allows for user to add temporary photo and delete it again
+  // @@ Sends back a temp photo that can be saved when submitted
   router.post('/api/temp-profile-image', upload.single('image'), auth, async (req, res) => {
     const convertedImage = await sharp(req.file.buffer).resize(250, 250).png().toBuffer()
     try {
@@ -42,6 +42,7 @@ module.exports = (router) => {
       updates.lastName = req.body.lastName
       updates.jobTitle = req.body.jobTitle
       updates.email = req.body.email
+      // Converts file to png, 250x250
       if (req.file) {
         const image = await sharp(req.file.buffer).resize(250, 250).png().toBuffer()
         updates.image = image
@@ -53,7 +54,7 @@ module.exports = (router) => {
             updates.password = await bcrypt.hash(req.body.newPassword, 8)
           }
         } else if (!match) {
-          res.status(406).send("Password doesn't match")
+          return res.status(406).send("Password doesn't match")
         }
       }
       await User.updateOne({ _id: req.user._id }, { ...updates })

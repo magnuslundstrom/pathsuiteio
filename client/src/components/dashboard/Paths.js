@@ -28,9 +28,9 @@ class Paths extends React.Component {
 
   // url with filters in query
   getCurrentFetchUrl = () => {
-    return `/api/paths?limit=${this.state.limit}&skip=${this.state.skip}${appendFilters(this.state.filters)}${
-      !this.props.isAdmin ? `&user=${this.props.userId}` : ''
-    }`
+    return `/api/paths?limit=${this.state.limit}&skip=${this.state.skip}${appendFilters(
+      this.state.filters
+    )}${!this.props.isAdmin ? `&user=${this.props.userId}` : ''}`
   }
 
   // on mount fetch paths
@@ -72,20 +72,20 @@ class Paths extends React.Component {
   render() {
     return (
       <Container>
-        <div className='flex justify-between items-center'>
+        <section className="flex justify-between items-center">
           <h1>Paths</h1>
           {this.props.isAdmin && (
-            <Link to='/create-path' className='hover-spin'>
-              <i className='fas fa-plus text-2xl font-semibold'></i>
+            <Link to="/create-path" className="hover-spin">
+              <i className="fas fa-plus text-2xl font-semibold"></i>
             </Link>
           )}
-        </div>
+        </section>
         {/* Filter section */}
         <FilterBar
           left={
-            <div className='flex'>
+            <div className="flex">
               <DropdownFilter
-                title='Sort'
+                title="Sort"
                 list={['Completed', 'Unfinished']}
                 data={{ name: 'isCompleted', current: this.state.filters.isCompleted }}
                 boolean
@@ -93,7 +93,7 @@ class Paths extends React.Component {
               />
 
               <DropdownFilter
-                title='Category'
+                title="Category"
                 list={this.state.categories}
                 onClick={(value) => this.onFilterChange(value, 'category')}
                 data={{ name: 'category', current: this.state.filters.category }}
@@ -109,19 +109,24 @@ class Paths extends React.Component {
         />
         {/* Paths list */}
         {(this.state.loading && <BoxLoader />) || (
-          <div>
-            <div className='flex justify-between items-center'>
-              <div>{this.state.paths.length === 0 && <p className='mt-10'>No paths found</p>}</div>
+          <section>
+            <div className="flex justify-between items-center">
+              <div>{this.state.paths.length === 0 && <p className="mt-10">No paths found</p>}</div>
             </div>
             {this.state.paths.length > 0 && (
-              <PathList paths={this.state.paths} isAdmin={this.props.isAdmin} image={true} onScroll={this.onScroll} />
+              <PathList
+                paths={this.state.paths}
+                isAdmin={this.props.isAdmin}
+                image={true}
+                onScroll={this.onScroll}
+              />
             )}
             {this.state.extendedLoading && (
-              <p className='mt-10'>
-                Fetching more paths <i className='fas fa-spinner own-spinner'></i>
+              <p className="mt-10">
+                Fetching more paths <i className="fas fa-spinner own-spinner"></i>
               </p>
             )}
-          </div>
+          </section>
         )}
       </Container>
     )

@@ -1,8 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-
 import axios from 'axios'
-
 import Container from '../buildingBlocks/Container'
 import EmployeeList from '../buildingBlocks/employee/EmployeeList'
 import BoxLoader from '../buildingBlocks/utils/ScreenLoader'
@@ -27,24 +24,27 @@ class Employees extends React.Component {
 
   // returns employee list if length of state.employees is bigger than 0
   renderEmployeeList = () => {
-    if (this.state.employees.length === 0) return <p className='mt-10'>You have no employees yet!</p>
+    if (this.state.employees.length === 0)
+      return <p className="mt-10">You have no employees yet!</p>
     else return <EmployeeList employees={this.state.employees} />
   }
 
   render() {
     return (
       <Container>
-        <div className='flex justify-between items-center'>
+        <section className="flex justify-between items-center">
           <h1>Employees</h1>
           <button onClick={() => this.setState({ displayInvite: true })}>
-            <i className='fas fa-plus text-2xl font-semibold hover-spin'></i>
+            <i className="fas fa-plus text-2xl font-semibold hover-spin"></i>
           </button>
-        </div>
+        </section>
         {(this.state.loading && <BoxLoader />) || (
-          <div>
-            {this.state.displayInvite && <InviteOverlay onClose={() => this.setState({ displayInvite: false })} />}
+          <section>
+            {this.state.displayInvite && (
+              <InviteOverlay onClose={() => this.setState({ displayInvite: false })} />
+            )}
             {this.renderEmployeeList()}
-          </div>
+          </section>
         )}
       </Container>
     )

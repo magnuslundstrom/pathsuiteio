@@ -5,7 +5,7 @@ const Container = (props) => {
   return (
     <div>
       <Header />
-      <div className='w-8/12 m-auto px-5 pt-10 pb-20'>{props.children}</div>
+      <div className="w-8/12 m-auto px-5 pt-10 pb-20">{props.children}</div>
     </div>
   )
 }

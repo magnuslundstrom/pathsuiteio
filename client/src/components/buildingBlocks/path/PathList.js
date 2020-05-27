@@ -34,7 +34,7 @@ const PathList = (props) => {
     })
   }
 
-  return <div className='mt-10'>{renderPaths()}</div>
+  return <section className="mt-10">{renderPaths()}</section>
 }
 
 export default PathList

@@ -66,13 +66,13 @@ class AccountUsers extends React.Component {
         <h1>Account users</h1>
         <AccountMenu />
         {!this.state.loading && (
-          <div className="bg-white rounded-lg shadow-md p-10 mt-10">
-            <div className="flex justify-between items-center">
+          <section className="bg-white rounded-lg shadow-md p-10 mt-10">
+            <article className="flex justify-between items-center">
               <h2>Manage users</h2>
               <button onClick={() => this.setState({ displayInvite: true })}>
                 <i className="fas fa-plus text-xl font-semibold hover-spin"></i>
               </button>
-            </div>
+            </article>
             {this.state.loading && <BoxLoader />}
 
             <table className="w-full mt-8">
@@ -90,7 +90,7 @@ class AccountUsers extends React.Component {
             {this.state.displayInvite && (
               <InviteOverlay onClose={() => this.setState({ displayInvite: false })} />
             )}
-          </div>
+          </section>
         )}
       </Container>
     )

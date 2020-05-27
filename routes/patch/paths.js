@@ -10,6 +10,7 @@ module.exports = (router) => {
       const path = await Path.findById(req.body.pathId)
         .populate('user', 'firstName lastName')
         .exec()
+      // finds the index of the subtask with the id from req.body.pathId and then sets either isCompleted or !
       const subtaskIndex = path.subtasks.findIndex((subtask) => subtask._id == req.body.subtaskId)
       path.subtasks[subtaskIndex].isCompleted = !path.subtasks[subtaskIndex].isCompleted
       path.subtasks.every((subtask) => subtask.isCompleted)
@@ -17,9 +18,7 @@ module.exports = (router) => {
         : (path.isCompleted = false)
       await path.save()
 
-      // @@ Notification logic -- REFACTOR -- CONSIDER: MIDDLEWARE, POST.SAVE ON MODEL, PRE.SAVE ON MODEL
-
-      // GOAL NOTIFICATION
+      // subtask NOTIFICATION if the subtask is Completed creates a subtaskNotification else deletes
       if (path.subtasks[subtaskIndex].isCompleted) {
         const subtaskNotification = new SubtaskNotification({
           description: `${path.user.firstName} ${path.user.lastName} completed the subtask "${path.subtasks[subtaskIndex].subtaskTitle}"`,
@@ -33,7 +32,7 @@ module.exports = (router) => {
         await SubtaskNotification.findOneAndDelete({ subtask: path.subtasks[subtaskIndex]._id })
       }
 
-      // PATH NOTIFICATION
+      // PATH NOTIFICATION if the PATH is Completed creates a pathNotification else deletes
       if (path.subtasks.every((subtask) => subtask.isCompleted)) {
         const pathNotification = new PathNotification({
           description: `${path.user.firstName} ${path.user.lastName} completed the path "${path.pathTitle}"`,

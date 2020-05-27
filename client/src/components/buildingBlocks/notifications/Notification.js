@@ -26,6 +26,7 @@ const Notification = (props) => {
   // Observes on render
   useEffect(() => {
     observer.observe(notificationRef.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

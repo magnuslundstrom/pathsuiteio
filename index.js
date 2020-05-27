@@ -20,16 +20,19 @@ app.use(cookieParser())
 const router = require('./routes/rootRouter')
 app.use(router)
 
+// static files
 if (process.env.NODE_ENV === 'production') {
   const path = require('path')
   app.use(express.static('client/build'))
   app.use(express.static('files'))
 
+  // shows our index.html in client/build if neither path above was accessed
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   })
 }
 
+// Port
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
   console.log(`App started`)

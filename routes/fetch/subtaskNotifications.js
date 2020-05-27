@@ -4,20 +4,21 @@ const SubtaskNotification = require('../../models/notifications/SubtaskNotificat
 const completedWeek = require('../../utilFns/completedWeek')
 const completedYear = require('../../utilFns/completedYear')
 
-// GET /tasks?limits=10&skip=10 -- remember to parseInt() since querystrings are STRINGS
-
 // get subtasks completed last week
 module.exports = (router) => {
+  // Used to get data to the chart
   router.get('/api/subtasks-completed', auth, async (req, res) => {
     const period = req.query.when
     const query = {
       company: req.user.company._id,
     }
+    // finds the paths connected to company and if !isAdmin user id also included
     if (req.query.user) query.user = req.query.user
     const companySubtaskNotifications = await SubtaskNotification.find({
       ...query,
     })
     let numbers
+    // completedweek/year returns an array with the data
     if (period.includes('week')) numbers = completedWeek(companySubtaskNotifications, period)
     if (period.includes('year')) numbers = completedYear(companySubtaskNotifications, period)
     res.send(numbers)
@@ -30,6 +31,7 @@ module.exports = (router) => {
     }
     if (req.query.user) query.user = req.query.user
     try {
+      // parseInt to turn the querySTRING to a number
       const companySubtaskNotifications = await SubtaskNotification.find({
         ...query,
       })

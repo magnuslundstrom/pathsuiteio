@@ -109,12 +109,15 @@ class Dashboard extends React.Component {
 
   // used to reset data and put in new data
   updateChartOne = async (newPeriod, newWhen) => {
-    this.setState({ chartOne: { ...this.state.chartOne, period: newPeriod, when: newWhen, data: [] } }, async () => {
-      const { data: newRes } = await axios.get(`/api/subtasks-completed?when=${newWhen}`)
-      this.setState({
-        chartOne: { ...this.state.chartOne, data: newRes },
-      })
-    })
+    this.setState(
+      { chartOne: { ...this.state.chartOne, period: newPeriod, when: newWhen, data: [] } },
+      async () => {
+        const { data: newRes } = await axios.get(`/api/subtasks-completed?when=${newWhen}`)
+        this.setState({
+          chartOne: { ...this.state.chartOne, data: newRes },
+        })
+      }
+    )
   }
   // used to reset data and put in new data
   updateChartTwo = (newPeriod, newWhen) => {
@@ -136,21 +139,23 @@ class Dashboard extends React.Component {
       <Container>
         {this.props.isFirstTime && <Onboard isAdmin={this.props.isAdmin} />}
         <h1>Welcome back, {this.props.firstName}!</h1>
-        {(this.props.isAdmin && <p>Get status on your teams performance</p>) || <p>Get status on your performance</p>}
+        {(this.props.isAdmin && <p>Get status on your teams performance</p>) || (
+          <p>Get status on your performance</p>
+        )}
 
         {(this.state.loading && <ScreenLoader />) || (
-          <div>
+          <section>
             {/* Tasks + lastest activity */}
-            <div className='flex mt-10'>
-              <div className='w-2/3 mr-10'>
-                <div className='flex justify-between'>
-                  <h3 className='mb-3 font-semibold'>Subtasks completed</h3>
-                  <div className='flex items-center mb-3'>
+            <div className="flex mt-10">
+              <article className="w-2/3 mr-10">
+                <div className="flex justify-between">
+                  <h3 className="mb-3 font-semibold">Subtasks completed</h3>
+                  <div className="flex items-center mb-3">
                     <Dropdown onClick={this.updateChartOne} />
                   </div>
                 </div>
                 {/* First chart */}
-                <div className='bg-white p-5 rounded-lg shadow-md'>
+                <div className="bg-white p-5 rounded-lg shadow-md">
                   <Chart
                     data={this.state.chartOne.data}
                     period={this.state.chartOne.period}
@@ -158,59 +163,59 @@ class Dashboard extends React.Component {
                   />
                 </div>
                 {/* Latest activity notification list */}
-              </div>
-              <div className='w-1/3'>
-                <h3 className='mb-3'>Lastest activity</h3>
-                <div className='bg-white p-5 rounded-lg shadow-md'>
+              </article>
+              <article className="w-1/3">
+                <h3 className="mb-3">Lastest activity</h3>
+                <div className="bg-white p-5 rounded-lg shadow-md">
                   <NotificationList
                     notifications={this.state.lastestActivity}
                     isAdmin={this.props.isAdmin}
                     onScroll={this.latestActivityScroll}
-                    zeroMessage='No subtasks completed yet'
+                    zeroMessage="No subtasks completed yet"
                   />
                   {this.state.latestActivityLoading && (
-                    <p className='ml-5'>
-                      Fetching more notifications <i className='fas fa-spinner own-spinner'></i>
+                    <p className="ml-5">
+                      Fetching more notifications <i className="fas fa-spinner own-spinner"></i>
                     </p>
                   )}
                 </div>
-              </div>
+              </article>
             </div>
             {/* paths + recently finished */}
-            <div className='flex mt-10'>
-              <div className='w-2/3 mr-10'>
-                <div className='flex justify-between'>
-                  <h3 className='mb-3'>Paths completed</h3>
+            <div className="flex mt-10">
+              <article className="w-2/3 mr-10">
+                <div className="flex justify-between">
+                  <h3 className="mb-3">Paths completed</h3>
                   <Dropdown onClick={this.updateChartTwo} />
                 </div>
                 {/* Second chart */}
-                <div className='bg-white p-5 rounded-lg shadow-md'>
+                <div className="bg-white p-5 rounded-lg shadow-md">
                   <Chart
                     data={this.state.chartTwo.data}
                     period={this.state.chartTwo.period}
                     suggestedMax={findHighestNumber(this.state.chartTwo.data) + 10}
                   />
                 </div>
-              </div>
+              </article>
               {/* recently finished paths notification list */}
-              <div className='w-1/3'>
-                <h3 className='mb-3 font-semibold'>Recently finished paths</h3>
-                <div className='bg-white p-5 rounded-lg shadow-md'>
+              <article className="w-1/3">
+                <h3 className="mb-3 font-semibold">Recently finished paths</h3>
+                <div className="bg-white p-5 rounded-lg shadow-md">
                   <NotificationList
                     notifications={this.state.recentlyFinished}
                     isAdmin={this.props.isAdmin}
-                    zeroMessage='No paths completed yet'
+                    zeroMessage="No paths completed yet"
                     onScroll={this.recentlyFinishedScroll}
                   />
                   {this.state.finishedPathsLoading && (
-                    <p className='ml-5'>
-                      Fetching more notifications <i className='fas fa-spinner own-spinner'></i>
+                    <p className="ml-5">
+                      Fetching more notifications <i className="fas fa-spinner own-spinner"></i>
                     </p>
                   )}
                 </div>
-              </div>
+              </article>
             </div>
-          </div>
+          </section>
         )}
       </Container>
     )

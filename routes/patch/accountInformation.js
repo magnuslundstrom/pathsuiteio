@@ -2,6 +2,7 @@ const Company = require('../../models/Company')
 const auth = require('../../middleware/auth')
 
 module.exports = (router) => {
+  // update account/company information
   router.patch('/api/update-account-information', auth, async (req, res) => {
     const company = await Company.findOneAndUpdate(
       { _id: req.user.company._id },

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 const EmployeeCard = (props) => {
   return (
-    <div className="bg-white shadow-md p-8 flex flex-col items-center rounded-lg text-center hover-card">
+    <article className="bg-white shadow-md p-8 flex flex-col items-center rounded-lg text-center hover-card">
       <img
         src={`data:image/png;base64, ${props.employee.image}`}
         className="rounded-full w-24 h-24"
@@ -22,7 +22,7 @@ const EmployeeCard = (props) => {
       <Link to={`user?id=${props.employee._id}`} className="text-green hover:font-semibold mt-3">
         View profile
       </Link>
-    </div>
+    </article>
   )
 }
 
