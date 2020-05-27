@@ -8,9 +8,8 @@ sgMail.setApiKey(SENDGRID_API)
 module.exports = (router) => {
   router.post('/api/invite-user', auth, async (req, res) => {
     // if the app is in production sends link to prod URL else localhost
-    let ahref = process.env.NODE_ENV === 'production' ? 'https://pathsuiteio.herokuapp.com' : 'http://localhost:3000'
-
-    ahref = ahref + `/invited-user?email=${req.body.email}&isAdmin=${req.body.isAdmin}&company=${req.user.company._id}`
+    let ahref = process.env.PORT || 'http://localhost:3000'
+    ahref += `/invited-user?email=${req.body.email}&isAdmin=${req.body.isAdmin}&company=${req.user.company._id}`
     // The message being sent
     const msg = {
       to: req.body.email,
