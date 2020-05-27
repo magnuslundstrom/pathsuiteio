@@ -26,6 +26,7 @@ import SuccessMessage from './buildingBlocks/utils/SuccessMessage'
 class App extends React.Component {
   state = {
     loading: true,
+    displayMobileMessage: window.innerWidth < 1100,
   }
 
   // sends request to server to check if user has cookie and user exists
@@ -39,6 +40,10 @@ class App extends React.Component {
     } catch (e) {
       this.setState({ loading: false })
     }
+    window.addEventListener('resize', () => {
+      if (window.innerWidth < 1100) this.setState({ displayMobileMessage: true })
+      else this.setState({ displayMobileMessage: false })
+    })
   }
 
   renderRoutes = () => {
@@ -53,17 +58,17 @@ class App extends React.Component {
       } else {
         return (
           <Switch>
-            <Route path='/' exact component={Dashboard} />
-            <Route path='/paths' exact component={Paths} />
-            <Route path='/employees' exact component={Employees} />
-            <Route path='/create-path' exact component={CreatePath} />
-            <Route path='/create-user' exact component={CreateUser} />
-            <Route path='/profile' exact component={Profile} />
-            <Route path='/account-users' exact component={AccountUsers} />
-            <Route path='/user' component={User} />
-            <Route path='/edit-path' component={EditPath} />
-            <Route path='/account-information' component={AccountInformation} />
-            <Route path='*' render={() => <Redirect to='/' />} />
+            <Route path="/" exact component={Dashboard} />
+            <Route path="/paths" exact component={Paths} />
+            <Route path="/employees" exact component={Employees} />
+            <Route path="/create-path" exact component={CreatePath} />
+            <Route path="/create-user" exact component={CreateUser} />
+            <Route path="/profile" exact component={Profile} />
+            <Route path="/account-users" exact component={AccountUsers} />
+            <Route path="/user" component={User} />
+            <Route path="/edit-path" component={EditPath} />
+            <Route path="/account-information" component={AccountInformation} />
+            <Route path="*" render={() => <Redirect to="/" />} />
           </Switch>
         )
       }
@@ -71,10 +76,10 @@ class App extends React.Component {
     } else {
       return (
         <Switch>
-          <Route path='/' exact component={Login} />
-          <Route path='/sign-up' exact component={SignUp} />
-          <Route path='/invited-user' exact component={InvitedUser} />
-          <Route path='*' render={() => <Redirect to='/' />} />
+          <Route path="/" exact component={Login} />
+          <Route path="/sign-up" exact component={SignUp} />
+          <Route path="/invited-user" exact component={InvitedUser} />
+          <Route path="*" render={() => <Redirect to="/" />} />
         </Switch>
       )
     }
@@ -84,7 +89,13 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         {this.props.successMessage && <SuccessMessage />}
-
+        {this.state.displayMobileMessage && (
+          <div className="absolute top-0 left-0 h-screen w-screen z-50 flex items-center justify-center bg-gray">
+            <p className="text-5-xl font-semibold">
+              Thanks for using Pathsuite. Mobile version coming soon!
+            </p>
+          </div>
+        )}
         {this.renderRoutes()}
       </BrowserRouter>
     )

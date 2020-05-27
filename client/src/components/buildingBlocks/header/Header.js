@@ -18,7 +18,7 @@ const Header = (props) => {
 
   return (
     <header className="shadow-md bg-white py-6 px-5">
-      <div className="w-8/12 m-auto flex justify-between items-center">
+      <div className="w-11/12 m-auto flex justify-between items-center xl:w-8/12">
         <Link to="/">
           <img src={logo} className="w-40" alt="logo" />
         </Link>

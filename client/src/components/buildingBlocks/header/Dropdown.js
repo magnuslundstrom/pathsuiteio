@@ -21,7 +21,7 @@ const Dropdown = (props) => {
         />
         {/* Dropdown component */}
         {dropdown && (
-          <div className="absolute top-0 left-0 mt-16 bg-white shadow-md p-5 w-72 rounded-md">
+          <div className="absolute top-0 left-0 mt-16 bg-white shadow-md p-5 w-72 rounded-md -ml-48 xl:ml-0">
             <p className="font-semibold">{props.fullName}</p>
             <p className="text-secGray border-b border-secGray pb-2">{props.email}</p>
             <div className="flex flex-col border-b border-secGray pb-2">
@@ -44,20 +44,6 @@ const Dropdown = (props) => {
                     Company
                   </NavLink>
 
-                  <NavLink
-                    to="/subscription"
-                    className="mt-1 inline-block hover:font-semibold self-start text-red"
-                    activeClassName="font-semibold"
-                  >
-                    Subscription
-                  </NavLink>
-                  <NavLink
-                    to="/billing"
-                    className="mt-1 inline-block hover:font-semibold self-start text-red"
-                    activeClassName="font-semibold"
-                  >
-                    Billing info
-                  </NavLink>
                   <a
                     href="https://pathsuite.webflow.io/support"
                     target="_blank"
