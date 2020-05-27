@@ -31,7 +31,6 @@ class CreateUser extends React.Component {
       this.props.history.goBack()
     } catch (e) {
       this.setState({ errors: { ...e.response.data } })
-      console.log(this.state.errors)
     }
   }
   render() {

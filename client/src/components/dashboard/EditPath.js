@@ -5,6 +5,7 @@ import ScreenLoader from '../buildingBlocks/utils/ScreenLoader'
 import Container from '../buildingBlocks/Container'
 import PathForm from '../buildingBlocks/path/PathForm'
 
+// Represents /edit-path
 const CreatePath = (props) => {
   const [editPathState, setEditPathState] = useState('')
   const [loading, setLoading] = useState(true)
@@ -24,14 +25,14 @@ const CreatePath = (props) => {
     }
   }
 
+  // Used to delete path
   const onDelete = async () => {
     try {
       const res = await axios.get(`/api/delete-path?id=${pathId}`)
       if (res) props.history.goBack()
-    } catch (e) {
-      console.log(e.response)
-    }
+    } catch (e) {}
   }
+
   useEffect(() => {
     const getData = async () => {
       const { data: path } = await axios.get(`/api/single-edit-path?id=${pathId}`)

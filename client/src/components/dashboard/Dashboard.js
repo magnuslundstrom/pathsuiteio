@@ -31,6 +31,7 @@ class Dashboard extends React.Component {
     finishedPathsLoading: false,
   }
 
+  // scroll function to load more recently finished paths
   recentlyFinishedScroll = async () => {
     if (this.state.recentlyFinished.length % 5 === 0) {
       this.setState({
@@ -47,6 +48,7 @@ class Dashboard extends React.Component {
     }
   }
 
+  // scroll function to load more notifications
   latestActivityScroll = async () => {
     if (this.state.lastestActivity.length % 5 === 0) {
       this.setState({
@@ -101,11 +103,10 @@ class Dashboard extends React.Component {
         recentlyFinished,
         loading: false,
       })
-    } catch (e) {
-      console.log(e.response)
-    }
+    } catch (e) {}
   }
 
+  // used to reset data and put in new data
   updateChartOne = async (newPeriod, newWhen) => {
     this.setState(
       { chartOne: { ...this.state.chartOne, period: newPeriod, when: newWhen, data: [] } },
@@ -117,6 +118,7 @@ class Dashboard extends React.Component {
       }
     )
   }
+  // used to reset data and put in new data
   updateChartTwo = (newPeriod, newWhen) => {
     this.setState(
       {
@@ -151,7 +153,7 @@ class Dashboard extends React.Component {
                     <Dropdown onClick={this.updateChartOne} />
                   </div>
                 </div>
-
+                {/* First chart */}
                 <div className="bg-white p-5 rounded-lg shadow-md">
                   <Chart
                     data={this.state.chartOne.data}
@@ -159,6 +161,7 @@ class Dashboard extends React.Component {
                     suggestedMax={findHighestNumber(this.state.chartOne.data) + 10}
                   />
                 </div>
+                {/* Latest activity notification list */}
               </div>
               <div className="w-1/3">
                 <h3 className="mb-3">Lastest activity</h3>
@@ -177,14 +180,14 @@ class Dashboard extends React.Component {
                 </div>
               </div>
             </div>
-            {/* learning paths + recently finished */}
+            {/* paths + recently finished */}
             <div className="flex mt-10">
               <div className="w-2/3 mr-10">
                 <div className="flex justify-between">
-                  <h3 className="mb-3">Learning paths completed</h3>
+                  <h3 className="mb-3">Paths completed</h3>
                   <Dropdown onClick={this.updateChartTwo} />
                 </div>
-
+                {/* Second chart */}
                 <div className="bg-white p-5 rounded-lg shadow-md">
                   <Chart
                     data={this.state.chartTwo.data}
@@ -193,6 +196,7 @@ class Dashboard extends React.Component {
                   />
                 </div>
               </div>
+              {/* recently finished paths notification list */}
               <div className="w-1/3">
                 <h3 className="mb-3 font-semibold">Recently finished paths</h3>
                 <div className="bg-white p-5 rounded-lg shadow-md">

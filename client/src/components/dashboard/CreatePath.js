@@ -14,7 +14,6 @@ const CreatePath = (props) => {
       const res = await axios.post('/api/create-path', {
         ...stateobj,
       })
-      console.log(res)
       if (res) {
         props.history.goBack()
         props.setSuccessMessage('Path was succesfully created!')
@@ -24,7 +23,7 @@ const CreatePath = (props) => {
     }
   }
 
-  // FIX - subtasks bliver ikke resat, så har gjort det således
+  // FIX - subtasks doesn't get reset after first time, so this is current solutions
   useEffect(() => {
     setState({
       obj: {
@@ -37,8 +36,6 @@ const CreatePath = (props) => {
       loading: false,
     })
   }, [])
-
-  console.log(state.obj)
 
   return (
     <Container>
