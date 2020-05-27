@@ -58,6 +58,7 @@ const PathSchema = new mongoose.Schema({
   },
 })
 
+// adds https if no protocall added when submitted
 PathSchema.pre('save', function (next) {
   const pattern = /^((http|https):\/\/)/
   this.subtasks.forEach((subtask) => {

@@ -4,10 +4,10 @@ const PathNotification = require('../../models/notifications/PathNotification')
 const completedWeek = require('../../utilFns/completedWeek')
 const completedYear = require('../../utilFns/completedYear')
 
-// GET /tasks?limits=10&skip=10 -- remember to parseInt() since querystrings are STRINGS
-
 module.exports = (router) => {
+  // used to get the data for the charts
   router.get('/api/paths-completed', auth, async (req, res) => {
+    // creates a query and then uses that query to find PathNotifications
     const period = req.query.when
     const query = {
       company: req.user.company._id,
@@ -17,6 +17,7 @@ module.exports = (router) => {
       ...query,
     })
     let numbers
+    // sets the returned array to "numbers"
     if (period.includes('week')) numbers = completedWeek(companyPathNotifications, period)
     if (period.includes('year')) numbers = completedYear(companyPathNotifications, period)
     res.send(numbers)
@@ -27,6 +28,7 @@ module.exports = (router) => {
     const query = {
       company: req.user.company._id,
     }
+    // used on employee side where the query comes with a user
     if (req.query.user) query.user = req.query.user
     try {
       const companyPathNotifications = await PathNotification.find({
@@ -39,6 +41,7 @@ module.exports = (router) => {
         .populate('user', 'firstName lastName image')
         .exec()
       const newPaths = []
+      // grabs data and puts in new paths
       companyPathNotifications.forEach((noti) => {
         const image = noti.user._doc.image.toString('base64')
         const date = moment(noti.date).format('MMM Do')

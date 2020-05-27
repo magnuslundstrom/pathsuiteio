@@ -1,6 +1,7 @@
 const auth = require('../../middleware/auth')
 const Path = require('../../models/Path')
 
+// Fetch all categories for the "/path" filters
 module.exports = (router) => {
   router.get('/api/get-categories', auth, async (req, res) => {
     try {

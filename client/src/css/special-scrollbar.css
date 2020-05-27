@@ -1,0 +1,15 @@
+.special-scroll::-webkit-scrollbar {
+  width: 7.5px;
+}
+
+.special-scroll::-webkit-scrollbar-track {
+  @apply bg-white;
+}
+
+.special-scroll::-webkit-scrollbar-thumb {
+  @apply bg-secGray rounded;
+}
+
+.special-scroll::-webkit-scrollbar-thumb:hover {
+  @apply bg-secGray;
+}

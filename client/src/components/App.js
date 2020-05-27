@@ -22,17 +22,18 @@ import EditPath from './dashboard/EditPath'
 import AccountInformation from './dashboard/AccountInformation'
 import SuccessMessage from './buildingBlocks/utils/SuccessMessage'
 
+// Represents a big parent component and handles routes
 class App extends React.Component {
   state = {
     loading: true,
   }
 
+  // sends request to server to check if user has cookie and user exists
   async componentDidMount() {
     try {
       const res = await axios.get('/api/mount')
       if (res) {
         this.props.logIn()
-
         this.setState({ loading: false })
       }
     } catch (e) {
@@ -52,17 +53,17 @@ class App extends React.Component {
       } else {
         return (
           <Switch>
-            <Route path="/" exact component={Dashboard} />
-            <Route path="/paths" exact component={Paths} />
-            <Route path="/employees" exact component={Employees} />
-            <Route path="/create-path" exact component={CreatePath} />
-            <Route path="/create-user" exact component={CreateUser} />
-            <Route path="/profile" exact component={Profile} />
-            <Route path="/account-users" exact component={AccountUsers} />
-            <Route path="/user" component={User} />
-            <Route path="/edit-path" component={EditPath} />
-            <Route path="/account-information" component={AccountInformation} />
-            <Route path="*" render={() => <Redirect to="/" />} />
+            <Route path='/' exact component={Dashboard} />
+            <Route path='/paths' exact component={Paths} />
+            <Route path='/employees' exact component={Employees} />
+            <Route path='/create-path' exact component={CreatePath} />
+            <Route path='/create-user' exact component={CreateUser} />
+            <Route path='/profile' exact component={Profile} />
+            <Route path='/account-users' exact component={AccountUsers} />
+            <Route path='/user' component={User} />
+            <Route path='/edit-path' component={EditPath} />
+            <Route path='/account-information' component={AccountInformation} />
+            <Route path='*' render={() => <Redirect to='/' />} />
           </Switch>
         )
       }
@@ -70,10 +71,10 @@ class App extends React.Component {
     } else {
       return (
         <Switch>
-          <Route path="/" exact component={Login} />
-          <Route path="/sign-up" exact component={SignUp} />
-          <Route path="/invited-user" exact component={InvitedUser} />
-          <Route path="*" render={() => <Redirect to="/" />} />
+          <Route path='/' exact component={Login} />
+          <Route path='/sign-up' exact component={SignUp} />
+          <Route path='/invited-user' exact component={InvitedUser} />
+          <Route path='*' render={() => <Redirect to='/' />} />
         </Switch>
       )
     }

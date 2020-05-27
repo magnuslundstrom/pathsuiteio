@@ -1,5 +1,7 @@
 const User = require('../models/User')
 
+// ensures that user is authenticated by checking cookies
+// If user exists then set req.user to be used laterr else send error and stop the request from completing
 const auth = async (req, res, next) => {
   try {
     const user = await User.findById(req.cookies.user)

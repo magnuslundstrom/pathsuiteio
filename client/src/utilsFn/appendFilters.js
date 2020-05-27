@@ -1,3 +1,5 @@
+// takes in state obj and returns a string with the keys=value
+
 export default (obj) => {
   let string = ''
   for (const prop in obj) {

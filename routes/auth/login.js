@@ -8,17 +8,17 @@ module.exports = (router) => {
     try {
       const user = await User.findOne({ email: req.body.email }).select('email password')
       if (user) {
+        // compares the input password with the one in DB
         const match = await bcrypt.compare(req.body.password, user.password)
         if (match) {
           setCookie(res, user._id)
           return res.send({ success: 'User was successfully logged in!' })
         }
       }
+      // ERRORS
       return res.status(406).send({ loginError: "We don't know this account. Please try again." })
     } catch (e) {
-      return res
-        .status(406)
-        .send({ errors: { login: { message: 'Something went wrong, try again!' } } })
+      return res.status(406).send({ errors: { login: { message: 'Something went wrong, try again!' } } })
     }
   })
 }

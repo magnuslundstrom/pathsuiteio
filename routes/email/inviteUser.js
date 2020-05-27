@@ -1,20 +1,17 @@
 const sgMail = require('@sendgrid/mail')
+const auth = require('../../middleware/auth')
+
 const { SENDGRID_API } = require('../../config/keys')
 sgMail.setApiKey(SENDGRID_API)
 
-const auth = require('../../middleware/auth')
-
+// Used to send out emails to the invited user
 module.exports = (router) => {
   router.post('/api/invite-user', auth, async (req, res) => {
-    let ahref =
-      process.env.NODE_ENV === 'production'
-        ? 'https://pathsuiteio.herokuapp.com'
-        : 'http://localhost:3000'
+    // if the app is in production sends link to prod URL else localhost
+    let ahref = process.env.NODE_ENV === 'production' ? 'https://pathsuiteio.herokuapp.com' : 'http://localhost:3000'
 
-    ahref =
-      ahref +
-      `/invited-user?email=${req.body.email}&isAdmin=${req.body.isAdmin}&company=${req.user.company._id}`
-
+    ahref = ahref + `/invited-user?email=${req.body.email}&isAdmin=${req.body.isAdmin}&company=${req.user.company._id}`
+    // The message being sent
     const msg = {
       to: req.body.email,
       from: 'pathsuite@opholdsguide.dk',

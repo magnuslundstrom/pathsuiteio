@@ -80,6 +80,7 @@ UserSchema.virtual('paths', {
   foreignField: 'user',
 })
 
+// CamelCases
 UserSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 8)
   this.firstName = camelCase(this.firstName)

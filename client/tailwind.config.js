@@ -1,3 +1,4 @@
+// configure our tailwind theme
 module.exports = {
   theme: {
     fontFamily: {

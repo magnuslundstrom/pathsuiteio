@@ -14,7 +14,9 @@ class User extends React.Component {
     unfinishedPaths: [],
   }
 
+  //  fetch users information and paths associated with them
   async componentDidMount() {
+    // grabs user ID of url
     const params = new URLSearchParams(this.props.location.search)
     const id = params.get('id')
     const { data: paths } = await axios.get(`/api/paths?user=${id}`)
@@ -23,6 +25,7 @@ class User extends React.Component {
     const { data: user } = await axios.get(`/api/user?id=${id}`)
     this.setState({ completedPaths, unfinishedPaths, user, loading: false }, () => console.log(this.state))
   }
+  // IGNORE - Used since PathList expects props.onscroll
   onScoll = () => {}
 
   render() {
@@ -30,6 +33,7 @@ class User extends React.Component {
       <Container>
         {(this.state.loading && <BoxLoader />) || (
           <div>
+            {/* Profile image + information */}
             <div className='flex justify-between'>
               <div className='flex'>
                 <img
@@ -56,7 +60,7 @@ class User extends React.Component {
                   <i className='fas fa-arrow-left mr-1 '></i> Go back to employees
                 </Link>
               )}
-
+              {/* Active paths */}
               <div>
                 <h2 className='mt-10 -mb-5'>Active paths</h2>
                 {this.state.unfinishedPaths.length === 0 ? (
@@ -70,6 +74,7 @@ class User extends React.Component {
                   />
                 )}
               </div>
+              {/* Completed paths */}
               <div>
                 <h2 className='mt-10 -mb-5'>Completed paths</h2>
                 {this.state.completedPaths.length === 0 ? (

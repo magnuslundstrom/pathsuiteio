@@ -5,27 +5,25 @@ import ScreenLoader from '../buildingBlocks/utils/ScreenLoader'
 import Container from '../buildingBlocks/Container'
 import PathForm from '../buildingBlocks/path/PathForm'
 
-// Represents /edit-path
+// Represents "/edit-path"
+
 const CreatePath = (props) => {
   const [editPathState, setEditPathState] = useState('')
   const [loading, setLoading] = useState(true)
-
   const params = new URLSearchParams(props.location.search)
-
   const [pathId] = useState(params.get('id'))
 
+  // submits data to server
   const onSubmit = async (stateobj) => {
     try {
       const res = await axios.patch(`/api/update-path?id=${pathId}`, {
         ...stateobj,
       })
       if (res) props.history.goBack()
-    } catch (e) {
-      console.log(e.response)
-    }
+    } catch (e) {}
   }
 
-  // Used to delete path
+  // Delete path
   const onDelete = async () => {
     try {
       const res = await axios.get(`/api/delete-path?id=${pathId}`)
@@ -33,6 +31,7 @@ const CreatePath = (props) => {
     } catch (e) {}
   }
 
+  // onload fetch path data
   useEffect(() => {
     const getData = async () => {
       const { data: path } = await axios.get(`/api/single-edit-path?id=${pathId}`)
@@ -52,20 +51,13 @@ const CreatePath = (props) => {
     <Container>
       <h1>Edit path</h1>
 
-      <button
-        className="block mt-8 font-semibold hover-underline"
-        onClick={() => props.history.goBack()}
-      >
-        <i className="fas fa-arrow-left mr-2"></i> Go back{' '}
+      <button className='block mt-8 font-semibold hover-underline' onClick={() => props.history.goBack()}>
+        <i className='fas fa-arrow-left mr-2'></i> Go back{' '}
       </button>
-      <button className="mt-2 font-semibold mb-5 hover-underline" onClick={() => onDelete()}>
-        <i className="fas fa-trash-alt mr-2"></i> Discard path
+      <button className='mt-2 font-semibold mb-5 hover-underline' onClick={() => onDelete()}>
+        <i className='fas fa-trash-alt mr-2'></i> Discard path
       </button>
-      {loading ? (
-        <ScreenLoader />
-      ) : (
-        editPathState && <PathForm edit={true} onSubmit={onSubmit} state={editPathState} />
-      )}
+      {loading ? <ScreenLoader /> : editPathState && <PathForm edit={true} onSubmit={onSubmit} state={editPathState} />}
     </Container>
   )
 }

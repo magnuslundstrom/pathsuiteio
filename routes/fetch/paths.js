@@ -10,11 +10,10 @@ module.exports = (router) => {
     const searchObj = {
       ...req.query,
     }
-    console.log(searchObj)
     delete searchObj.limit
     delete searchObj.skip
     if (searchObj.pathTitle) searchObj.pathTitle = reg
-    console.log(searchObj)
+
     const paths = await Path.find({ ...searchObj, company: req.user.company._id })
       .limit(parseInt(req.query.limit))
       .skip(parseInt(req.query.skip))
@@ -34,7 +33,7 @@ module.exports = (router) => {
     res.send(actualPaths)
   })
 
-  // Used on /paths on employee side -- REALLY ? -- REMAKE
+  // Used on /paths on employee side -- DEPRECIATED <---- WILL BE DELETED
   router.get('/api/own-paths', auth, async (req, res) => {
     const paths = await Path.find({ user: req.user._id })
       .populate('user', 'firstName lastName jobTitle image')

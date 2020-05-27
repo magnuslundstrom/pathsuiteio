@@ -8,13 +8,14 @@ import EmployeeList from '../buildingBlocks/employee/EmployeeList'
 import BoxLoader from '../buildingBlocks/utils/ScreenLoader'
 import InviteOverlay from '../buildingBlocks/employee/InviteOverlay'
 
+// Represents "/employees"
 class Employees extends React.Component {
   state = {
     loading: true,
     employees: [],
     displayInvite: false,
   }
-
+  // fetch employees on load
   async componentDidMount() {
     try {
       const { data: employees } = await axios.get('/api/users')
@@ -24,26 +25,24 @@ class Employees extends React.Component {
     }
   }
 
+  // returns employee list if length of state.employees is bigger than 0
   renderEmployeeList = () => {
-    if (this.state.employees.length === 0)
-      return <p className="mt-10">You have no employees yet!</p>
+    if (this.state.employees.length === 0) return <p className='mt-10'>You have no employees yet!</p>
     else return <EmployeeList employees={this.state.employees} />
   }
 
   render() {
     return (
       <Container>
-        <div className="flex justify-between items-center">
+        <div className='flex justify-between items-center'>
           <h1>Employees</h1>
           <button onClick={() => this.setState({ displayInvite: true })}>
-            <i className="fas fa-plus text-2xl font-semibold hover-spin"></i>
+            <i className='fas fa-plus text-2xl font-semibold hover-spin'></i>
           </button>
         </div>
         {(this.state.loading && <BoxLoader />) || (
           <div>
-            {this.state.displayInvite && (
-              <InviteOverlay onClose={() => this.setState({ displayInvite: false })} />
-            )}
+            {this.state.displayInvite && <InviteOverlay onClose={() => this.setState({ displayInvite: false })} />}
             {this.renderEmployeeList()}
           </div>
         )}

@@ -3,6 +3,7 @@ const Path = require('../../models/Path')
 const PathNotification = require('../../models/Path')
 const GoalNotification = require('../../models/Path')
 
+// Deletes path
 module.exports = (router) => {
   router.get('/api/delete-path', auth, async (req, res) => {
     await Path.findByIdAndDelete(req.query.id)

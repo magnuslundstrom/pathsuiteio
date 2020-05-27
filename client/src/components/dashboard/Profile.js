@@ -5,6 +5,7 @@ import axios from 'axios'
 import Container from '../buildingBlocks/Container'
 import AccountMenu from '../buildingBlocks/account/AccountMenu'
 
+// represents "/user-profile"
 class Profile extends React.Component {
   state = {
     image: this.props.user.image,
@@ -17,6 +18,7 @@ class Profile extends React.Component {
     confirmNewPassword: '',
   }
 
+  // On upload sends file to server, resize, compress, sends back
   fetchNewPhoto = async (file) => {
     const form = new FormData()
     form.append('image', file)
@@ -27,11 +29,13 @@ class Profile extends React.Component {
     })
     this.setState({ image })
   }
+  // on X click, removes new photo and puts back old one
   setOriginalPhoto = () => {
     document.querySelector('#image').value = ''
     this.setState({ image: this.props.user.image })
   }
 
+  // Sends form to patch
   onSubmit = async (e) => {
     e.preventDefault()
     const form = new FormData()
@@ -45,7 +49,6 @@ class Profile extends React.Component {
     if (this.state.currentPassword) form.set('currentPassword', this.state.currentPassword)
     if (this.state.newPassword) form.set('newPassword', this.state.newPassword)
     if (this.state.confirmNewPassword) form.set('confirmNewPassword', this.state.confirmNewPassword)
-
     const res = await axios.post('api/update-profile', form, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -56,10 +59,11 @@ class Profile extends React.Component {
     }
   }
 
+  // function to change inputs
   onChangeHandler = (e, input) => {
     this.setState({ [`${input}`]: e.target.value })
   }
-
+  // Markup
   render() {
     return (
       <Container>
